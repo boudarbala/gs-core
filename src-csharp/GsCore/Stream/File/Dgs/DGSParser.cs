@@ -269,7 +269,7 @@ public class DGSParser : Parser {
 
 			double step;
 
-			step = double.valueOf(id());
+			step = double.Parse(id());
 			dgs.sendStepBegins(sourceId, step);
 			break;
 		case CL:
@@ -278,12 +278,12 @@ public class DGSParser : Parser {
 		case TF:
 			// TODO for release 1.2
 			// String tf;
-			// tf = string();
+			// tf = getString();
 
 			// try {
 			// dateIO.setFormat(tf);
 			// } catch (Exception e) {
-			// throw parseException("invalid time format \"%s\"", tf);
+			// throw parseException("invalid time format \"{0}\"", tf);
 			// }
 
 			break;
@@ -390,7 +390,7 @@ public class DGSParser : Parser {
 			switch (c) {
 			case '\'':
 			case '\"':
-				o = string();
+				o = getString();
 				break;
 			case '#':
 				o = color();
@@ -427,16 +427,16 @@ public class DGSParser : Parser {
 				if ((c >= '0' && c <= '9') || c == '-') {
 					try {
 						if (word.IndexOf('.') > 0)
-							o = double.valueOf(word);
+							o = double.Parse(word);
 						else {
 							try {
 								o = int.Parse(word);
 							} catch (FormatException e) {
-								o = long.valueOf(word);
+								o = (long)Enum.Parse(typeof(long), word);
 							}
 						}
 					} catch (FormatException e) {
-						throw parseException("invalid number format '%s'", word);
+						throw parseException("invalid number format '{0}'", word);
 					}
 				} else {
 					if (word.Equals("true"))
@@ -471,7 +471,7 @@ public class DGSParser : Parser {
 	protected Color color(){
 		int c;
 		int r, g, b, a;
-		System.Text.System.Text.StringBuilder hexa = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder hexa = new System.Text.StringBuilder();
 
 		c = nextChar();
 
@@ -666,11 +666,11 @@ public class DGSParser : Parser {
 
 	protected string string(){
 		int c, s;
-		System.Text.System.Text.StringBuilder builder;
+		System.Text.StringBuilder builder;
 		bool slash;
 
 		slash = false;
-		builder = new System.Text.System.Text.StringBuilder();
+		builder = new System.Text.StringBuilder();
 		c = nextChar();
 
 		if (c != '\"' && c != '\'')
@@ -697,7 +697,7 @@ public class DGSParser : Parser {
 
 	protected string id(){
 		int c;
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
 		skipWhitespaces();
 		c = nextChar();
@@ -760,7 +760,7 @@ public class DGSParser : Parser {
 	 * 
 	 * c = nextChar(); pushback(c);
 	 * 
-	 * switch (c) { case '"': case '\'': time = string(); break; default:
+	 * switch (c) { case '"': case '\'': time = getString(); break; default:
 	 * System.Text.StringBuilder builder = new System.Text.StringBuilder();
 	 * 
 	 * while ((c = nextChar()) != '\n' && c != '"') builder.appendCodePoint(c);

@@ -764,7 +764,7 @@ public class DefaultCamera2D : ICamera {
 			else
 				return true;
 		case ZOOMS:
-			return new List<object> { Selector.Type.Values).Contains(visibility[0]);
+			return new List<object> { Selector.((Type[])Enum.GetValues(typeof(Type)))).Contains(visibility[0]);
 		default:
 			return true;
 		}
@@ -789,7 +789,7 @@ public class DefaultCamera2D : ICamera {
 			else
 				return true;
 		case ZOOMS:
-			return new List<object> { Selector.Type.Values).Contains(visibility[0]);
+			return new List<object> { Selector.((Type[])Enum.GetValues(typeof(Type)))).Contains(visibility[0]);
 		default:
 			return true;
 		}
@@ -968,7 +968,7 @@ public class DefaultCamera2D : ICamera {
 
 	
 	public string toString() {
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder(string.Format("ICamera :\n"));
+		System.Text.StringBuilder builder = new System.Text.StringBuilder(string.Format("ICamera :\n"));
 
 		builder.Append(string.Format("    autoFit  = {0}\n", autoFit));
 		builder.Append(string.Format("    center   = {0}\n", center));

@@ -187,7 +187,7 @@ public class ByteProxy : SourceBase, IPipe, Action {
 			Console.Error.WriteLine("Already started.");
 		} else {
 			Thread t = new Thread(this);
-			t.start();
+			t.Start();
 		}
 	}
 
@@ -199,7 +199,7 @@ public class ByteProxy : SourceBase, IPipe, Action {
 			Thread t = thread;
 			running.set(false);
 
-			t.join();
+			t.Join();
 		}
 	}
 

@@ -68,7 +68,7 @@ public class StyleSheetParser : StyleSheetParserConstants {
 	 */
 	public void start(){
 		Rule r;
-		label_1: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case GRAPH:
 			case EDGE:
@@ -79,7 +79,7 @@ public class StyleSheetParser : StyleSheetParserConstants {
 				break;
 			default:
 				jj_la1[0] = jj_gen;
-				break label_1;
+				break;
 			}
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case GRAPH:
@@ -120,7 +120,7 @@ public class StyleSheetParser : StyleSheetParserConstants {
 	}
 
 	public void styles(Style style){
-		label_2: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case FILLMODE:
 			case FILLCOLOR:
@@ -165,14 +165,14 @@ public class StyleSheetParser : StyleSheetParserConstants {
 				break;
 			default:
 				jj_la1[2] = jj_gen;
-				break label_2;
+				break;
 			}
 			style(style);
 		}
 	}
 
 	public void stylesStart(Style style){
-		label_3: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case FILLMODE:
 			case FILLCOLOR:
@@ -217,7 +217,7 @@ public class StyleSheetParser : StyleSheetParserConstants {
 				break;
 			default:
 				jj_la1[3] = jj_gen;
-				break label_3;
+				break;
 			}
 			style(style);
 		}
@@ -262,7 +262,7 @@ public class StyleSheetParser : StyleSheetParserConstants {
 					break;
 				case STRING:
 					t = jj_consume_token(STRING);
-					select.setId(t.image.Substring(1, t.image.Length - 1));
+					select.setId(t.image.Substring(1, t.image.Length - 2));
 					break;
 				case REAL:
 					t = jj_consume_token(REAL);
@@ -291,7 +291,7 @@ public class StyleSheetParser : StyleSheetParserConstants {
 					break;
 				case STRING:
 					t = jj_consume_token(STRING);
-					select.setClass(t.image.Substring(1, t.image.Length - 1));
+					select.setClass(t.image.Substring(1, t.image.Length - 2));
 					break;
 				default:
 					jj_la1[6] = jj_gen;
@@ -323,7 +323,7 @@ public class StyleSheetParser : StyleSheetParserConstants {
 				break;
 			case STRING:
 				t = jj_consume_token(STRING);
-				select.setPseudoClass(t.image.Substring(1, t.image.Length - 1));
+				select.setPseudoClass(t.image.Substring(1, t.image.Length - 2));
 				break;
 			case IDENTIFIER:
 				t = jj_consume_token(IDENTIFIER);
@@ -679,14 +679,14 @@ public class StyleSheetParser : StyleSheetParserConstants {
 		Value value;
 		value = value();
 		values = new Values(value.units, value.value);
-		label_4: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case COMA:
 				;
 				break;
 			default:
 				jj_la1[12] = jj_gen;
-				break label_4;
+				break;
 			}
 			jj_consume_token(COMA);
 			value = value();
@@ -707,7 +707,7 @@ public class StyleSheetParser : StyleSheetParserConstants {
 		jj_consume_token(RPAREN);
 		{
 			if (true)
-				return t.image.Substring(1, t.image.Length - 1);
+				return t.image.Substring(1, t.image.Length - 2);
 		}
 		throw new Error("Missing return statement in function");
 	}
@@ -745,7 +745,7 @@ public class StyleSheetParser : StyleSheetParserConstants {
 			break;
 		case STRING:
 			t = jj_consume_token(STRING);
-			s = t.image.Substring(1, t.image.Length - 1);
+			s = t.image.Substring(1, t.image.Length - 2);
 			break;
 		default:
 			jj_la1[14] = jj_gen;
@@ -798,7 +798,7 @@ public class StyleSheetParser : StyleSheetParserConstants {
 			break;
 		case STRING:
 			t = jj_consume_token(STRING);
-			s = t.image.Substring(1, t.image.Length - 1);
+			s = t.image.Substring(1, t.image.Length - 2);
 			break;
 		default:
 			jj_la1[15] = jj_gen;
@@ -820,14 +820,14 @@ public class StyleSheetParser : StyleSheetParserConstants {
 		Color color;
 		color = color();
 		colors.Add(color);
-		label_5: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case COMA:
 				;
 				break;
 			default:
 				jj_la1[16] = jj_gen;
-				break label_5;
+				break;
 			}
 			jj_consume_token(COMA);
 			color = color();

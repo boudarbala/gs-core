@@ -229,7 +229,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 /// </summary>
 /// <returns>The elements iterator.</returns>
 	public IEnumerator<IElement> getElementIterator() {
-		return elements.Values.GetEnumerator();
+		return ((elements[])Enum.GetValues(typeof(elements))).GetEnumerator();
 	}
 
 	/// <summary>
@@ -237,7 +237,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 /// </summary>
 /// <returns>All the elements in no particular order.</returns>
 	public IEnumerable<IElement> elements() {
-		return elements.Values;
+		return ((elements[])Enum.GetValues(typeof(elements)));
 	}
 
 	/// <summary>
@@ -253,7 +253,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 /// </summary>
 /// <returns>The subset of elements modified by one or more events.</returns>
 	public IEnumerable<ElementEvents> elementsEvents() {
-		return eventsFor.Values;
+		return ((eventsFor[])Enum.GetValues(typeof(eventsFor)));
 	}
 
 	/// <summary>
@@ -265,7 +265,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 	}
 
 	public IEnumerator<IElement> iterator() {
-		return elements.Values.GetEnumerator();
+		return ((elements[])Enum.GetValues(typeof(elements))).GetEnumerator();
 	}
 
 	/// <summary>
@@ -457,7 +457,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 
 	
 	public string toString(int level) {
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder builder = new System.Text.StringBuilder();
 		string prefix = "";
 		string sprefix = "    ";
 
@@ -467,7 +467,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 		builder.Append(string.Format("{0}{1}\n", prefix, id));
 		builder.Append(string.Format("{0}{1}Contains : ", prefix, sprefix));
 
-		foreach (IElement element in elements.Values) {
+		foreach (IElement element in ((elements[])Enum.GetValues(typeof(elements)))) {
 			builder.Append(string.Format("{0} ", element.getId()));
 		}
 
@@ -598,7 +598,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 
 		
 		public string toString() {
-			System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+			System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
 			builder.Append(string.Format("{0} events {", element.getId()));
 			foreach (string event in events)
@@ -614,7 +614,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 /// </summary>
 	protected class BulkElements : IEnumerable<IElement> {
 		public IEnumerator<IElement> iterator() {
-			return new BulkIterator(elements.Values.GetEnumerator());
+			return new BulkIterator(((elements[])Enum.GetValues(typeof(elements))).GetEnumerator());
 		}
 	}
 

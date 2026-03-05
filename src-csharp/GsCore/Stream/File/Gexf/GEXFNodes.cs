@@ -69,7 +69,7 @@ public class GEXFNodes : SinkAdapter, IGEXFElement {
 	public void export(SmartXMLWriter stream){
 		stream.startElement("nodes");
 
-		foreach (GEXFNode node in nodes.Values)
+		foreach (GEXFNode node in ((nodes[])Enum.GetValues(typeof(nodes))))
 			node.export(stream);
 
 		stream.endElement(); // NODES
@@ -89,7 +89,7 @@ public class GEXFNodes : SinkAdapter, IGEXFElement {
 			nodes[nodeId] = node;
 		}
 
-		node.spells.start();
+		node.spells.Start();
 	}
 
 	/*
@@ -171,7 +171,7 @@ public class GEXFNodes : SinkAdapter, IGEXFElement {
 	 * @see org.graphstream.stream.SinkAdapter#graphCleared(java.lang.String, long)
 	 */
 	public void graphCleared(string sourceId, long timeId) {
-		foreach (GEXFNode node in nodes.Values)
+		foreach (GEXFNode node in ((nodes[])Enum.GetValues(typeof(nodes))))
 			node.spells.end();
 	}
 }

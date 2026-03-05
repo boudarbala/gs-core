@@ -136,7 +136,7 @@ public class FileSinkUnstyledSVG : FileSinkBase {
 		Point3 p1 = nodePos[toNodeId];
 
 		if (p0 != null && p1 != null) {
-			output.printf("  <g id=\"%s\">%n", edgeId);
+			output.printf("  <g id=\"{0}\">%n", edgeId);
 			output.printf("    <line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\"/>%n", p0.x, p0.y, p1.x, p1.y);
 			output.printf("  </g>%n");
 		}
@@ -245,7 +245,7 @@ public class FileSinkUnstyledSVG : FileSinkBase {
 			style = "circle { fill: grey; stroke: none; } line { stroke-width: 1; stroke: black; }";
 
 		output.printf("<defs><style type=\"text/css\"><![CDATA[%n");
-		output.printf("    %s%n", style);
+		output.printf("    {0}\n", style);
 		output.printf("]]></style></defs>%n");
 	}
 
@@ -256,21 +256,21 @@ public class FileSinkUnstyledSVG : FileSinkBase {
 			string key = keys.next();
 			Point3 pos = nodePos[key];
 
-			output.printf("  <g id=\"%s\">%n", key);
+			output.printf("  <g id=\"{0}\">%n", key);
 			output.printf("    <circle cx=\"%f\" cy=\"%f\" r=\"4\"/>%n", pos.x, pos.y);
 			output.printf("  </g>%n");
 		}
 	}
 
 	protected string styleSheetToSVG(StyleSheet sheet) {
-		System.Text.System.Text.StringBuilder output = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder output = new System.Text.StringBuilder();
 
 		addRule(output, sheet.getDefaultGraphRule());
 
 		return output.ToString();
 	}
 
-	protected void addRule(System.Text.System.Text.StringBuilder out, Rule rule) {
+	protected void addRule(System.Text.StringBuilder out, Rule rule) {
 		// Style style = rule.getStyle();
 
 		// TODO

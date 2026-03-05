@@ -32,7 +32,7 @@ namespace Org.GraphStream.Stream.File.Images
 /// Defines filter that will be applied on images before writing.
 /// </summary>
 public interface IFilter {
-	void apply(object /* BufferedImage */ image);
+	void apply(object image);
 }
 
 }

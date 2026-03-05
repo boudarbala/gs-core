@@ -148,7 +148,7 @@ public class StyleGroupSet : StyleSheetListener {
 /// </summary>
 /// <returns>An iterator on the group set.</returns>
 	public IEnumerator<StyleGroup> getGroupIterator() {
-		return groups.Values.GetEnumerator();
+		return ((groups[])Enum.GetValues(typeof(groups))).GetEnumerator();
 	}
 
 	/// <summary>
@@ -156,7 +156,7 @@ public class StyleGroupSet : StyleSheetListener {
 /// </summary>
 /// <returns>An iterable on the set of groups.</returns>
 	public IEnumerable<StyleGroup> groups() {
-		return groups.Values;
+		return ((groups[])Enum.GetValues(typeof(groups)));
 	}
 
 	/// <summary>
@@ -484,7 +484,7 @@ public class StyleGroupSet : StyleSheetListener {
 /// <param name="on"> If true the groups will be removed.</param>
 	public void setRemoveEmptyGroups(bool on) {
 		if (removeEmptyGroups == false && on == true) {
-			IEnumerator<StyleGroup> i = groups.Values.GetEnumerator();
+			IEnumerator<StyleGroup> i = ((groups[])Enum.GetValues(typeof(groups))).GetEnumerator();
 
 			while (i.MoveNext()) {
 				StyleGroup g = i.next();
@@ -786,7 +786,7 @@ public class StyleGroupSet : StyleSheetListener {
 
 				Selector.Type type = oldRule.selector.type;
 
-				foreach (StyleGroup group in groups.Values) {
+				foreach (StyleGroup group in ((groups[])Enum.GetValues(typeof(groups)))) {
 					if (group.getType() == type) {
 						zIndex.groupChanged(group);
 						shadow.groupChanged(group);
@@ -864,11 +864,11 @@ public class StyleGroupSet : StyleSheetListener {
 
 	
 	public string toString() {
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
 		builder.Append(string.Format("Style groups ({0}) :\n", groups.Count));
 
-		foreach (StyleGroup group in groups.Values) {
+		foreach (StyleGroup group in ((groups[])Enum.GetValues(typeof(groups)))) {
 			builder.Append(group.toString(1));
 			builder.Append(string.Format("\n"));
 		}
@@ -1038,7 +1038,7 @@ public class StyleGroupSet : StyleSheetListener {
 
 		
 		public string toString() {
-			System.Text.System.Text.StringBuilder sb = new System.Text.System.Text.StringBuilder();
+			System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
 			sb.Append(string.Format("Z index :\n"));
 

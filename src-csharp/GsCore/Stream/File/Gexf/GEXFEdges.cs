@@ -51,7 +51,7 @@ public class GEXFEdges : SinkAdapter, IGEXFElement {
 	public void export(SmartXMLWriter stream){
 		stream.startElement("edges");
 
-		foreach (GEXFEdge edge in edges.Values)
+		foreach (GEXFEdge edge in ((edges[])Enum.GetValues(typeof(edges))))
 			edge.export(stream);
 
 		stream.endElement(); // EDGES
@@ -72,7 +72,7 @@ public class GEXFEdges : SinkAdapter, IGEXFElement {
 			edges[edgeId] = edge;
 		}
 
-		edge.spells.start();
+		edge.spells.Start();
 	}
 
 	/*
@@ -98,7 +98,7 @@ public class GEXFEdges : SinkAdapter, IGEXFElement {
 	 * @see org.graphstream.stream.SinkAdapter#graphCleared(java.lang.String, long)
 	 */
 	public void graphCleared(string sourceId, long timeId) {
-		foreach (GEXFEdge edge in edges.Values)
+		foreach (GEXFEdge edge in ((edges[])Enum.GetValues(typeof(edges))))
 			edge.spells.end();
 	}
 

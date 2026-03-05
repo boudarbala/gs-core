@@ -70,7 +70,7 @@ public class AdjacencyListNode : AbstractNode {
 	}
 
 	
-	protected T locateEdge<T>(INode opposite, char type) { where T : IEdge
+	protected T locateEdge<T>(INode opposite, char type) where T : IEdge {
 		// where to search ?
 		int start = 0;
 		int end = degree;
@@ -215,17 +215,17 @@ public class AdjacencyListNode : AbstractNode {
 
 	
 	public IEnumerable<IEdge> edges() {
-		return new ArraySegment<object>(edges, 0, degree - 0);
+		return new ArraySegment<AbstractEdge>(edges, 0, degree - 0);
 	}
 
 	
 	public IEnumerable<IEdge> enteringEdges() {
-		return new ArraySegment<object>(edges, 0, oStart - 0);
+		return new ArraySegment<AbstractEdge>(edges, 0, oStart - 0);
 	}
 
 	
 	public IEnumerable<IEdge> leavingEdges() {
-		return new ArraySegment<object>(edges, ioStart, degree - ioStart);
+		return new ArraySegment<AbstractEdge>(edges, ioStart, degree - ioStart);
 	}
 
 	protected class EdgeIterator<T> : IEnumerator<T> where T : IEdge {

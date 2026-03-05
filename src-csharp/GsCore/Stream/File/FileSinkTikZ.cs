@@ -259,7 +259,7 @@ public class FileSinkTikZ : FileSinkBase {
 /// <param name="group"> the style group to convert</param>
 /// <returns>string representation of the style group usable in TikZ.</returns>
 	protected string getTikzStyle(StyleGroup group) {
-		System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder buffer = new System.Text.StringBuilder();
 		List<string> style = new List<string>();
 
 		for (int i = 0; i < group.getFillColorCount(); i++)
@@ -428,7 +428,7 @@ public class FileSinkTikZ : FileSinkBase {
 				y = height * (y - ymin) / (ymax - ymin);
 			}
 
-			output.printf(l, "\t\\node[inner sep=0pt] (%s) at (%f,%f) {};%n", formatId(n.getId()), x, y);
+			output.printf(l, "\t\\node[inner sep=0pt] ({0}) at ({1},{2}) {};\n", formatId(n.getId()), x, y);
 		});
 
 		StyleGroupSet sgs = buffer.getStyleGroups();
@@ -534,15 +534,15 @@ public class FileSinkTikZ : FileSinkBase {
 		output.printf("[%n");
 
 		foreach (string key in classes.Keys)
-			output.printf(l, "\t%s/.style={%s},%n", key, classes[key]);
+			output.printf(l, "\t{0}/.style={{1}},\n", key, classes[key]);
 
-		output.printf(l, "\ttikzgsnode/.style={%s},%n", nodeStyle);
-		output.printf(l, "\ttikzgsedge/.style={%s}%n", edgeStyle);
+		output.printf(l, "\ttikzgsnode/.style={{0}},\n", nodeStyle);
+		output.printf(l, "\ttikzgsedge/.style={{0}}\n", edgeStyle);
 
 		output.printf("]%n");
 
 		foreach (string rgb in colors.Keys)
-			output.printf(l, "\t\\definecolor{%s}{rgb}{%s}%n", colors[rgb], rgb);
+			output.printf(l, "\t\\definecolor{{0}}{rgb}{{1}}\n", colors[rgb], rgb);
 	}
 
 	private void outputNode(INode n) {
@@ -552,7 +552,7 @@ public class FileSinkTikZ : FileSinkBase {
 		label = n.hasAttribute("label") ? (string) n.getLabel("label")
 				: (n.hasAttribute("ui.label") ? (string) n.getLabel("ui.label") : "");
 
-		output.printf(l, "\t\\node[%s] at (%s) {%s};%n", style, formatId(n.getId()), label);
+		output.printf(l, "\t\\node[{0}] at ({1}) {{2}};\n", style, formatId(n.getId()), label);
 	}
 
 	private void outputEdge(IEdge e) {
@@ -573,7 +573,7 @@ public class FileSinkTikZ : FileSinkBase {
 			}
 		}
 
-		output.printf(l, "\t\\draw[%s] (%s) %s%s (%s);%n", style, formatId(e.getSourceNode().getId()), uiPoints,
+		output.printf(l, "\t\\draw[{0}] ({1}) {2}{3} ({4});\n", style, formatId(e.getSourceNode().getId()), uiPoints,
 				e.isDirected() ? "->" : "--", formatId(e.getTargetNode().getId()));
 	}
 

@@ -80,7 +80,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 	 * @see org.graphstream.stream.file.FileSource#readAll(java.net.URL)
 	 */
 	public void readAll(System.Uri url){
-		readAll(url.openStream());
+		readAll(url /* .openStream() */);
 	}
 
 	/*
@@ -119,7 +119,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 	 * @see org.graphstream.stream.file.FileSource#begin(java.net.URL)
 	 */
 	public void begin(System.Uri url){
-		begin(url.openStream());
+		begin(url /* .openStream() */);
 	}
 
 	/*
@@ -183,7 +183,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 		skipWhiteSpaces();
 
 		if (events.Count > 0)
-			return events.pop();
+			return events.Pop();
 
 		return reader.nextEvent();
 	}
@@ -193,7 +193,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 /// </summary>
 /// <param name="e"> the event</param>
 	protected void pushback(XMLEvent e) {
-		events.push(e);
+		events.Push(e);
 	}
 
 	/// <summary>
@@ -255,7 +255,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 		bool valid = isEvent(e, type, name);
 
 		if (!valid)
-			newParseError(e, true, "expecting %s, got %s", gotWhat(type, name), gotWhat(e));
+			newParseError(e, true, "expecting {0}, got {1}", gotWhat(type, name), gotWhat(e));
 	}
 
 	private string gotWhat(XMLEvent e) {
@@ -308,7 +308,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 
 		do {
 			if (events.Count > 0)
-				e = events.pop();
+				e = events.Pop();
 			else
 				e = reader.nextEvent();
 		} while (isEvent(e, XMLEvent.CHARACTERS, null) && e.asCharacters().getData().matches("^\\s*$"));
@@ -382,7 +382,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 /// <returns>a sequence of characters</returns>
 		protected string __characters(){
 			XMLEvent e;
-			System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder();
+			System.Text.StringBuilder buffer = new System.Text.StringBuilder();
 
 			e = getNextEvent();
 
@@ -433,7 +433,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 			if (required != null) {
 				for (int i = 0; i < required.Length; i++) {
 					if (!attributes.ContainsKey(required[i]))
-						newParseError(e, true, "'%s' attribute is required for <%s> element",
+						newParseError(e, true, "'{0}' attribute is required for <{1}> element",
 								required[i].ToString().ToLower(), e.asStartElement().Name.getLocalPart());
 				}
 			}

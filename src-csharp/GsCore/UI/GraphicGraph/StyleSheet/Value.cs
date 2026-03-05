@@ -92,7 +92,7 @@ public class Value : IConvertible {
 
 	
 	public string toString() {
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
 		builder.Append(value);
 

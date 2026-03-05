@@ -82,7 +82,7 @@ public class Path : IStructure {
 	public void setRoot(INode root) {
 		if (this.root == null) {
 			this.root = root;
-			nodePath.push(root);
+			nodePath.Push(root);
 		} else {
 			Console.Error.WriteLine("Root node is not null - first use the clear method.");
 		}
@@ -166,10 +166,10 @@ public class Path : IStructure {
 		}
 
 		if (from == null) {
-			from = nodePath.peek();
+			from = nodePath.Peek();
 		}
 
-		if (!nodePath.peek().Equals(from)) {
+		if (!nodePath.Peek().Equals(from)) {
 			throw new ArgumentException("From node must be at the head of the path");
 		}
 
@@ -177,8 +177,8 @@ public class Path : IStructure {
 			throw new ArgumentException("From node must be part of the edge");
 		}
 
-		nodePath.push(edge.getOpposite(from));
-		edgePath.push(edge);
+		nodePath.Push(edge.getOpposite(from));
+		edgePath.Push(edge);
 	}
 
 	/// <summary>
@@ -189,7 +189,7 @@ public class Path : IStructure {
 		if (nodePath.Length == 0) {
 			add(null, edge);
 		} else {
-			add(nodePath.peek(), edge);
+			add(nodePath.Peek(), edge);
 		}
 	}
 
@@ -212,8 +212,8 @@ public class Path : IStructure {
 /// </summary>
 /// <returns>The edge that have just been removed.</returns>
 	public IEdge popEdge() {
-		nodePath.pop();
-		return edgePath.pop();
+		nodePath.Pop();
+		return edgePath.Pop();
 	}
 
 	/// <summary>
@@ -221,8 +221,8 @@ public class Path : IStructure {
 /// </summary>
 /// <returns>The node that have just been removed.</returns>
 	public INode popNode() {
-		edgePath.pop();
-		return nodePath.pop();
+		edgePath.Pop();
+		return nodePath.Pop();
 	}
 
 	/// <summary>
@@ -230,7 +230,7 @@ public class Path : IStructure {
 /// </summary>
 /// <returns>The node at the top of the stack.</returns>
 	public INode peekNode() {
-		return nodePath.peek();
+		return nodePath.Peek();
 	}
 
 	/// <summary>
@@ -239,7 +239,7 @@ public class Path : IStructure {
 /// <returns>The edge at the top of the stack.</returns>
 
 	public IEdge peekEdge() {
-		return edgePath.peek();
+		return edgePath.Peek();
 	}
 
 	/// <summary>
@@ -365,7 +365,7 @@ public class Path : IStructure {
 	 * @see org.graphstream.graph.Structure#getNodeSet()
 	 */
 	
-	public ICollection<T> getNodeSet<T>() { where T : INode
+	public ICollection<T> getNodeSet<T>() where T : INode {
 		return (ICollection<T>) nodePath;
 	}
 
@@ -375,7 +375,7 @@ public class Path : IStructure {
 	 * @see org.graphstream.graph.Structure#getEdgeSet()
 	 */
 	
-	public ICollection<T> getEdgeSet<T>() { where T : IEdge
+	public ICollection<T> getEdgeSet<T>() where T : IEdge {
 		return (ICollection<T>) edgePath;
 	}
 }

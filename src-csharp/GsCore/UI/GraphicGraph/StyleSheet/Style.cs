@@ -691,7 +691,7 @@ public class Style : StyleConstants {
 	}
 
 	public string toString(int level) {
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder builder = new System.Text.StringBuilder();
 		string prefix = "";
 		string sprefix = "    ";
 
@@ -700,7 +700,7 @@ public class Style : StyleConstants {
 				prefix += "    ";
 		}
 
-		// builder.append( String.format( "%s%s%n", prefix, base.toString() )
+		// builder.append( String.format( "{0}{1}\n", prefix, base.toString() )
 		// );
 
 		if (parent != null) {
@@ -708,7 +708,7 @@ public class Style : StyleConstants {
 
 			while (!(p == null)) {
 				builder.Append(string.Format(" -> {0}", p.selector.ToString()));
-				p = p.getStyle().getParent();
+				p = p.getStyle().Directory?.FullName;
 			}
 
 		}
@@ -741,7 +741,7 @@ public class Style : StyleConstants {
 		}
 
 		if (alternates != null && alternates.Count > 0) {
-			foreach (Rule rule in alternates.Values) {
+			foreach (Rule rule in ((alternates[])Enum.GetValues(typeof(alternates)))) {
 				// We use "level-1" to ensure that these styles line up with those above
 				builder.Append(rule.toString(level - 1));
 			}

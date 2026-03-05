@@ -353,10 +353,10 @@ public class GraphicGraph : AbstractElement, IGraph, StyleGroupListener {
 
 		while (keys.MoveNext()) {
 			GraphicNode node = keys.next();
-			System.err.printf("    [%s] -> ", node.getId());
+			System.err.printf("    [{0}] -> ", node.getId());
 			IEnumerable<GraphicEdge> edges = connectivity[node];
 			foreach (GraphicEdge edge in edges)
-				System.err.printf(" (%s %d)", edge.getId(), edge.getMultiIndex());
+				System.err.printf(" ({0} {1})", edge.getId(), edge.getMultiIndex());
 			System.err.printf("%n");
 		}
 	}
@@ -493,10 +493,10 @@ public class GraphicGraph : AbstractElement, IGraph, StyleGroupListener {
 			GraphicNode n2 = (GraphicNode) styleGroups.getNode(to);
 
 			if (n1 == null)
-				throw new ElementNotFoundException("node \"%s\"", from);
+				throw new ElementNotFoundException("node \"{0}\"", from);
 
 			if (n2 == null)
-				throw new ElementNotFoundException("node \"%s\"", to);
+				throw new ElementNotFoundException("node \"{0}\"", to);
 
 			edge = new GraphicEdge(id, n1, n2, directed, null);// , attributes);
 
@@ -1071,7 +1071,7 @@ public class GraphicGraph : AbstractElement, IGraph, StyleGroupListener {
 				}
 			} else {
 				Console.Error.WriteLine(string.Format("Cannot transform value '{0}' (length={1}) into a position\n",
-						Arrays.toString(values), values.Length));
+						"[values]"(values), values.Length));
 			}
 		} else if (value is IConvertible) {
 			sprite.setPosition(((IConvertible) value));

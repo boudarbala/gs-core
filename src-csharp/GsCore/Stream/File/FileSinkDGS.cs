@@ -55,7 +55,7 @@ public class FileSinkDGS : FileSinkBase {
 		if (graphName.Length <= 0)
 			output.printf("null 0 0%n");
 		else
-			output.printf("\"%s\" 0 0%n", FileSinkDGSUtility.formatStringForQuoting(graphName));
+			output.printf("\"{0}\" 0 0%n", FileSinkDGSUtility.formatStringForQuoting(graphName));
 	}
 
 	
@@ -69,12 +69,12 @@ public class FileSinkDGS : FileSinkBase {
 
 	public void edgeAttributeChanged(string graphId, long timeId, string edgeId, string attribute, object oldValue,
 			object newValue) {
-		output.printf("ce \"%s\" %s%n", FileSinkDGSUtility.formatStringForQuoting(edgeId),
+		output.printf("ce \"{0}\" %s%n", FileSinkDGSUtility.formatStringForQuoting(edgeId),
 				FileSinkDGSUtility.attributeString(attribute, newValue, false));
 	}
 
 	public void edgeAttributeRemoved(string graphId, long timeId, string edgeId, string attribute) {
-		output.printf("ce \"%s\" %s%n", FileSinkDGSUtility.formatStringForQuoting(edgeId),
+		output.printf("ce \"{0}\" %s%n", FileSinkDGSUtility.formatStringForQuoting(edgeId),
 				FileSinkDGSUtility.attributeString(attribute, null, true));
 	}
 
@@ -83,11 +83,11 @@ public class FileSinkDGS : FileSinkBase {
 	}
 
 	public void graphAttributeChanged(string graphId, long timeId, string attribute, object oldValue, object newValue) {
-		output.printf("cg %s%n", FileSinkDGSUtility.attributeString(attribute, newValue, false));
+		output.printf("cg {0}\n", FileSinkDGSUtility.attributeString(attribute, newValue, false));
 	}
 
 	public void graphAttributeRemoved(string graphId, long timeId, string attribute) {
-		output.printf("cg %s%n", FileSinkDGSUtility.attributeString(attribute, null, true));
+		output.printf("cg {0}\n", FileSinkDGSUtility.attributeString(attribute, null, true));
 	}
 
 	public void nodeAttributeAdded(string graphId, long timeId, string nodeId, string attribute, object value) {
@@ -96,12 +96,12 @@ public class FileSinkDGS : FileSinkBase {
 
 	public void nodeAttributeChanged(string graphId, long timeId, string nodeId, string attribute, object oldValue,
 			object newValue) {
-		output.printf("cn \"%s\" %s%n", FileSinkDGSUtility.formatStringForQuoting(nodeId),
+		output.printf("cn \"{0}\" %s%n", FileSinkDGSUtility.formatStringForQuoting(nodeId),
 				FileSinkDGSUtility.attributeString(attribute, newValue, false));
 	}
 
 	public void nodeAttributeRemoved(string graphId, long timeId, string nodeId, string attribute) {
-		output.printf("cn \"%s\" %s%n", FileSinkDGSUtility.formatStringForQuoting(nodeId),
+		output.printf("cn \"{0}\" %s%n", FileSinkDGSUtility.formatStringForQuoting(nodeId),
 				FileSinkDGSUtility.attributeString(attribute, null, true));
 	}
 
@@ -111,11 +111,11 @@ public class FileSinkDGS : FileSinkBase {
 		fromNodeId = FileSinkDGSUtility.formatStringForQuoting(fromNodeId);
 		toNodeId = FileSinkDGSUtility.formatStringForQuoting(toNodeId);
 
-		output.printf("ae \"%s\" \"%s\" %s \"%s\"%n", edgeId, fromNodeId, directed ? ">" : "", toNodeId);
+		output.printf("ae \"{0}\" \"{0}\" %s \"{0}\"%n", edgeId, fromNodeId, directed ? ">" : "", toNodeId);
 	}
 
 	public void edgeRemoved(string graphId, long timeId, string edgeId) {
-		output.printf("de \"%s\"%n", FileSinkDGSUtility.formatStringForQuoting(edgeId));
+		output.printf("de \"{0}\"%n", FileSinkDGSUtility.formatStringForQuoting(edgeId));
 	}
 
 	public void graphCleared(string graphId, long timeId) {
@@ -123,11 +123,11 @@ public class FileSinkDGS : FileSinkBase {
 	}
 
 	public void nodeAdded(string graphId, long timeId, string nodeId) {
-		output.printf("an \"%s\"%n", FileSinkDGSUtility.formatStringForQuoting(nodeId));
+		output.printf("an \"{0}\"%n", FileSinkDGSUtility.formatStringForQuoting(nodeId));
 	}
 
 	public void nodeRemoved(string graphId, long timeId, string nodeId) {
-		output.printf("dn \"%s\"%n", FileSinkDGSUtility.formatStringForQuoting(nodeId));
+		output.printf("dn \"{0}\"%n", FileSinkDGSUtility.formatStringForQuoting(nodeId));
 	}
 
 	public void stepBegins(string graphId, long timeId, double step) {

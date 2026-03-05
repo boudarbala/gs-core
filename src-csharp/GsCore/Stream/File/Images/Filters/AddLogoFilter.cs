@@ -36,7 +36,7 @@ public class AddLogoFilter : IFilter {
 	/// <summary>
 /// The logo.
 /// </summary>
-	private object /* BufferedImage */ logo;
+	private object logo;
 	/// <summary>
 /// Logo position on images.
 /// </summary>
@@ -49,9 +49,9 @@ public class AddLogoFilter : IFilter {
 /// <param name="x">x position of the logo (top-left corner is (0;0))</param>
 /// <param name="y">y position of the logo</param>
 	public AddLogoFilter(string logoFile, int x, int y){
-		File f = new System.IO.FileInfo(logoFile);
+		System.IO.FileInfo f = new System.IO.FileInfo(logoFile);
 
-		if (f.exists())
+		if (f.Exists)
 			this.logo = ImageIO.Read(f);
 		else
 			this.logo = ImageIO.Read(ClassLoader.getSystemResource(logoFile));
@@ -60,7 +60,7 @@ public class AddLogoFilter : IFilter {
 		this.y = y;
 	}
 
-	public void apply(object /* BufferedImage */ image) {
+	public void apply(object image) {
 		Graphics2D g = image.createGraphics();
 		g.drawImage(logo, x, y, null);
 	}

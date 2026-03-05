@@ -34,7 +34,7 @@ namespace Org.GraphStream.UI.Layout
 /// <summary>
 /// Allows to run a layout in a distinct thread. <p> A layout runner will run in its own thread and periodically activate a layout algorithm on a graph event stream (you do not need a graph). This implementation is mainly used by the graph viewer but could be used by any program that needs a layout algorithm that run continuously on a dynamic graph (adapting the layout as the graph changes). </p> <p> The layout algorithms in GraphStream are iterative versions that can be called repeatedly to take graph dynamics into account and may produce a result only after several invocations. This is why the layout runner invokes the layout on a regular basis. The runner is temporized, it will not run in a loop as fast as possible, instead it will wait a little between each layout invocation. When the last layout invocation indicated the layout was good, it will wait longer that when the last invocation indicated the layout was not good (stabilized). These two times can be configured using {@link #setNaps(long, long)}. </p> <p> Once you finished using the runner, you must call {@link #release()} to break the link with the event source and stop the thread. The runner cannot be used after. </p>
 /// </summary>
-public class LayoutRunner : Thread {
+public class LayoutRunner {
 
 	/// <summary>
 /// class level logger
@@ -153,7 +153,7 @@ public class LayoutRunner : Thread {
 
 		if (System.Threading.Thread.CurrentThread != this) {
 			try {
-				this.join();
+				this.Join();
 			} catch (Exception e) {
 				Console.Error.WriteLine("Unable to stop/release layout." + " " + e);
 			}

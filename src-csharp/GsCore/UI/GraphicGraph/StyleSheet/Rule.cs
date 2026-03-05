@@ -133,7 +133,7 @@ public class Rule {
 	}
 
 	public string toString(int level) {
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder builder = new System.Text.StringBuilder();
 		string prefix = "";
 
 		if (level > 0) {

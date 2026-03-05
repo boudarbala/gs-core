@@ -206,7 +206,7 @@ public class StyleSheet {
 /// <param name="rules"> The styling rules.</param>
 /// <returns>The unique identifier of the style group for the element.</returns>
 	public string getStyleGroupIdFor(IElement element, List<Rule> rules) {
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
 		if (element is IGraph) {
 			builder.Append("g");
@@ -339,15 +339,15 @@ public class StyleSheet {
 		System.Uri u = typeof(StyleSheet).getClassLoader().getResource(url);
 		if (u == null) {
 			string fileUrl = url.Replace("file://", "");
-			File f = new System.IO.FileInfo(fileUrl);
+			System.IO.FileInfo f = new System.IO.FileInfo(fileUrl);
 
-			if (f.exists())
+			if (f.Exists)
 				u = f.toURI().toURL();
 			else
 				u = new System.Uri(url);
 		}
 
-		parse(new System.IO.StreamReader(u.openStream()));
+		parse(new System.IO.StreamReader(u /* .openStream() */));
 	}
 
 	/// <summary>
@@ -434,7 +434,7 @@ public class StyleSheet {
 		StyleSheetParser parser = new StyleSheetParser(this, reader);
 
 		try {
-			parser.start();
+			parser.Start();
 		} catch (ParseException e) {
 			throw new System.IO.IOException(e.getMessage());
 		}
@@ -472,7 +472,7 @@ public class StyleSheet {
 
 	
 	public string toString() {
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
 		builder.Append("StyleSheet  {\n");
 		builder.Append("  default styles:\n");
@@ -690,7 +690,7 @@ public class StyleSheet {
 					prefix += "    ";
 			}
 
-			System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+			System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
 			builder.Append(string.Format("{0}{1} default style :\n", prefix, type));
 			builder.Append(defaultRule.toString(level + 1));
@@ -700,11 +700,11 @@ public class StyleSheet {
 			return builder.ToString();
 		}
 
-		protected void toStringRules(int level, System.Text.System.Text.StringBuilder builder, Dictionary<string, Rule> rules, string title) {
+		protected void toStringRules(int level, System.Text.StringBuilder builder, Dictionary<string, Rule> rules, string title) {
 			builder.Append(title);
 			builder.Append(string.Format(" :\n"));
 
-			foreach (Rule rule in rules.Values)
+			foreach (Rule rule in ((rules[])Enum.GetValues(typeof(rules))))
 				builder.Append(rule.toString(level + 1));
 		}
 	}

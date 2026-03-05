@@ -66,7 +66,7 @@ public class SmartXMLWriter {
 	public void endElement(){
 		depth--;
 
-		bool leaf = (childrenCount.pop() == 0);
+		bool leaf = (childrenCount.Pop() == 0);
 
 		if (smart && !leaf) {
 			stream.writeCharacters("\n");
@@ -86,7 +86,7 @@ public class SmartXMLWriter {
 
 	public void flush() {
 		try {
-			stream.Flush();
+			/* stream.Flush(); */
 		} catch (Exception e) {
 			// Ignored
 		}
@@ -94,7 +94,7 @@ public class SmartXMLWriter {
 
 	public void close(){
 		stream.writeEndDocument();
-		stream.Flush();
+		/* stream.Flush(); */
 
 		stream.Close();
 	}

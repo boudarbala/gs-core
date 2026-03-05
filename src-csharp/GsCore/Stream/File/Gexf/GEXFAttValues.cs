@@ -67,7 +67,7 @@ public class GEXFAttValues : IGEXFElement {
 			return "<null>";
 
 		if (o.GetType().IsArray) {
-			System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder();
+			System.Text.StringBuilder buffer = new System.Text.StringBuilder();
 
 			for (int i = 0; i < Array.getLength(o); i++) {
 				object ochild = Array[o, i];
@@ -98,7 +98,7 @@ public class GEXFAttValues : IGEXFElement {
 
 		stream.startElement("attvalues");
 
-		foreach (List<GEXFAttValue> attrValues in values.Values) {
+		foreach (List<GEXFAttValue> attrValues in ((values[])Enum.GetValues(typeof(values)))) {
 			for (int i = 0; i < attrValues.Count; i++)
 				attrValues[i].export(stream);
 		}

@@ -60,14 +60,7 @@ abstract class FileSinkImages : IFileSink {
 /// Output image type.
 /// </summary>
 	enum OutputType {
-		PNG, JPG, png(
-
-
-
-
-
-
-		}
+		PNG, JPG
 	}
 
 	/// <summary>
@@ -91,7 +84,7 @@ abstract class FileSinkImages : IFileSink {
 		LOW, MEDIUM, HIGH
 	}
 
-	private static readonly object /* Logger */ LOGGER = object /* Logger */.getLogger);
+	private static readonly object /* Logger */ LOGGER = null; /* Logger */
 
 	protected IResolution resolution;
 	protected OutputType outputType;
@@ -155,7 +148,7 @@ abstract class FileSinkImages : IFileSink {
 /// Get the image in which graph has been rendered.
 /// </summary>
 /// <returns>an image of the graph</returns>
-	protected abstract object /* BufferedImage */ getRenderedImage();
+	protected abstract object getRenderedImage();
 
 	/// <summary>
 /// Initialize the image data. This method is called at sink creation and each time there is a change in image specifications (resolution, type).
@@ -341,7 +334,7 @@ abstract class FileSinkImages : IFileSink {
 
 			try {
 				if (outputRunner != null)
-					outputRunner.join();
+					outputRunner.Join();
 			} catch (ThreadInterruptedException e) {
 				// ... ?
 			}
@@ -363,7 +356,7 @@ abstract class FileSinkImages : IFileSink {
 
 			sink = outputRunnerProxy;
 			outputRunner = new OutputRunner();
-			outputRunner.start();
+			outputRunner.Start();
 		}
 	}
 
@@ -456,12 +449,12 @@ abstract class FileSinkImages : IFileSink {
 			render();
 		}
 
-		object /* BufferedImage */ image = getRenderedImage();
+		object image = getRenderedImage();
 
 		foreach (IFilter action in filters)
 			action.apply(image);
 
-		image.Flush();
+		/* image.Flush(); */
 
 		try {
 			writeImage(image, filename);
@@ -471,13 +464,13 @@ abstract class FileSinkImages : IFileSink {
 		}
 	}
 
-	protected void writeImage(object /* BufferedImage */ image, string filename){
-		File output = new System.IO.FileInfo(filename);
+	protected void writeImage(object image, string filename){
+		System.IO.FileInfo output = new System.IO.FileInfo(filename);
 
-		if (output.getParent() != null && !output.getParentFile().exists())
-			output.getParentFile().mkdirs();
+		if (output.Directory?.FullName != null && !output.Directory.Exists)
+			output.Directory?.Create();
 
-		ImageIO.Write(image, outputType.ToString(), output);
+		/* ImageIO.Write not available in .NET */, output);
 	}
 
 	protected void printProgress() {
@@ -879,11 +872,11 @@ abstract class FileSinkImages : IFileSink {
 
 	enum Option {
 		IMAGE_PREFIX, IMAGE_TYPE("image-type",
-				't', "image type. one of " + Arrays.toString), true, true, "PNG"), IMAGE_RESOLUTION(
+				't', "image type. one of " + "[values]"), true, true, "PNG"), IMAGE_RESOLUTION(
 				"image-resolution", 'r',
-				"defines images resolution. \"width x height\" or one of " + Arrays.toString),
+				"defines images resolution. \"width x height\" or one of " + "[values]"),
 				true, true, "HD720"), OUTPUT_POLICY("output-policy", 'e',
-				"defines when images are outputted. one of " + Arrays.toString), true, true,
+				"defines when images are outputted. one of " + "[values]"), true, true,
 				"ByStepOutput"), LOGO, STYLESHEET("stylesheet",
 				's', "defines stylesheet of graph. can be a file or a string.", true, true, null), QUALITY("quality",
 
@@ -928,9 +921,9 @@ abstract class FileSinkImages : IFileSink {
 		}
 	}
 
-	protected class OutputRunner : Thread {
+	protected class OutputRunner {
 		public OutputRunner() {
-			setDaemon(true);
+			// Thread.IsBackground = true;
 		}
 
 		public void run() {
@@ -951,7 +944,7 @@ abstract class FileSinkImages : IFileSink {
 	public static void usage() {
 		Console.WriteLine(string.Format("usage: java {0} [options] fichier.dgs\n", typeof(FileSinkImages).Name));
 		Console.WriteLine(string.Format("where options in:\n"));
-		foreach (Option option in Option.Values) {
+		foreach (Option option in ((Option[])Enum.GetValues(typeof(Option)))) {
 			Console.WriteLine(string.Format("\n --{0}{1} , -{2} {3}\n{4}\n", option.fullopts, option.valuable ? "=..." : "",
 					option.shortopts, option.valuable ? "..." : "", option.description));
 		}
@@ -962,23 +955,23 @@ abstract class FileSinkImages : IFileSink {
 		Dictionary<Option, string> options = new Dictionary<Option, string>();
 		List<string> others = new List<string>();
 
-		foreach (Option option in Option.Values)
+		foreach (Option option in ((Option[])Enum.GetValues(typeof(Option))))
 			if (option.defaultValue != null)
 				options[option] = option.defaultValue;
 
 		if (args != null && args.Length > 0) {
-			Pattern valueGetter = Pattern.compile("^--\\w[\\w-]*\\w?(?:=(?:\"([^\"]*)\"|([^\\s]*)))$");
+			System.Text.RegularExpressions.Regex valueGetter = new System.Text.RegularExpressions.Regex("^--\\w[\\w-]*\\w?(?:=(?:\"([^\"]*)\"|([^\\s]*)))$");
 
 			for (int i = 0; i < args.Length; i++) {
 
-				if (args[i].matches("^--\\w[\\w-]*\\w?(=(\"[^\"]*\"|[^\\s]*))?$")) {
+				if (System.Text.RegularExpressions.Regex.IsMatch(args[i], "^--\\w[\\w-]*\\w?(=(\"[^\"]*\"|[^\\s]*))?$")) {
 					bool found = false;
-					foreach (Option option in Option.Values) {
+					foreach (Option option in ((Option[])Enum.GetValues(typeof(Option)))) {
 						if (args[i].StartsWith("--" + option.fullopts + "=")) {
-							Matcher m = valueGetter.matcher(args[i]);
+							System.Text.RegularExpressions.Match m = valueGetter.Match(args[i]);
 
-							if (m.matches()) {
-								options[option] = m.group(1) == null ? m.group(2) : m.group(1);
+							if (m.Success) {
+								options[option] = m.Groups[1].Value == null ? m.Groups[2].Value : m.Groups[1].Value;
 							}
 
 							found = true;
@@ -991,10 +984,10 @@ abstract class FileSinkImages : IFileSink {
 								string.Format("unknown option {0}\n", args[i].Substring(0, args[i].IndexOf('='))));
 						System.Environment.Exit(1);
 					}
-				} else if (args[i].matches("^-\\w$")) {
+				} else if (System.Text.RegularExpressions.Regex.IsMatch(args[i], "^-\\w$")) {
 					bool found = false;
 
-					foreach (Option option in Option.Values) {
+					foreach (Option option in ((Option[])Enum.GetValues(typeof(Option)))) {
 						if (args[i].Equals("-" + option.shortopts)) {
 							options[option] = args[++i];
 							break;
@@ -1006,7 +999,7 @@ abstract class FileSinkImages : IFileSink {
 						System.Environment.Exit(1);
 					}
 				} else {
-					others.addLast(args[i]);
+					others.Add(args[i]);
 				}
 			}
 		} else {
@@ -1031,19 +1024,19 @@ abstract class FileSinkImages : IFileSink {
 		imagePrefix = options[Option.IMAGE_PREFIX];
 
 		try {
-			outputType = OutputType.valueOf(options[Option.IMAGE_TYPE]);
+			outputType = (OutputType)Enum.Parse(typeof(OutputType), options[Option.IMAGE_TYPE]);
 		} catch (ArgumentException e) {
 			errors.Add("bad image type: " + options[Option.IMAGE_TYPE]);
 		}
 
 		try {
-			outputPolicy = OutputPolicy.valueOf(options[Option.OUTPUT_POLICY]);
+			outputPolicy = (OutputPolicy)Enum.Parse(typeof(OutputPolicy), options[Option.OUTPUT_POLICY]);
 		} catch (ArgumentException e) {
 			errors.Add("bad output policy: " + options[Option.OUTPUT_POLICY]);
 		}
 
 		try {
-			quality = Quality.valueOf(options[Option.QUALITY]);
+			quality = (Quality)Enum.Parse(typeof(Quality), options[Option.QUALITY]);
 		} catch (ArgumentException e) {
 			errors.Add("bad quality: " + options[Option.QUALITY]);
 		}
@@ -1052,27 +1045,27 @@ abstract class FileSinkImages : IFileSink {
 		stylesheet = options[Option.STYLESHEET];
 
 		try {
-			resolution = Resolutions.valueOf(options[Option.IMAGE_RESOLUTION]);
+			resolution = (Resolutions)Enum.Parse(typeof(Resolutions), options[Option.IMAGE_RESOLUTION]);
 		} catch (ArgumentException e) {
-			Pattern p = Pattern.compile("^\\s*(\\d+)\\s*x\\s*(\\d+)\\s*$");
-			Matcher m = p.matcher(options[Option.IMAGE_RESOLUTION]);
+			System.Text.RegularExpressions.Regex p = new System.Text.RegularExpressions.Regex("^\\s*(\\d+)\\s*x\\s*(\\d+)\\s*$");
+			System.Text.RegularExpressions.Match m = p.Match(options[Option.IMAGE_RESOLUTION]);
 
-			if (m.matches()) {
-				resolution = new CustomResolution(int.Parse(m.group(1)), int.Parse(m.group(2)));
+			if (m.Success) {
+				resolution = new CustomResolution(int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value));
 			} else {
 				errors.Add("bad resolution: " + options[Option.IMAGE_RESOLUTION]);
 			}
 		}
 
 		if (stylesheet != null && stylesheet.Length < 1024) {
-			File test = new System.IO.FileInfo(stylesheet);
+			System.IO.FileInfo test = new System.IO.FileInfo(stylesheet);
 
-			if (test.exists()) {
-				System.IO.StreamReader input = new System.IO.StreamReader(test);
+			if (test.Exists) {
+				System.IO.StreamReader input = new System.IO.StreamReader(test.FullName);
 				char[] buffer = new char[128];
 				string content = "";
 
-				while (input.ready()) {
+				while (input.Peek() >= 0) {
 					int c = input.Read(buffer, 0, 128);
 					content += new string(buffer, 0, c);
 				}
@@ -1083,9 +1076,9 @@ abstract class FileSinkImages : IFileSink {
 		}
 
 		{
-			File test = new System.IO.FileInfo(others.peek());
-			if (!test.exists())
-				errors.Add(string.Format("file \"%s\" does not exist", others.peek()));
+			System.IO.FileInfo test = new System.IO.FileInfo(others.Peek());
+			if (!test.Exists)
+				errors.Add(string.Format("file \"{0}\" does not exist", others.Peek()));
 		}
 
 		if (errors.Count > 0) {

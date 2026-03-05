@@ -150,7 +150,7 @@ public class Values : IEnumerable<double> {
 
 	
 	public string toString() {
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
 		builder.Append('(');
 		foreach (double value in values) {

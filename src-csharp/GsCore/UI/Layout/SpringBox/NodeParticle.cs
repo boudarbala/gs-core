@@ -184,8 +184,8 @@ abstract class NodeParticle : Particle {
 		}
 
 		if (out != null) {
-			output.printf(System.Globalization.CultureInfo.InvariantCulture, "%s %f %f %f%n", getId(), len, attE, repE);
-			output.Flush();
+			output.printf(System.Globalization.CultureInfo.InvariantCulture, "{0} {1} {2} {3}\n", getId(), len, attE, repE);
+			/* output.Flush(); */
 		}
 
 		base.nextStep(time);

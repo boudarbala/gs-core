@@ -159,7 +159,7 @@ public class FileSinkSVG : IFileSink {
 				return ((IConvertible) xyz[0]);
 		}
 
-		System.err.printf("[WARNING] no x attribute for node \"%s\" %s\n", n.getId(), n.hasAttribute("xyz"));
+		System.err.printf("[WARNING] no x attribute for node \"{0}\" %s\n", n.getId(), n.hasAttribute("xyz"));
 
 		return new Random().NextDouble();
 	}
@@ -273,7 +273,7 @@ public class FileSinkSVG : IFileSink {
 				svgStyles[group] = new SVGStyle(group);
 
 			output.open("defs");
-			foreach (SVGStyle svgStyle in svgStyles.Values)
+			foreach (SVGStyle svgStyle in ((svgStyles[])Enum.GetValues(typeof(svgStyles))))
 				svgStyle.writeDef(output);
 			output.Close();
 		}
@@ -420,7 +420,7 @@ public class FileSinkSVG : IFileSink {
 		}
 
 		public string getPath(IElement e, SVGStyle style) {
-			System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder();
+			System.Text.StringBuilder buffer = new System.Text.StringBuilder();
 
 			if (e is INode) {
 				double sx, sy;
@@ -940,7 +940,7 @@ public class FileSinkSVG : IFileSink {
 		}
 
 		void buildNodeStyle() {
-			System.Text.System.Text.StringBuilder styleSB = new System.Text.System.Text.StringBuilder();
+			System.Text.StringBuilder styleSB = new System.Text.StringBuilder();
 
 			switch (group.getFillMode()) {
 			case GRADIENT_RADIAL:
@@ -983,7 +983,7 @@ public class FileSinkSVG : IFileSink {
 		}
 
 		void buildEdgeStyle() {
-			System.Text.System.Text.StringBuilder styleSB = new System.Text.System.Text.StringBuilder();
+			System.Text.StringBuilder styleSB = new System.Text.StringBuilder();
 
 			switch (group.getFillMode()) {
 			case GRADIENT_RADIAL:
@@ -1129,7 +1129,7 @@ public class FileSinkSVG : IFileSink {
 
 		void end(){
 			output.writeEndDocument();
-			output.Flush();
+			/* output.Flush(); */
 			output.Close();
 			out = null;
 		}
@@ -1157,7 +1157,7 @@ public class FileSinkSVG : IFileSink {
 		}
 	}
 
-	private static void concat(System.Text.System.Text.StringBuilder buffer, params object[] args) {
+	private static void concat(System.Text.StringBuilder buffer, params object[] args) {
 		if (args != null) {
 			for (int i = 0; i < args.Length; i++)
 				buffer.Append(args[i].ToString());

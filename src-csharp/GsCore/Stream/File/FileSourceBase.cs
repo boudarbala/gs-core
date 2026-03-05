@@ -232,7 +232,7 @@ abstract class FileSourceBase : SourceBase, IFileSource {
 /// </summary>
 /// <param name="url"> The URL used as source for the tokenizer.</param>
 	protected void pushTokenizer(System.Uri url){
-		pushTokenizer(url.openStream(), url.ToString());
+		pushTokenizer(url /* .openStream() */, url.ToString());
 	}
 
 	/// <summary>
@@ -390,7 +390,7 @@ abstract class FileSourceBase : SourceBase, IFileSource {
 		int tok = st.nextToken();
 
 		if (tok != StreamTokenizer.TT_WORD)
-			parseError("expecting one of `[" + Arrays.toString(words) + "]', " + gotWhat(tok));
+			parseError("expecting one of `[" + "[values]"(words) + "]', " + gotWhat(tok));
 
 		bool found = false;
 
@@ -402,7 +402,7 @@ abstract class FileSourceBase : SourceBase, IFileSource {
 		}
 
 		if (!found)
-			parseError("expecting one of `[" + Arrays.toString(words) + "]', got `" + st.sval + "'");
+			parseError("expecting one of `[" + "[values]"(words) + "]', got `" + st.sval + "'");
 	}
 
 	/// <summary>

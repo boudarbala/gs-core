@@ -85,7 +85,7 @@ public class FileSinkGEXF : FileSinkBase {
 
 			endElement(stream, false);
 			stream.writeEndDocument();
-			stream.Flush();
+			/* stream.Flush(); */
 		} catch (Exception e) {
 			throw new System.IO.IOException(e);
 		}
@@ -172,7 +172,7 @@ public class FileSinkGEXF : FileSinkBase {
 
 						n.attributeKeys().ToList().ForEach(key => {
 							try {
-								nodeAttributes.push(stream, n, key);
+								nodeAttributes.Push(stream, n, key);
 							} catch (Exception e) {
 								onException.accept(e);
 							}
@@ -202,7 +202,7 @@ public class FileSinkGEXF : FileSinkBase {
 
 						e.attributeKeys().ToList().ForEach(key => {
 							try {
-								edgeAttributes.push(stream, e, key);
+								edgeAttributes.Push(stream, e, key);
 							} catch (Exception e1) {
 								onException.accept(e1);
 							}
@@ -264,7 +264,7 @@ public class FileSinkGEXF : FileSinkBase {
 
 				if (attr.getAttributesCount() > 0) {
 					startElement(stream, "attvalues");
-					nodeAttributes.push(stream, nodeId, graphSpells);
+					nodeAttributes.Push(stream, nodeId, graphSpells);
 					endElement(stream, false);
 				}
 
@@ -300,7 +300,7 @@ public class FileSinkGEXF : FileSinkBase {
 
 				if (attr.getAttributesCount() > 0) {
 					startElement(stream, "attvalues");
-					edgeAttributes.push(stream, edgeId, graphSpells);
+					edgeAttributes.Push(stream, edgeId, graphSpells);
 					endElement(stream, false);
 				}
 

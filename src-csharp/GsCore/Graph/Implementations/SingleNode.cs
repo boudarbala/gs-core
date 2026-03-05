@@ -51,7 +51,7 @@ public class SingleNode : AdjacencyListNode {
 
 	
 	
-	protected T locateEdge<T>(INode opposite, char type) { where T : IEdge
+	protected T locateEdge<T>(INode opposite, char type) where T : IEdge {
 		TwoEdges ee = neighborMap[opposite];
 
 		if (ee == null)

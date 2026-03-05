@@ -177,50 +177,50 @@ public class StyleConstants {
 	protected static Dictionary<string, Color> colorMap;
 
 	/// <summary>
-/// Pattern to ensure a "#FFFFFF" colour is recognised.
+/// System.Text.RegularExpressions.Regex to ensure a "#FFFFFF" colour is recognised.
 /// </summary>
-	protected static Pattern sharpColor1, sharpColor2;
+	protected static System.Text.RegularExpressions.Regex sharpColor1, sharpColor2;
 
 	/// <summary>
-/// Pattern to ensure a CSS style "rgb" colour is recognised.
+/// System.Text.RegularExpressions.Regex to ensure a CSS style "rgb" colour is recognised.
 /// </summary>
-	protected static Pattern cssColor;
+	protected static System.Text.RegularExpressions.Regex cssColor;
 
 	/// <summary>
-/// Pattern to ensure a CSS style "rgba(1,2,3,4)" colour is recognised.
+/// System.Text.RegularExpressions.Regex to ensure a CSS style "rgba(1,2,3,4)" colour is recognised.
 /// </summary>
-	protected static Pattern cssColorA;
+	protected static System.Text.RegularExpressions.Regex cssColorA;
 
 	/// <summary>
-/// Pattern to ensure that java.awt.Color.toString() strings are recognised as colour.
+/// System.Text.RegularExpressions.Regex to ensure that java.awt.Color.toString() strings are recognised as colour.
 /// </summary>
-	protected static Pattern awtColor;
+	protected static System.Text.RegularExpressions.Regex awtColor;
 
 	/// <summary>
-/// Pattern to ensure an hexadecimal number is a recognised colour.
+/// System.Text.RegularExpressions.Regex to ensure an hexadecimal number is a recognised colour.
 /// </summary>
-	protected static Pattern hexaColor;
+	protected static System.Text.RegularExpressions.Regex hexaColor;
 
 	/// <summary>
-/// Pattern to ensure a string is a Value in various units.
+/// System.Text.RegularExpressions.Regex to ensure a string is a Value in various units.
 /// </summary>
-	protected static Pattern numberUnit, number;
+	protected static System.Text.RegularExpressions.Regex numberUnit, number;
 
 	static StyleConstants() {
 		// Prepare some pattern matchers.
 
-		number = Pattern.compile("\\s*(\\p{Digit}+([.]\\p{Digit})?)\\s*");
-		numberUnit = Pattern.compile("\\s*(\\p{Digit}+(?:[.]\\p{Digit}+)?)\\s*(gu|px|%)\\s*");
+		number = new System.Text.RegularExpressions.Regex("\\s*(\\p{Digit}+([.]\\p{Digit})?)\\s*");
+		numberUnit = new System.Text.RegularExpressions.Regex("\\s*(\\p{Digit}+(?:[.]\\p{Digit}+)?)\\s*(gu|px|%)\\s*");
 
-		sharpColor1 = Pattern.compile(
+		sharpColor1 = new System.Text.RegularExpressions.Regex(
 				"#(\\p{XDigit}\\p{XDigit})(\\p{XDigit}\\p{XDigit})(\\p{XDigit}\\p{XDigit})((\\p{XDigit}\\p{XDigit})?)");
-		sharpColor2 = Pattern.compile("#(\\p{XDigit})(\\p{XDigit})(\\p{XDigit})((\\p{XDigit})?)");
-		hexaColor = Pattern.compile(
+		sharpColor2 = new System.Text.RegularExpressions.Regex("#(\\p{XDigit})(\\p{XDigit})(\\p{XDigit})((\\p{XDigit})?)");
+		hexaColor = new System.Text.RegularExpressions.Regex(
 				"0[xX](\\p{XDigit}\\p{XDigit})(\\p{XDigit}\\p{XDigit})(\\p{XDigit}\\p{XDigit})((\\p{XDigit}\\p{XDigit})?)");
-		cssColor = Pattern.compile("rgb\\s*\\(\\s*([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)\\s*\\)");
-		cssColorA = Pattern
+		cssColor = new System.Text.RegularExpressions.Regex("rgb\\s*\\(\\s*([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)\\s*\\)");
+		cssColorA = System.Text.RegularExpressions.Regex
 				.compile("rgba\\s*\\(\\s*([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)\\s*\\)");
-		awtColor = Pattern.compile("java.awt.Color\\[r=([0-9]+),g=([0-9]+),b=([0-9]+)\\]");
+		awtColor = new System.Text.RegularExpressions.Regex("java.awt.Color\\[r=([0-9]+),g=([0-9]+),b=([0-9]+)\\]");
 		colorMap = new Dictionary<string, Color>();
 
 		// Load all the X11 predefined colour names and their RGB definition
@@ -232,17 +232,17 @@ public class StyleConstants {
 			throw new Exception(
 					"corrupted graphstream.jar ? the org/miv/graphstream/ui/graphicGraph/rgb.properties file is not found");
 
-		Properties p = new Properties();
+		Dictionary<string, string> p = new Dictionary<string, string>();
 
 		try {
-			p.load(url.openStream());
+			p.load(url /* .openStream() */);
 		} catch (System.IO.IOException e) {
 			Console.Error.WriteLine(e);
 		}
 
 		foreach (object o in p.Keys) {
 			string key = (string) o;
-			string val = p.getProperty(key);
+			string val = p[key);
 			Color col = Color.decode(val);
 
 			colorMap[key.ToLower()] = col;
@@ -266,9 +266,9 @@ public class StyleConstants {
 			string value = (string) anyValue;
 
 			if (value.StartsWith("#")) {
-				Matcher m = sharpColor1.matcher(value);
+				System.Text.RegularExpressions.Match m = sharpColor1.Match(value);
 
-				if (m.matches()) {
+				if (m.Success) {
 					if (value.Length == 7) {
 						try {
 							c = Color.decode(value);
@@ -278,55 +278,55 @@ public class StyleConstants {
 							c = null;
 						}
 					} else if (value.Length == 9) {
-						int r = int.Parse(m.group(1), 16);
-						int g = int.Parse(m.group(2), 16);
-						int b = int.Parse(m.group(3), 16);
-						int a = int.Parse(m.group(4), 16);
+						int r = int.Parse(m.Groups[1].Value, 16);
+						int g = int.Parse(m.Groups[2].Value, 16);
+						int b = int.Parse(m.Groups[3].Value, 16);
+						int a = int.Parse(m.Groups[4].Value, 16);
 
 						return new Color(r, g, b, a);
 					}
 				}
 
-				m = sharpColor2.matcher(value);
+				m = sharpColor2.Match(value);
 
-				if (m.matches()) {
+				if (m.Success) {
 					if (value.Length >= 4) {
-						int r = int.Parse(m.group(1), 16) * 16;
-						int g = int.Parse(m.group(2), 16) * 16;
-						int b = int.Parse(m.group(3), 16) * 16;
+						int r = int.Parse(m.Groups[1].Value, 16) * 16;
+						int g = int.Parse(m.Groups[2].Value, 16) * 16;
+						int b = int.Parse(m.Groups[3].Value, 16) * 16;
 						int a = 255;
 
 						if (value.Length == 5)
-							a = int.Parse(m.group(4), 16) * 16;
+							a = int.Parse(m.Groups[4].Value, 16) * 16;
 
 						return new Color(r, g, b, a);
 					}
 				}
 			} else if (value.StartsWith("rgb")) {
-				Matcher m = cssColorA.matcher(value);
+				System.Text.RegularExpressions.Match m = cssColorA.Match(value);
 
-				if (m.matches()) {
-					int r = int.Parse(m.group(1));
-					int g = int.Parse(m.group(2));
-					int b = int.Parse(m.group(3));
-					int a = int.Parse(m.group(4));
+				if (m.Success) {
+					int r = int.Parse(m.Groups[1].Value);
+					int g = int.Parse(m.Groups[2].Value);
+					int b = int.Parse(m.Groups[3].Value);
+					int a = int.Parse(m.Groups[4].Value);
 
 					return new Color(r, g, b, a);
 				}
 
-				m = cssColor.matcher(value);
+				m = cssColor.Match(value);
 
-				if (m.matches()) {
-					int r = int.Parse(m.group(1));
-					int g = int.Parse(m.group(2));
-					int b = int.Parse(m.group(3));
+				if (m.Success) {
+					int r = int.Parse(m.Groups[1].Value);
+					int g = int.Parse(m.Groups[2].Value);
+					int b = int.Parse(m.Groups[3].Value);
 
 					return new Color(r, g, b);
 				}
 			} else if (value.StartsWith("0x") || value.StartsWith("0X")) {
-				Matcher m = hexaColor.matcher(value);
+				System.Text.RegularExpressions.Match m = hexaColor.Match(value);
 
-				if (m.matches()) {
+				if (m.Success) {
 					if (value.Length == 8) {
 						try {
 							return Color.decode(value);
@@ -334,22 +334,22 @@ public class StyleConstants {
 							c = null;
 						}
 					} else if (value.Length == 10) {
-						string r = m.group(1);
-						string g = m.group(2);
-						string b = m.group(3);
-						string a = m.group(4);
+						string r = m.Groups[1].Value;
+						string g = m.Groups[2].Value;
+						string b = m.Groups[3].Value;
+						string a = m.Groups[4].Value;
 
 						return new Color(int.Parse(r, 16), int.Parse(g, 16), int.Parse(b, 16),
 								int.Parse(a, 16));
 					}
 				}
 			} else if (value.StartsWith("java.awt.Color[")) {
-				Matcher m = awtColor.matcher(value);
+				System.Text.RegularExpressions.Match m = awtColor.Match(value);
 
-				if (m.matches()) {
-					int r = int.Parse(m.group(1));
-					int g = int.Parse(m.group(2));
-					int b = int.Parse(m.group(3));
+				if (m.Success) {
+					int r = int.Parse(m.Groups[1].Value);
+					int g = int.Parse(m.Groups[2].Value);
+					int b = int.Parse(m.Groups[3].Value);
 
 					return new Color(r, g, b);
 				}
@@ -411,23 +411,23 @@ public class StyleConstants {
 /// <returns>A value.</returns>
 	public static Value convertValue(object value) {
 		if (value is string) {
-			string string = (string) value;
+			string str = (string) value;
 
 			// if (string == null)
 			// throw new Exception("null size string ...");
 
-			if (string.Length < 0)
+			if (str.Length < 0)
 				throw new Exception("empty size string ...");
 
-			Matcher m = numberUnit.matcher(string);
+			System.Text.RegularExpressions.Match m = numberUnit.Match(string);
 
-			if (m.matches())
-				return new Value(convertUnit(m.group(2)), float.Parse(m.group(1)));
+			if (m.Success)
+				return new Value(convertUnit(m.Groups[2].Value), float.Parse(m.Groups[1].Value));
 
-			m = number.matcher(string);
+			m = number.Match(string);
 
-			if (m.matches())
-				return new Value(Units.PX, float.Parse(m.group(1)));
+			if (m.Success)
+				return new Value(Units.PX, float.Parse(m.Groups[1].Value));
 
 			throw new Exception(string.Format("string is not convertible to a value ({0})", string));
 		} else if (value is IConvertible) {

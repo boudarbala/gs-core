@@ -34,7 +34,7 @@ namespace Org.GraphStream.Stream.File
 /// File source for the <a href="http://gexf.net/format/">GEXF</a> file format used by <a href="http://www.gephi.org">Gephi</a>.
 /// </summary>
 public class FileSourceGEXF : FileSourceXML {
-	private static readonly Pattern IS_DOUBLE = Pattern.compile("^-?\\d+([.]\\d+)?$");
+	private static readonly System.Text.RegularExpressions.Regex IS_DOUBLE = new System.Text.RegularExpressions.Regex("^-?\\d+([.]\\d+)?$");
 
 	/// <summary>
 /// The GEXF parser.
@@ -91,16 +91,16 @@ public class FileSourceGEXF : FileSourceXML {
 				r = int.Parse(value);
 				break;
 			case LONG:
-				r = long.valueOf(value);
+				r = (long)Enum.Parse(typeof(long), value);
 				break;
 			case FLOAT:
-				r = float.valueOf(value);
+				r = float.Parse(value);
 				break;
 			case DOUBLE:
-				r = double.valueOf(value);
+				r = double.Parse(value);
 				break;
 			case BOOLEAN:
-				r = bool.valueOf(value);
+				r = bool.Parse(value);
 				break;
 			case LISTSTRING:
 				string[] list = value.Split("\\|");
@@ -108,7 +108,7 @@ public class FileSourceGEXF : FileSourceXML {
 				bool isDouble = true;
 
 				for (int i = 0; i < list.Length; i++)
-					isDouble = isDouble && IS_DOUBLE.matcher(list[i]).matches();
+					isDouble = isDouble && IS_DOUBLE.Match(list[i]).matches();
 
 				if (isDouble) {
 					double[] dlist = new double[list.Length];
@@ -222,7 +222,7 @@ public class FileSourceGEXF : FileSourceXML {
 			while (!isEvent(e, XMLEvent.END_ELEMENT, "meta")) {
 				try {
 					string str;
-					Balise b = Balise.valueOf(toConstantName(e.asStartElement().Name.getLocalPart()));
+					Balise b = (Balise)Enum.Parse(typeof(Balise), toConstantName(e.asStartElement().Name.getLocalPart()));
 
 					pushback(e);
 
@@ -243,7 +243,7 @@ public class FileSourceGEXF : FileSourceXML {
 						newParseError(e, false, "meta children should be one of 'creator','keywords' or 'description'");
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, true, "unknown element '%s'", e.asStartElement().Name.getLocalPart());
+					newParseError(e, true, "unknown element '{0}'", e.asStartElement().Name.getLocalPart());
 				}
 
 				e = getNextEvent();
@@ -320,7 +320,7 @@ public class FileSourceGEXF : FileSourceXML {
 
 			if (attributes.ContainsKey(GRAPHAttribute.DEFAULTEDGETYPE)) {
 				try {
-					defaultEdgeType = EdgeType.valueOf(toConstantName(attributes[GRAPHAttribute.DEFAULTEDGETYPE]));
+					defaultEdgeType = (EdgeType)Enum.Parse(typeof(EdgeType), toConstantName(attributes[GRAPHAttribute.DEFAULTEDGETYPE]));
 				} catch (ArgumentException ex) {
 					newParseError(e, true,
 							"'defaultedgetype' value should be one of 'directed', 'undirected' or 'mutual'");
@@ -329,7 +329,7 @@ public class FileSourceGEXF : FileSourceXML {
 
 			if (attributes.ContainsKey(GRAPHAttribute.TIMEFORMAT)) {
 				try {
-					timeFormat = TimeFormatType.valueOf(toConstantName(attributes[GRAPHAttribute.TIMEFORMAT]));
+					timeFormat = (TimeFormatType)Enum.Parse(typeof(TimeFormatType), toConstantName(attributes[GRAPHAttribute.TIMEFORMAT]));
 				} catch (ArgumentException ex) {
 					newParseError(e, true,
 							"'timeformat' value should be one of 'integer', 'double', 'date' or 'datetime'");
@@ -378,7 +378,7 @@ public class FileSourceGEXF : FileSourceXML {
 			checkRequiredAttributes(e, attributes, ATTRIBUTESAttribute.CLASS);
 
 			try {
-				type = ClassType.valueOf(toConstantName(attributes[ATTRIBUTESAttribute.CLASS]));
+				type = (ClassType)Enum.Parse(typeof(ClassType), toConstantName(attributes[ATTRIBUTESAttribute.CLASS]));
 			} catch (ArgumentException ex) {
 				newParseError(e, true, "'class' value shoudl be one of 'node' or 'edge'");
 			}
@@ -423,7 +423,7 @@ public class FileSourceGEXF : FileSourceXML {
 			title = attributes[ATTRIBUTEAttribute.TITLE];
 
 			try {
-				type = AttributeType.valueOf(toConstantName(attributes[ATTRIBUTEAttribute.TYPE]));
+				type = (AttributeType)Enum.Parse(typeof(AttributeType), toConstantName(attributes[ATTRIBUTEAttribute.TYPE]));
 			} catch (ArgumentException ex) {
 				newParseError(e, true,
 						"'type' of attribute should be one of 'integer', 'long', 'float, 'double', 'string', 'liststring', 'anyURI' or 'bool'");
@@ -435,7 +435,7 @@ public class FileSourceGEXF : FileSourceXML {
 
 			while (!isEvent(e, XMLEvent.END_ELEMENT, "attribute")) {
 				try {
-					Balise b = Balise.valueOf(toConstantName(e.asStartElement().Name.getLocalPart()));
+					Balise b = (Balise)Enum.Parse(typeof(Balise), toConstantName(e.asStartElement().Name.getLocalPart()));
 
 					pushback(e);
 
@@ -455,7 +455,7 @@ public class FileSourceGEXF : FileSourceXML {
 						newParseError(e, true, "attribute children should be one of 'default' or 'options'");
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, true, "unknown element '%s'", e.asStartElement().Name.getLocalPart());
+					newParseError(e, true, "unknown element '{0}'", e.asStartElement().Name.getLocalPart());
 				}
 
 				e = getNextEvent();
@@ -550,7 +550,7 @@ public class FileSourceGEXF : FileSourceXML {
 
 			while (!isEvent(e, XMLEvent.END_ELEMENT, "node")) {
 				try {
-					Balise b = Balise.valueOf(toConstantName(e.asStartElement().Name.getLocalPart()));
+					Balise b = (Balise)Enum.Parse(typeof(Balise), toConstantName(e.asStartElement().Name.getLocalPart()));
 
 					pushback(e);
 
@@ -587,13 +587,13 @@ public class FileSourceGEXF : FileSourceXML {
 								"attribute children should be one of 'attvalues', 'color', 'position', 'size', shape', 'spells', 'nodes, 'edges' or 'parents'");
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, true, "unknown element '%s'", e.asStartElement().Name.getLocalPart());
+					newParseError(e, true, "unknown element '{0}'", e.asStartElement().Name.getLocalPart());
 				}
 
 				e = getNextEvent();
 			}
 
-			foreach (Attribute theAttribute in nodeAttributesDefinition.Values) {
+			foreach (Attribute theAttribute in ((nodeAttributesDefinition[])Enum.GetValues(typeof(nodeAttributesDefinition)))) {
 				if (!defined.Contains(theAttribute.id)) {
 					sendNodeAttributeAdded(sourceId, id, theAttribute.title, theAttribute.def);
 				}
@@ -648,7 +648,7 @@ public class FileSourceGEXF : FileSourceXML {
 				theAttribute = edgeAttributesDefinition[attributes.get(ATTVALUEAttribute.FOR)];
 
 			if (theAttribute == null)
-				newParseError(e, false, "undefined attribute \"%s\"", attributes[ATTVALUEAttribute.FOR]);
+				newParseError(e, false, "undefined attribute \"{0}\"", attributes[ATTVALUEAttribute.FOR]);
 			else {
 				try {
 					value = theAttribute.getValue(attributes[ATTVALUEAttribute.VALUE]);
@@ -807,9 +807,9 @@ public class FileSourceGEXF : FileSourceXML {
 
 			checkRequiredAttributes(e, attributes, POSITIONAttribute.X, POSITIONAttribute.Y, POSITIONAttribute.Z);
 
-			xyz[0] = double.valueOf(attributes[POSITIONAttribute.X]);
-			xyz[1] = double.valueOf(attributes[POSITIONAttribute.Y]);
-			xyz[2] = double.valueOf(attributes[POSITIONAttribute.Z]);
+			xyz[0] = double.Parse(attributes[POSITIONAttribute.X]);
+			xyz[1] = double.Parse(attributes[POSITIONAttribute.Y]);
+			xyz[2] = double.Parse(attributes[POSITIONAttribute.Z]);
 
 			sendNodeAttributeAdded(sourceId, nodeId, "xyz", xyz);
 
@@ -840,7 +840,7 @@ public class FileSourceGEXF : FileSourceXML {
 
 			checkRequiredAttributes(e, attributes, SIZEAttribute.VALUE);
 
-			value = double.valueOf(attributes[SIZEAttribute.VALUE]);
+			value = double.Parse(attributes[SIZEAttribute.VALUE]);
 
 			sendNodeAttributeAdded(sourceId, nodeId, "ui.size", value);
 
@@ -873,7 +873,7 @@ public class FileSourceGEXF : FileSourceXML {
 			checkRequiredAttributes(e, attributes, NODESHAPEAttribute.VALUE);
 
 			try {
-				type = NodeShapeType.valueOf(toConstantName(attributes[NODESHAPEAttribute.VALUE]));
+				type = (NodeShapeType)Enum.Parse(typeof(NodeShapeType), toConstantName(attributes[NODESHAPEAttribute.VALUE]));
 			} catch (ArgumentException ex) {
 				newParseError(e, true, "'value' should be one of 'disc', 'diamond', 'triangle', 'square' or 'image'");
 			}
@@ -949,7 +949,7 @@ public class FileSourceGEXF : FileSourceXML {
 
 			if (attributes.ContainsKey(EDGEAttribute.TYPE)) {
 				try {
-					type = EdgeType.valueOf(toConstantName(attributes[EDGEAttribute.TYPE]));
+					type = (EdgeType)Enum.Parse(typeof(EdgeType), toConstantName(attributes[EDGEAttribute.TYPE]));
 				} catch (ArgumentException ex) {
 					newParseError(e, true, "edge type should be one of 'undirected', 'undirected' or 'mutual'");
 				}
@@ -970,7 +970,7 @@ public class FileSourceGEXF : FileSourceXML {
 
 			if (attributes.ContainsKey(EDGEAttribute.WEIGHT)) {
 				try {
-					double d = double.valueOf(attributes[EDGEAttribute.WEIGHT]);
+					double d = double.Parse(attributes[EDGEAttribute.WEIGHT]);
 					sendEdgeAttributeAdded(sourceId, id, "weight", d);
 				} catch (FormatException ex) {
 					newParseError(e, true, "'weight' attribute of edge should be a real");
@@ -981,7 +981,7 @@ public class FileSourceGEXF : FileSourceXML {
 
 			while (!isEvent(e, XMLEvent.END_ELEMENT, "edge")) {
 				try {
-					Balise b = Balise.valueOf(toConstantName(e.asStartElement().Name.getLocalPart()));
+					Balise b = (Balise)Enum.Parse(typeof(Balise), toConstantName(e.asStartElement().Name.getLocalPart()));
 
 					pushback(e);
 
@@ -1006,7 +1006,7 @@ public class FileSourceGEXF : FileSourceXML {
 								"edge children should be one of 'attvalues', 'color', 'thicknes', 'shape' or 'spells'");
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, true, "unknown tag '%s'", e.asStartElement().Name.getLocalPart());
+					newParseError(e, true, "unknown tag '{0}'", e.asStartElement().Name.getLocalPart());
 				}
 
 				e = getNextEvent();
@@ -1036,7 +1036,7 @@ public class FileSourceGEXF : FileSourceXML {
 			checkRequiredAttributes(e, attributes, EDGESHAPEAttribute.VALUE);
 
 			try {
-				type = EdgeShapeType.valueOf(toConstantName(attributes[EDGESHAPEAttribute.VALUE]));
+				type = (EdgeShapeType)Enum.Parse(typeof(EdgeShapeType), toConstantName(attributes[EDGESHAPEAttribute.VALUE]));
 			} catch (ArgumentException ex) {
 				newParseError(e, true, "'value' of shape should be one of 'solid', 'dotted', 'dashed' or 'double'");
 			}

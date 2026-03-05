@@ -71,7 +71,7 @@ public class GMLContext {
 	}
 
 	public void addNodeOrEdge(string element, KeyValues kv) {
-		System.err.printf("adding %s %n", element);
+		System.err.printf("adding {0} \n", element);
 	}
 
 	protected void insertKeyValues(KeyValues kv){
@@ -548,9 +548,9 @@ class KeyValues : Dictionary<string, object> {
 	public int column;
 
 	public void print() {
-		System.err.printf("%s:%n", key);
+		System.err.printf("{0}:\n", key);
 		foreach (string k in keySet()) {
-			System.err.printf("    %s: %s%n", k, get(k));
+			System.err.printf("    {0}: {1}\n", k, get(k));
 		}
 	}
 

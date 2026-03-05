@@ -424,7 +424,7 @@ abstract class BarnesHutLayout : SourceBase, ILayout, ParticleBoxListener {
 				try {
 					statsOut = new System.IO.TextWriter("springBox.dat");
 					statsOut.printf("# stabilization nodeMoveCount energy energyDiff maxMoveLength avgLength area%n");
-					statsOut.Flush();
+					/* statsOut.Flush(); */
 				} catch (FileNotFoundException e) {
 					Console.Error.WriteLine(e);
 				}
@@ -435,7 +435,7 @@ abstract class BarnesHutLayout : SourceBase, ILayout, ParticleBoxListener {
 
 				statsOut.printf(System.Globalization.CultureInfo.InvariantCulture, "%f %d %f %f %f %f%n", getStabilization(), nodeMoveCount,
 						energies.getEnergy(), energyDiff, maxMoveLength, avgLength, area);
-				statsOut.Flush();
+				/* statsOut.Flush(); */
 			}
 		}
 	}

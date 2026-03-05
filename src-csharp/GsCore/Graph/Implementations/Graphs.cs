@@ -513,7 +513,7 @@ public class Graphs {
 			System.Threading.Monitor.Enter(elementLock);
 
 			try {
-				nodes = new Vector<object>(synchronizedNodes.Values);
+				nodes = new Vector<object>(((synchronizedNodes[])Enum.GetValues(typeof(synchronizedNodes))));
 			} finally {
 				System.Threading.Monitor.Exit(elementLock);
 			}
@@ -528,7 +528,7 @@ public class Graphs {
 			System.Threading.Monitor.Enter(elementLock);
 
 			try {
-				edges = new Vector<object>(synchronizedEdges.Values);
+				edges = new Vector<object>(((synchronizedEdges[])Enum.GetValues(typeof(synchronizedEdges))));
 			} finally {
 				System.Threading.Monitor.Exit(elementLock);
 			}

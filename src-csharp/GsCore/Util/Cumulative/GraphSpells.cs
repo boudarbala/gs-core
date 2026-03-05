@@ -220,7 +220,7 @@ public class GraphSpells : ISink {
 	}
 
 	public string toString() {
-		System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder buffer = new System.Text.StringBuilder();
 
 		foreach (string id in nodes.Keys) {
 			buffer.Append("node#\"").Append(id).Append("\" ").Append(nodes[id]).Append(" ")

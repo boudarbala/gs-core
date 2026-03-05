@@ -170,7 +170,7 @@ public class FileSinkGEXF2 : PipeBase, IFileSink {
 	 */
 	public void flush(){
 		if (currentContext != null)
-			currentContext.stream.Flush();
+			currentContext./* stream.Flush(); */
 	}
 
 	/*

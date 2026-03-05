@@ -49,7 +49,7 @@ public class FileSinkDynamicGML : FileSinkGML {
 		string val = valueToString(value);
 
 		if (val != null) {
-			output.printf("\t%s %s%n", attribute, val);
+			output.printf("\t{0} {1}\n", attribute, val);
 		}
 	}
 
@@ -63,7 +63,7 @@ public class FileSinkDynamicGML : FileSinkGML {
 	
 	public void graphAttributeRemoved(string sourceId, long timeId, string attribute) {
 		ensureToFinish();
-		output.printf("\t-%s%n", attribute);
+		output.printf("\t-{0}\n", attribute);
 	}
 
 	
@@ -78,7 +78,7 @@ public class FileSinkDynamicGML : FileSinkGML {
 		if (nodeToFinish == null || (!nodeToFinish.Equals(nodeId))) {
 			ensureToFinish();
 			output.printf("\t+node [%n");
-			output.printf("\t\tid \"%s\"%n", nodeId);
+			output.printf("\t\tid \"{0}\"%n", nodeId);
 			nodeToFinish = nodeId;
 		}
 
@@ -86,10 +86,10 @@ public class FileSinkDynamicGML : FileSinkGML {
 			string val = valueToString(newValue);
 
 			if (val != null) {
-				output.printf("\t\t%s %s%n", attribute, val);
+				output.printf("\t\t{0} {1}\n", attribute, val);
 			}
 		} else {
-			output.printf("\t\t-%s%n", attribute);
+			output.printf("\t\t-{0}\n", attribute);
 		}
 	}
 
@@ -110,7 +110,7 @@ public class FileSinkDynamicGML : FileSinkGML {
 		if (edgeToFinish == null || (!edgeToFinish.Equals(edgeId))) {
 			ensureToFinish();
 			output.printf("\t+edge [%n");
-			output.printf("\t\tid \"%s\"%n", edgeId);
+			output.printf("\t\tid \"{0}\"%n", edgeId);
 			edgeToFinish = edgeId;
 		}
 
@@ -118,10 +118,10 @@ public class FileSinkDynamicGML : FileSinkGML {
 			string val = valueToString(newValue);
 
 			if (val != null) {
-				output.printf("\t\t%s %s%n", attribute, val);
+				output.printf("\t\t{0} {1}\n", attribute, val);
 			}
 		} else {
-			output.printf("\t\t-%s%n", attribute);
+			output.printf("\t\t-{0}\n", attribute);
 		}
 	}
 
@@ -136,14 +136,14 @@ public class FileSinkDynamicGML : FileSinkGML {
 	public void nodeAdded(string sourceId, long timeId, string nodeId) {
 		ensureToFinish();
 		output.printf("\tnode [%n");
-		output.printf("\t\tid \"%s\"%n", nodeId);
+		output.printf("\t\tid \"{0}\"%n", nodeId);
 		nodeToFinish = nodeId;
 	}
 
 	
 	public void nodeRemoved(string sourceId, long timeId, string nodeId) {
 		ensureToFinish();
-		output.printf("\t-node \"%s\"%n", nodeId);
+		output.printf("\t-node \"{0}\"%n", nodeId);
 	}
 
 	
@@ -151,17 +151,17 @@ public class FileSinkDynamicGML : FileSinkGML {
 			bool directed) {
 		ensureToFinish();
 		output.printf("\tedge [%n");
-		output.printf("\t\tid \"%s\"%n", edgeId);
-		output.printf("\t\tsource \"%s\"%n", fromNodeId);
-		output.printf("\t\ttarget \"%s\"%n", toNodeId);
-		output.printf("\t\tdirected %s%n", directed ? "1" : "0");
+		output.printf("\t\tid \"{0}\"%n", edgeId);
+		output.printf("\t\tsource \"{0}\"%n", fromNodeId);
+		output.printf("\t\ttarget \"{0}\"%n", toNodeId);
+		output.printf("\t\tdirected {0}\n", directed ? "1" : "0");
 		edgeToFinish = edgeId;
 	}
 
 	
 	public void edgeRemoved(string sourceId, long timeId, string edgeId) {
 		ensureToFinish();
-		output.printf("\t-edge \"%s\"%n", edgeId);
+		output.printf("\t-edge \"{0}\"%n", edgeId);
 	}
 
 	

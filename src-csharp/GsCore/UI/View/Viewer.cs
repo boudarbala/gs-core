@@ -266,7 +266,7 @@ abstract class Viewer {
 		lock (views) {
 			Point3 lo = graph.getMinPos();
 			Point3 hi = graph.getMaxPos();
-			foreach (IView view in views.Values) {
+			foreach (IView view in ((views[])Enum.GetValues(typeof(views)))) {
 				ICamera camera = view.getCamera();
 				if (camera != null) {
 					camera.setBounds(lo.x, lo.y, lo.z, hi.x, hi.y, hi.z);

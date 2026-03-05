@@ -68,7 +68,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void edgeAttributeAdded(string graphId, long timeId, string edgeId, string attribute, object value) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.edgeAttributeAdded(graphId, timeId, edgeId, attribute, value);
 			} catch (Exception e) {
@@ -79,7 +79,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 
 	public void edgeAttributeChanged(string graphId, long timeId, string edgeId, string attribute, object oldValue,
 			object newValue) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.edgeAttributeChanged(graphId, timeId, edgeId, attribute, oldValue, newValue);
 			} catch (Exception e) {
@@ -89,7 +89,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void edgeAttributeRemoved(string graphId, long timeId, string edgeId, string attribute) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.edgeAttributeRemoved(graphId, timeId, edgeId, attribute);
 			} catch (Exception e) {
@@ -99,7 +99,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void graphAttributeAdded(string graphId, long timeId, string attribute, object value) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.graphAttributeAdded(graphId, timeId, attribute, value);
 			} catch (Exception e) {
@@ -109,7 +109,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void graphAttributeChanged(string graphId, long timeId, string attribute, object oldValue, object newValue) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.graphAttributeChanged(graphId, timeId, attribute, oldValue, newValue);
 			} catch (Exception e) {
@@ -119,7 +119,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void graphAttributeRemoved(string graphId, long timeId, string attribute) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.graphAttributeRemoved(graphId, timeId, attribute);
 			} catch (Exception e) {
@@ -129,7 +129,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void nodeAttributeAdded(string graphId, long timeId, string nodeId, string attribute, object value) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.nodeAttributeAdded(graphId, timeId, nodeId, attribute, value);
 			} catch (Exception e) {
@@ -140,7 +140,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 
 	public void nodeAttributeChanged(string graphId, long timeId, string nodeId, string attribute, object oldValue,
 			object newValue) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.nodeAttributeChanged(graphId, timeId, nodeId, attribute, oldValue, newValue);
 			} catch (Exception e) {
@@ -150,7 +150,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void nodeAttributeRemoved(string graphId, long timeId, string nodeId, string attribute) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.nodeAttributeRemoved(graphId, timeId, nodeId, attribute);
 			} catch (Exception e) {
@@ -161,7 +161,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 
 	public void edgeAdded(string graphId, long timeId, string edgeId, string fromNodeId, string toNodeId,
 			bool directed) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.edgeAdded(graphId, timeId, edgeId, fromNodeId, toNodeId, directed);
 			} catch (Exception e) {
@@ -171,7 +171,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void edgeRemoved(string graphId, long timeId, string edgeId) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.edgeRemoved(graphId, timeId, edgeId);
 			} catch (Exception e) {
@@ -181,7 +181,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void graphCleared(string graphId, long timeId) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.graphCleared(graphId, timeId);
 			} catch (Exception e) {
@@ -191,7 +191,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void nodeAdded(string graphId, long timeId, string nodeId) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.nodeAdded(graphId, timeId, nodeId);
 			} catch (Exception e) {
@@ -201,7 +201,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void nodeRemoved(string graphId, long timeId, string nodeId) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.nodeRemoved(graphId, timeId, nodeId);
 			} catch (Exception e) {
@@ -211,7 +211,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 	}
 
 	public void stepBegins(string graphId, long timeId, double step) {
-		foreach (object /* RMIAdapterIn */ input in inputs.Values) {
+		foreach (object /* RMIAdapterIn */ input in ((inputs[])Enum.GetValues(typeof(inputs)))) {
 			try {
 				input.stepBegins(graphId, timeId, step);
 			} catch (Exception e) {

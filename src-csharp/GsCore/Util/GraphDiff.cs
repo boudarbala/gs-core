@@ -195,7 +195,7 @@ public class GraphDiff {
 	 */
 	
 	public string toString() {
-		System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder buffer = new System.Text.StringBuilder();
 
 		for (int i = 0; i < events.Count; i++)
 			buffer.Append(events[i].ToString()).Append("\n");
@@ -250,7 +250,7 @@ public class GraphDiff {
 		 */
 		
 		public string toString() {
-			return string.Format("an \"%s\"", nodeId);
+			return string.Format("an \"{0}\"", nodeId);
 		}
 	}
 
@@ -285,7 +285,7 @@ public class GraphDiff {
 		 */
 		
 		public string toString() {
-			return string.Format("dn \"%s\"", nodeId);
+			return string.Format("dn \"{0}\"", nodeId);
 		}
 	}
 
@@ -339,7 +339,7 @@ public class GraphDiff {
 				break;
 			}
 
-			return string.Format("{0} \"%s\"", header, elementId);
+			return string.Format("{0} \"{0}\"", header, elementId);
 		}
 
 		protected string toStringValue(object o) {
@@ -419,7 +419,7 @@ public class GraphDiff {
 		 */
 		
 		public string toString() {
-			return string.Format("{0} +\"%s\":%s", toStringHeader(), attrId, toStringValue(value));
+			return string.Format("{0} +\"{0}\":%s", toStringHeader(), attrId, toStringValue(value));
 		}
 	}
 
@@ -499,7 +499,7 @@ public class GraphDiff {
 		 */
 		
 		public string toString() {
-			return string.Format("{0} \"%s\":%s", toStringHeader(), attrId, toStringValue(newValue));
+			return string.Format("{0} \"{0}\":%s", toStringHeader(), attrId, toStringValue(newValue));
 		}
 	}
 
@@ -559,7 +559,7 @@ public class GraphDiff {
 		 */
 		
 		public string toString() {
-			return string.Format("{0} -\"%s\":%s", toStringHeader(), attrId, toStringValue(oldValue));
+			return string.Format("{0} -\"{0}\":%s", toStringHeader(), attrId, toStringValue(oldValue));
 		}
 	}
 
@@ -601,7 +601,7 @@ public class GraphDiff {
 		 */
 		
 		public string toString() {
-			return string.Format("ae \"%s\" \"%s\" %s \"%s\"", edgeId, source, directed ? ">" : "--", target);
+			return string.Format("ae \"{0}\" \"{0}\" %s \"{0}\"", edgeId, source, directed ? ">" : "--", target);
 		}
 	}
 
@@ -636,7 +636,7 @@ public class GraphDiff {
 		 */
 		
 		public string toString() {
-			return string.Format("de \"%s\"", edgeId);
+			return string.Format("de \"{0}\"", edgeId);
 		}
 	}
 
@@ -685,7 +685,7 @@ public class GraphDiff {
 				GZIPOutputStream output = new GZIPOutputStream(bytes);
 
 				sink.writeAll(g, output);
-				output.Flush();
+				/* output.Flush(); */
 				output.Close();
 
 				this.data = bytes.toByteArray();

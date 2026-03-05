@@ -143,7 +143,7 @@ public interface IGraph : IElement, IPipe, IEnumerable<INode>, IStructure {
 
 		if (src == null || dst == null) {
 			if (isStrict())
-				throw new ElementNotFoundException("INode '%s'", src == null ? from : to);
+				throw new ElementNotFoundException("INode '{0}'", src == null ? from : to);
 
 			if (!isAutoCreationEnabled())
 				return null;

@@ -245,17 +245,17 @@ abstract class GraphicElement : AbstractElement {
 
 	// Overriding of standard attribute changing to filter them.
 
-	protected static Pattern acceptedAttribute;
+	protected static System.Text.RegularExpressions.Regex acceptedAttribute;
 
 	static GraphicElement() {
-		acceptedAttribute = Pattern.compile("(ui[.].*)|(layout[.].*)|x|y|z|xy|xyz|label|stylesheet");
+		acceptedAttribute = new System.Text.RegularExpressions.Regex("(ui[.].*)|(layout[.].*)|x|y|z|xy|xyz|label|stylesheet");
 	}
 
 	
 	public void setAttribute(string attribute, params object[] values) {
-		Matcher matcher = acceptedAttribute.matcher(attribute);
+		System.Text.RegularExpressions.Match matcher = acceptedAttribute.Match(attribute);
 
-		if (matcher.matches())
+		if (matcher.Success)
 			base.setAttribute(attribute, values);
 	}
 }

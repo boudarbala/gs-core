@@ -210,7 +210,7 @@ public class DOTParser : Parser, DOTParserConstants {
 
 	public void all(){
 		graph();
-		label_1: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case GRAPH:
 			case SUBGRAPH:
@@ -223,7 +223,7 @@ public class DOTParser : Parser, DOTParserConstants {
 				break;
 			default:
 				jj_la1[0] = jj_gen;
-				break label_1;
+				break;
 			}
 			statement();
 		}
@@ -316,7 +316,7 @@ public class DOTParser : Parser, DOTParserConstants {
 			;
 		}
 		jj_consume_token(LBRACE);
-		label_2: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case GRAPH:
 			case SUBGRAPH:
@@ -329,7 +329,7 @@ public class DOTParser : Parser, DOTParserConstants {
 				break;
 			default:
 				jj_la1[6] = jj_gen;
-				break label_2;
+				break;
 			}
 			statement();
 		}
@@ -342,7 +342,7 @@ public class DOTParser : Parser, DOTParserConstants {
 		switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 		case STRING:
 			t = jj_consume_token(STRING);
-			id = t.image.Substring(1, t.image.Length - 1);
+			id = t.image.Substring(1, t.image.Length - 2);
 			break;
 		case REAL:
 			t = jj_consume_token(REAL);
@@ -554,21 +554,21 @@ public class DOTParser : Parser, DOTParserConstants {
 
 	private Dictionary<string, object> attributesList(){
 		Dictionary<string, object> attributes = new Dictionary<string, object>();
-		label_3: while (true) {
+		while (true) {
 			jj_consume_token(LSQBR);
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case REAL:
 			case STRING:
 			case WORD:
 				attributeList(attributes);
-				label_4: while (true) {
+				while (true) {
 					switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 					case COMMA:
 						;
 						break;
 					default:
 						jj_la1[17] = jj_gen;
-						break label_4;
+						break;
 					}
 					jj_consume_token(COMMA);
 					attributeList(attributes);
@@ -585,7 +585,7 @@ public class DOTParser : Parser, DOTParserConstants {
 				break;
 			default:
 				jj_la1[19] = jj_gen;
-				break label_3;
+				break;
 			}
 		}
 

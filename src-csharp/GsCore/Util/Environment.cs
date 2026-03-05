@@ -440,7 +440,7 @@ public class Environment : ICloneable {
 							parameters[val[0].Trim()] = "true";
 						} else {
 							Console.Error.WriteLine(string.Format(
-									"Something is wrong with the configuration file \"%s\"near line %d :\n %s",
+									"Something is wrong with the configuration file \"{0}\"near line %d :\n %s",
 									filename, count, str));
 							if (trashcan != null) {
 								trashcan.Add(str);
@@ -455,7 +455,7 @@ public class Environment : ICloneable {
 			}
 
 		} catch (FileNotFoundException fnfe) {
-			System.err.printf("Tried to open \"%s\" as a config file: file not found.%n", filename);
+			System.err.printf("Tried to open \"{0}\" as a config file: file not found.%n", filename);
 			if (trashcan != null) {
 				trashcan.Add(filename);
 			}
@@ -515,7 +515,7 @@ public class Environment : ICloneable {
 				if (val.Length != 2) {
 					Console.Error.WriteLine(string.Format("{0}  {1}  {2}\n", "Warn", "Environment",
 							"Something is wrong in your configuration file near line " + count + " : \n"
-									+ Arrays.toString(val)));
+									+ "[values]"(val)));
 				} else {
 					string s0 = val[0].Trim();
 					string s1 = val[1].Trim();

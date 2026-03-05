@@ -48,7 +48,7 @@ public class TLPParser : Parser, TLPParserConstants {
 		List<string> nodes;
 		List<string> edges;
 
-		Cluster {
+		Cluster(int index, string name) {
 			this.index = index;
 			this.name = name;
 			this.nodes = new List<string>();
@@ -101,7 +101,7 @@ public class TLPParser : Parser, TLPParserConstants {
 
 		this.root = new Cluster(0, "<root>");
 		this.clusters[0] = this.root;
-		this.stack.push(this.root);
+		this.stack.Push(this.root);
 	}
 
 	private void addNode(string id){
@@ -111,7 +111,7 @@ public class TLPParser : Parser, TLPParserConstants {
 		if (stack.Count == 1)
 			tlp.sendNodeAdded(sourceId, id);
 
-		stack.peek().nodes.Add(id);
+		stack.Peek().nodes.Add(id);
 	}
 
 	private void addEdge(string id, string source, string target){
@@ -121,14 +121,14 @@ public class TLPParser : Parser, TLPParserConstants {
 		if (stack.Count == 1)
 			tlp.sendEdgeAdded(sourceId, id, source, target, false);
 
-		stack.peek().edges.Add(id);
+		stack.Peek().edges.Add(id);
 	}
 
 	private void includeEdge(string id){
 		if (stack.Count > 1 && (!root.edges.Contains(id) || !stack[stack.Count - 2].edges.Contains(id)))
 			throw new ParseException("parent cluster " + stack[stack.Count - 2].name + " do not contain the edge");
 
-		stack.peek().edges.Add(id);
+		stack.Peek().edges.Add(id);
 	}
 
 	private void graphAttribute(string key, object value) {
@@ -139,12 +139,12 @@ public class TLPParser : Parser, TLPParserConstants {
 	private void pushCluster(int i, string name) {
 		Cluster c = new Cluster(i, name);
 		clusters[i] = c;
-		stack.push(c);
+		stack.Push(c);
 	}
 
 	private void popCluster() {
 		if (stack.Count > 1)
-			stack.pop();
+			stack.Pop();
 	}
 
 	private void newProperty(int cluster, string name, PropertyType type, string nodeDefault, string edgeDefault,
@@ -175,11 +175,11 @@ public class TLPParser : Parser, TLPParserConstants {
 	private object convert(PropertyType type, string value) {
 		switch (type) {
 		case BOOL:
-			return bool.valueOf(value);
+			return bool.Parse(value);
 		case INT:
 			return int.Parse(value);
 		case DOUBLE:
-			return double.valueOf(value);
+			return double.Parse(value);
 		case LAYOUT:
 		case COLOR:
 		case SIZE:
@@ -192,14 +192,14 @@ public class TLPParser : Parser, TLPParserConstants {
 
 	public void all(){
 		tlp();
-		label_1: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case OBRACKET:
 				;
 				break;
 			default:
 				jj_la1[0] = jj_gen;
-				break label_1;
+				break;
 			}
 			statement();
 		}
@@ -234,11 +234,11 @@ public class TLPParser : Parser, TLPParserConstants {
 		jj_consume_token(OBRACKET);
 		jj_consume_token(TLP);
 		jj_consume_token(STRING);
-		label_2: while (true) {
+		while (true) {
 			if (jj_2_1(2)) {
 				;
 			} else {
-				break label_2;
+				break;
 			}
 			headers();
 		}
@@ -250,17 +250,17 @@ public class TLPParser : Parser, TLPParserConstants {
 		switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 		case DATE:
 			jj_consume_token(DATE);
-			s = string();
+			s = getString();
 			graphAttribute("date", s);
 			break;
 		case AUTHOR:
 			jj_consume_token(AUTHOR);
-			s = string();
+			s = getString();
 			graphAttribute("author", s);
 			break;
 		case COMMENTS:
 			jj_consume_token(COMMENTS);
-			s = string();
+			s = getString();
 			graphAttribute("comments", s);
 			break;
 		default:
@@ -290,14 +290,14 @@ public class TLPParser : Parser, TLPParserConstants {
 		Token i;
 		jj_consume_token(OBRACKET);
 		jj_consume_token(NODES);
-		label_3: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case INTEGER:
 				;
 				break;
 			default:
 				jj_la1[3] = jj_gen;
-				break label_3;
+				break;
 			}
 			i = jj_consume_token(INTEGER);
 			addNode(i.image);
@@ -320,14 +320,14 @@ public class TLPParser : Parser, TLPParserConstants {
 		Token i;
 		jj_consume_token(OBRACKET);
 		jj_consume_token(EDGES);
-		label_4: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case INTEGER:
 				;
 				break;
 			default:
 				jj_la1[4] = jj_gen;
-				break label_4;
+				break;
 			}
 			i = jj_consume_token(INTEGER);
 			includeEdge(i.image);
@@ -341,18 +341,18 @@ public class TLPParser : Parser, TLPParserConstants {
 		jj_consume_token(OBRACKET);
 		jj_consume_token(CLUSTER);
 		index = jj_consume_token(INTEGER);
-		name = string();
+		name = getString();
 		pushCluster(int.Parse(index.image), name);
 		nodes();
 		edges();
-		label_5: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case OBRACKET:
 				;
 				break;
 			default:
 				jj_la1[5] = jj_gen;
-				break label_5;
+				break;
 			}
 			cluster();
 		}
@@ -373,34 +373,34 @@ public class TLPParser : Parser, TLPParserConstants {
 		jj_consume_token(OBRACKET);
 		jj_consume_token(PROPERTY);
 		cluster = integer();
-		type = type();
-		name = string();
+		type = getType();
+		name = getString();
 		jj_consume_token(OBRACKET);
 		jj_consume_token(DEF);
-		nodeDefault = string();
-		edgeDefault = string();
+		nodeDefault = getString();
+		edgeDefault = getString();
 		jj_consume_token(CBRACKET);
-		label_6: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case OBRACKET:
 				;
 				break;
 			default:
 				jj_la1[6] = jj_gen;
-				break label_6;
+				break;
 			}
 			jj_consume_token(OBRACKET);
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case NODE:
 				jj_consume_token(NODE);
 				t = jj_consume_token(INTEGER);
-				value = string();
+				value = getString();
 				nodes[t.image] = value;
 				break;
 			case EDGE:
 				jj_consume_token(EDGE);
 				t = jj_consume_token(INTEGER);
-				value = string();
+				value = getString();
 				edges[t.image] = value;
 				break;
 			default:
@@ -414,18 +414,18 @@ public class TLPParser : Parser, TLPParserConstants {
 		newProperty(cluster, name, type, nodeDefault, edgeDefault, nodes, edges);
 	}
 
-	private PropertyType type(){
+	private PropertyType getType(){
 		Token t;
 		t = jj_consume_token(PTYPE);
 
-		return PropertyType.valueOf(t.image.ToUpper());
+		return (PropertyType)Enum.Parse(typeof(PropertyType), t.image.ToUpper());
 	}
 
-	private string string(){
+	private string getString(){
 		Token t;
 		t = jj_consume_token(STRING);
 
-		return t.image.Substring(1, t.image.Length - 1);
+		return t.image.Substring(1, t.image.Length - 2);
 	}
 
 	private int integer(){

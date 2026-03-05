@@ -76,7 +76,7 @@ public class FileSinkGML : FileSinkBase {
 		attribute = keyToString(attribute);
 
 		if (val != null) {
-			output.printf("\t%s %s%n", attribute, val);
+			output.printf("\t{0} {1}\n", attribute, val);
 		}
 	}
 
@@ -97,7 +97,7 @@ public class FileSinkGML : FileSinkBase {
 			attribute = keyToString(attribute);
 
 			if (val != null) {
-				output.printf("\t\t%s %s%n", attribute, val);
+				output.printf("\t\t{0} {1}\n", attribute, val);
 			}
 		} else {
 			ensureToFinish();
@@ -123,7 +123,7 @@ public class FileSinkGML : FileSinkBase {
 			attribute = keyToString(attribute);
 
 			if (val != null) {
-				output.printf("\t\t%s %s%n", attribute, val);
+				output.printf("\t\t{0} {1}\n", attribute, val);
 			}
 		} else {
 			ensureToFinish();
@@ -148,7 +148,7 @@ public class FileSinkGML : FileSinkBase {
 	public void nodeAdded(string sourceId, long timeId, string nodeId) {
 		ensureToFinish();
 		output.printf("\tnode [%n");
-		output.printf("\t\tid \"%s\"%n", nodeId);
+		output.printf("\t\tid \"{0}\"%n", nodeId);
 		nodeToFinish = nodeId;
 	}
 
@@ -160,9 +160,9 @@ public class FileSinkGML : FileSinkBase {
 			bool directed) {
 		ensureToFinish();
 		output.printf("\tedge [%n");
-		output.printf("\t\tid \"%s\"%n", edgeId);
-		output.printf("\t\tsource \"%s\"%n", fromNodeId);
-		output.printf("\t\ttarget \"%s\"%n", toNodeId);
+		output.printf("\t\tid \"{0}\"%n", edgeId);
+		output.printf("\t\tsource \"{0}\"%n", fromNodeId);
+		output.printf("\t\ttarget \"{0}\"%n", toNodeId);
 		edgeToFinish = edgeId;
 	}
 
@@ -180,10 +180,10 @@ public class FileSinkGML : FileSinkBase {
 
 	// Commands
 
-	Pattern forbiddenKeyChars = Pattern.compile(".*[^a-zA-Z0-9-_.].*");
+	System.Text.RegularExpressions.Regex forbiddenKeyChars = new System.Text.RegularExpressions.Regex(".*[^a-zA-Z0-9-_.].*");
 
 	protected string keyToString(string key) {
-		if (forbiddenKeyChars.matcher(key).matches())
+		if (forbiddenKeyChars.Match(key).matches())
 			return "\"" + key.Replace("\"", "\\\"") + "\"";
 
 		return key;
@@ -201,7 +201,7 @@ public class FileSinkGML : FileSinkBase {
 				return string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", val);
 		}
 
-		return string.Format("\"%s\"", value.ToString().Replace("\n|\r|\"", " "));
+		return string.Format("\"{0}\"", value.ToString().Replace("\n|\r|\"", " "));
 	}
 
 	protected void ensureToFinish() {

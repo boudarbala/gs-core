@@ -153,12 +153,12 @@ public class AdjacencyListGraph : AbstractGraph {
 
 	
 	public IEnumerable<INode> nodes() {
-		return new ArraySegment<object>(nodeArray, 0, nodeCount - 0);
+		return new ArraySegment<AbstractEdge>(nodeArray, 0, nodeCount - 0);
 	}
 
 	
 	public IEnumerable<IEdge> edges() {
-		return new ArraySegment<object>(edgeArray, 0, edgeCount - 0);
+		return new ArraySegment<AbstractEdge>(edgeArray, 0, edgeCount - 0);
 	}
 
 	

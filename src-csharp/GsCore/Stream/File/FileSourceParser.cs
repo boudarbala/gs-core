@@ -77,7 +77,7 @@ abstract class FileSourceParser : SourceBase, IFileSource {
 	 * @see org.graphstream.stream.file.FileSource#readAll(java.net.URL)
 	 */
 	public void readAll(System.Uri url){
-		Parser parser = factory.newParser(new System.IO.StreamReader(url.openStream()));
+		Parser parser = factory.newParser(new System.IO.StreamReader(url /* .openStream() */));
 
 		try {
 			parser.all();
@@ -143,7 +143,7 @@ abstract class FileSourceParser : SourceBase, IFileSource {
 	 * @see org.graphstream.stream.file.FileSource#begin(java.net.URL)
 	 */
 	public void begin(System.Uri url){
-		parser = factory.newParser(new System.IO.StreamReader(url.openStream()));
+		parser = factory.newParser(new System.IO.StreamReader(url /* .openStream() */));
 
 		try {
 			parser.open();

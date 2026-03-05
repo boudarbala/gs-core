@@ -114,7 +114,7 @@ public class GMLParser : Parser, GMLParserConstants {
 			jj_consume_token(-1);
 			throw new ParseException();
 		}
-		label_1: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case STRING:
 			case KEY:
@@ -123,7 +123,7 @@ public class GMLParser : Parser, GMLParserConstants {
 				break;
 			default:
 				jj_la1[1] = jj_gen;
-				break label_1;
+				break;
 			}
 			key = keyValue(values);
 			values.key = key;
@@ -201,7 +201,7 @@ public class GMLParser : Parser, GMLParserConstants {
 /// </summary>
 	public KeyValues list(){
 		KeyValues values = new KeyValues();
-		label_2: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case STRING:
 			case KEY:
@@ -210,7 +210,7 @@ public class GMLParser : Parser, GMLParserConstants {
 				break;
 			default:
 				jj_la1[3] = jj_gen;
-				break label_2;
+				break;
 			}
 			keyValue(values);
 		}
@@ -229,14 +229,14 @@ public class GMLParser : Parser, GMLParserConstants {
 		string key;
 		object v;
 		bool isGraph = false;
-		label_3: while (true) {
+		while (true) {
 			switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 			case COMMENT:
 				;
 				break;
 			default:
 				jj_la1[4] = jj_gen;
-				break label_3;
+				break;
 			}
 			jj_consume_token(COMMENT);
 		}
@@ -280,11 +280,11 @@ public class GMLParser : Parser, GMLParserConstants {
 			if (t.image.IndexOf('.') < 0)
 				val = int.Parse(t.image);
 			else
-				val = double.valueOf(t.image);
+				val = double.Parse(t.image);
 			break;
 		case STRING:
 			t = jj_consume_token(STRING);
-			val = t.image.Substring(1, t.image.Length - 1);
+			val = t.image.Substring(1, t.image.Length - 2);
 			break;
 		case KEY:
 			t = jj_consume_token(KEY);

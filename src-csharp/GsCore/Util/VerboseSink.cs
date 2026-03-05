@@ -36,24 +36,24 @@ namespace Org.GraphStream.Util
 /// A sink that can be used to display event in a PrintStream like System.out. Format of messages can be customized, inserting keywords quoted with '%' in the format. '%sourceId%' and '%timeId%' keywords are defined for each evt. Following defines keywords available for each event types: <dl> <dt>ADD_NODE</dt> <dd> <ul> <li>%nodeId%</li> </ul> </dd> <dt>ADD_NODE_ATTRIBUTE</dt> <dd> <ul> <li>%nodeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>SET_NODE_ATTRIBUTE</dt> <dd> <ul> <li>%nodeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>DEL_NODE_ATTRIBUTE</dt> <dd> <ul> <li>%nodeId%</li> <li>%attributeId%</li> </ul> </dd> <dt>DEL_NODE</dt> <dd> <ul> <li>%nodeId%</li> </ul> </dd> <dt>ADD_EDGE</dt> <dd> <ul> <li>%edgeId%</li> <li>%source%</li> <li>%target%</li> <li>%directed%</li> </ul> </dd> <dt>ADD_EDGE_ATTRIBUTE</dt> <dd> <ul> <li>%edgeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>SET_EDGE_ATTRIBUTE</dt> <dd> <ul> <li>%edgeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>DEL_EDGE_ATTRIBUTE</dt> <dd> <ul> <li>%edgeId%</li> <li>%attributeId%</li> </ul> </dd> <dt>DEL_EDGE</dt> <dd> <ul> <li>%edgeId%</li> </ul> </dd> <dt>ADD_GRAPH_ATTRIBUTE</dt> <dd> <ul> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>SET_GRAPH_ATTRIBUTE</dt> <dd> <ul> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>DEL_GRAPH_ATTRIBUTE</dt> <dd> <ul> <li>%attributeId%</li> </ul> </dd> <dt>CLEAR</dt> <dd></dd> <dt>STEP_BEGINS</dt> <dd> <ul> <li>%step%</li> </ul> </dd> </dl>
 /// </summary>
 public class VerboseSink : ISink {
-	public static readonly string DEFAULT_AN_FORMAT = "%prefix%[%sourceId%:%timeId%] add node \"%nodeId%\"%suffix%";
-	public static readonly string DEFAULT_CNA_FORMAT = "%prefix%[%sourceId%:%timeId%] set node \"%nodeId%\" +\"%attributeId%\"=%value%%suffix%";
-	public static readonly string DEFAULT_CNC_FORMAT = "%prefix%[%sourceId%:%timeId%] set node \"%nodeId%\" \"%attributeId%\"=%value%%suffix%";
-	public static readonly string DEFAULT_CNR_FORMAT = "%prefix%[%sourceId%:%timeId%] set node \"%nodeId%\" -\"%attributeId%\"%suffix%";
-	public static readonly string DEFAULT_DN_FORMAT = "%prefix%[%sourceId%:%timeId%] remove node \"%nodeId%\"%suffix%";
+	public static readonly string DEFAULT_AN_FORMAT = "%prefix%[{0}ourceId%:%timeId%] add node \"%nodeId%\"{0}uffix%";
+	public static readonly string DEFAULT_CNA_FORMAT = "%prefix%[{0}ourceId%:%timeId%] set node \"%nodeId%\" +\"%attributeId%\"=%value%suffix%";
+	public static readonly string DEFAULT_CNC_FORMAT = "%prefix%[{0}ourceId%:%timeId%] set node \"%nodeId%\" \"%attributeId%\"=%value%suffix%";
+	public static readonly string DEFAULT_CNR_FORMAT = "%prefix%[{0}ourceId%:%timeId%] set node \"%nodeId%\" -\"%attributeId%\"{0}uffix%";
+	public static readonly string DEFAULT_DN_FORMAT = "%prefix%[{0}ourceId%:%timeId%] remove node \"%nodeId%\"{0}uffix%";
 
-	public static readonly string DEFAULT_AE_FORMAT = "%prefix%[%sourceId%:%timeId%] add edge \"%edgeId%\" : \"%source%\" -- \"%target%\"%suffix%";
-	public static readonly string DEFAULT_CEA_FORMAT = "%prefix%[%sourceId%:%timeId%] set edge \"%edgeId%\" +\"%attributeId%\"=%value%%suffix%";
-	public static readonly string DEFAULT_CEC_FORMAT = "%prefix%[%sourceId%:%timeId%] set edge \"%edgeId%\" \"%attributeId%\"=%value%%suffix%";
-	public static readonly string DEFAULT_CER_FORMAT = "%prefix%[%sourceId%:%timeId%] set edge \"%edgeId%\" -\"%attributeId%\"%suffix%";
-	public static readonly string DEFAULT_DE_FORMAT = "%prefix%[%sourceId%:%timeId%] remove edge \"%edgeId%\"%suffix%";
+	public static readonly string DEFAULT_AE_FORMAT = "%prefix%[{0}ourceId%:%timeId%] add edge \"%edgeId%\" : \"{0}ource%\" -- \"%target%\"{0}uffix%";
+	public static readonly string DEFAULT_CEA_FORMAT = "%prefix%[{0}ourceId%:%timeId%] set edge \"%edgeId%\" +\"%attributeId%\"=%value%suffix%";
+	public static readonly string DEFAULT_CEC_FORMAT = "%prefix%[{0}ourceId%:%timeId%] set edge \"%edgeId%\" \"%attributeId%\"=%value%suffix%";
+	public static readonly string DEFAULT_CER_FORMAT = "%prefix%[{0}ourceId%:%timeId%] set edge \"%edgeId%\" -\"%attributeId%\"{0}uffix%";
+	public static readonly string DEFAULT_DE_FORMAT = "%prefix%[{0}ourceId%:%timeId%] remove edge \"%edgeId%\"{0}uffix%";
 
-	public static readonly string DEFAULT_CGA_FORMAT = "%prefix%[%sourceId%:%timeId%] set +\"%attributeId%\"=%value%%suffix%";
-	public static readonly string DEFAULT_CGC_FORMAT = "%prefix%[%sourceId%:%timeId%] set \"%attributeId%\"=%value%%suffix%";
-	public static readonly string DEFAULT_CGR_FORMAT = "%prefix%[%sourceId%:%timeId%] set -\"%attributeId%\"%suffix%";
+	public static readonly string DEFAULT_CGA_FORMAT = "%prefix%[{0}ourceId%:%timeId%] set +\"%attributeId%\"=%value%suffix%";
+	public static readonly string DEFAULT_CGC_FORMAT = "%prefix%[{0}ourceId%:%timeId%] set \"%attributeId%\"=%value%suffix%";
+	public static readonly string DEFAULT_CGR_FORMAT = "%prefix%[{0}ourceId%:%timeId%] set -\"%attributeId%\"{0}uffix%";
 
-	public static readonly string DEFAULT_CL_FORMAT = "%prefix%[%sourceId%:%timeId%] clear%suffix%";
-	public static readonly string DEFAULT_ST_FORMAT = "%prefix%[%sourceId%:%timeId%] step %step% begins%suffix%";
+	public static readonly string DEFAULT_CL_FORMAT = "%prefix%[{0}ourceId%:%timeId%] clear{1}uffix%";
+	public static readonly string DEFAULT_ST_FORMAT = "%prefix%[{0}ourceId%:%timeId%] step {1}tep% begins{2}uffix%";
 
 	/*
 	 * Shortcut to use HashMap<String, object>.
@@ -129,7 +129,7 @@ public class VerboseSink : ISink {
 		formats[EventType.CLEAR] = DEFAULT_CL_FORMAT;
 		formats[EventType.STEP_BEGINS] = DEFAULT_ST_FORMAT;
 
-		foreach (EventType t in EventType.Values)
+		foreach (EventType t in ((EventType[])Enum.GetValues(typeof(EventType))))
 			enable[t] = bool.TRUE;
 
 		suffix = "";
@@ -221,7 +221,7 @@ public class VerboseSink : ISink {
 		this.output.printf("\n");
 
 		if (autoflush)
-			this.output.Flush();
+			this./* output.Flush(); */
 
 		argsPnP(args);
 	}
@@ -229,7 +229,7 @@ public class VerboseSink : ISink {
 	private Args argsPnP(Args args) {
 		if (args == null) {
 			if (argsStack.Count > 0)
-				args = argsStack.pop();
+				args = argsStack.Pop();
 			else
 				args = new Args();
 
@@ -239,7 +239,7 @@ public class VerboseSink : ISink {
 			return args;
 		} else {
 			args.Clear();
-			argsStack.push(args);
+			argsStack.Push(args);
 
 			return null;
 		}
@@ -252,7 +252,7 @@ public class VerboseSink : ISink {
 		if (o is string)
 			return "\"" + ((string) o).Replace("\"", "\\\"") + "\"";
 		else if (o.GetType().IsArray) {
-			System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder();
+			System.Text.StringBuilder buffer = new System.Text.StringBuilder();
 			buffer.Append("{");
 
 			for (int i = 0; i < Array.getLength(o); i++) {

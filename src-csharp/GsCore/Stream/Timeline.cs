@@ -388,7 +388,7 @@ public class Timeline : ISource, IReplayable, IEnumerable<IGraph> {
 	}
 
 	private static string toString(IGraph g) {
-		System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder buffer = new System.Text.StringBuilder();
 		buffer.Append("id=\"").Append(g.getId()).Append("\" node={");
 
 		g.nodes().ToList().ForEach(n => buffer.Append("\"").Append(n.getId()).Append("\", "));

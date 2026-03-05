@@ -119,7 +119,7 @@ abstract class ISODateComponent {
 	class TextComponent : ISODateComponent {
 		string unquoted;
 
-		public TextComponent(string value) : base(null, Pattern.quote(value)) {
+		public TextComponent(string value) : base(null, System.Text.RegularExpressions.Regex.quote(value)) {
 			unquoted = value;
 		}
 

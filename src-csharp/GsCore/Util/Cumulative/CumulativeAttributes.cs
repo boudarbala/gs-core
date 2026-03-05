@@ -107,19 +107,19 @@ public class CumulativeAttributes {
 	}
 
 	public void remove() {
-		foreach (CumulativeSpells spells in data.Values)
+		foreach (CumulativeSpells spells in ((data[])Enum.GetValues(typeof(data))))
 			spells.closeSpell();
 	}
 
 	public void updateDate(double date) {
 		this.date = date;
 
-		foreach (CumulativeSpells spells in data.Values)
+		foreach (CumulativeSpells spells in ((data[])Enum.GetValues(typeof(data))))
 			spells.updateCurrentSpell(date);
 	}
 
 	public string toString() {
-		System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder buffer = new System.Text.StringBuilder();
 
 		buffer.Append("(");
 

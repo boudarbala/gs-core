@@ -517,7 +517,7 @@ public class FileSourceGPX : FileSourceXML {
 
 			while (isEvent(e, XMLEvent.START_ELEMENT, "rtept")) {
 				pushback(e);
-				points.addLast(__rtept());
+				points.Add(__rtept());
 
 				e = getNextEvent();
 			}
@@ -1229,7 +1229,7 @@ public class FileSourceGPX : FileSourceXML {
 
 			while (isEvent(e, XMLEvent.START_ELEMENT, "trkpt")) {
 				pushback(e);
-				points.addLast(__trkpt());
+				points.Add(__trkpt());
 
 				e = getNextEvent();
 			}

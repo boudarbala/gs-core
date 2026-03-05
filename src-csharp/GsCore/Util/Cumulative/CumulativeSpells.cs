@@ -187,7 +187,7 @@ public class CumulativeSpells {
 	}
 
 	public string toString() {
-		System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder buffer = new System.Text.StringBuilder();
 
 		buffer.Append("{");
 

@@ -58,7 +58,7 @@ public class ISODateIO {
 	/// <summary>
 /// The regular expression builds from the components.
 /// </summary>
-	protected Pattern pattern;
+	protected System.Text.RegularExpressions.Regex pattern;
 
 	/// <summary>
 /// Create a scanner with default format "%K".
@@ -78,7 +78,7 @@ public class ISODateIO {
 /// Get the current pattern used to parse timestamp.
 /// </summary>
 /// <returns>a regular expression as a string</returns>
-	public Pattern getPattern() {
+	public System.Text.RegularExpressions.Regex getPattern() {
 		return pattern;
 	}
 
@@ -101,7 +101,7 @@ public class ISODateIO {
 							List<ISODateComponent> sub = findComponents(KNOWN_COMPONENTS[i].getReplacement());
 							components.AddRange(sub);
 						} else
-							components.addLast(KNOWN_COMPONENTS[i]);
+							components.Add(KNOWN_COMPONENTS[i]);
 
 						offset += KNOWN_COMPONENTS[i].getDirective().Length;
 					}
@@ -112,7 +112,7 @@ public class ISODateIO {
 				int from = offset;
 				while (offset < format.Length && format[offset] != '%')
 					offset++;
-				components.addLast(new TextComponent(format.Substring(from, offset)));
+				components.Add(new TextComponent(format.Substring(from, offset)));
 			}
 		}
 
@@ -136,7 +136,7 @@ public class ISODateIO {
 			pattern += "(" + regexValue + ")";
 		}
 
-		this.pattern = Pattern.compile(pattern);
+		this.pattern = new System.Text.RegularExpressions.Regex(pattern);
 	}
 
 	/// <summary>
@@ -155,9 +155,9 @@ public class ISODateIO {
 /// <returns>a calendar modeling the time value or null if invalid format</returns>
 	public Calendar parse(string time) {
 		Calendar cal = Calendar.getInstance();
-		Matcher match = pattern.matcher(time);
+		System.Text.RegularExpressions.Match match = pattern.Match(time);
 
-		if (match.matches()) {
+		if (match.Success) {
 			for (int i = 0; i < components.Count; i++)
 				components[i].set(match.group(i + 1), cal);
 		} else

@@ -41,7 +41,7 @@ public class FileSourceFactory {
 /// <param name="fileName"> Name of the graph file.</param>
 /// <returns>A graph reader suitable for the fileName graph format.</returns>
 	public static IFileSource sourceFor(string fileName){
-		File file = new System.IO.FileInfo(fileName);
+		System.IO.FileInfo file = new System.IO.FileInfo(fileName);
 
 		if (!file.isFile())
 			throw new System.IO.IOException("not a regular file '" + fileName + "'");

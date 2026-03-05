@@ -102,7 +102,7 @@ public class FileSinkDOT : FileSinkBase {
 
 		foreach (INode node in graph) {
 			string nodeId = node.getId();
-			output.printf("\t\"%s\" %s;%n", nodeId, outputAttributes(node));
+			output.printf("\t\"{0}\" %s;%n", nodeId, outputAttributes(node));
 		}
 
 		graph.edges().ToList().ForEach(edge => {
@@ -111,24 +111,24 @@ public class FileSinkDOT : FileSinkBase {
 			string attr = outputAttributes(edge);
 
 			if (digraph) {
-				output.printf("\t\"%s\" -> \"%s\"", fromNodeId, toNodeId);
+				output.printf("\t\"{0}\" -> \"{0}\"", fromNodeId, toNodeId);
 
 				if (!edge.isDirected())
-					output.printf(" -> \"%s\"", fromNodeId);
+					output.printf(" -> \"{0}\"", fromNodeId);
 			} else
-				output.printf("\t\"%s\" -- \"%s\"", fromNodeId, toNodeId);
+				output.printf("\t\"{0}\" -- \"{0}\"", fromNodeId, toNodeId);
 
-			output.printf(" %s;%n", attr);
+			output.printf(" {0};\n", attr);
 		});
 	}
 
 	
 	protected void outputHeader(){
 		out = (System.IO.StreamWriter) output;
-		output.printf("%s {%n", digraph ? "digraph" : "graph");
+		output.printf("{0} {\n", digraph ? "digraph" : "graph");
 
 		if (graphName.Length > 0)
-			output.printf("\tgraph [label=%s];%n", graphName);
+			output.printf("\tgraph [label={0}];\n", graphName);
 	}
 
 	
@@ -150,11 +150,11 @@ public class FileSinkDOT : FileSinkBase {
 	}
 
 	public void graphAttributeAdded(string graphId, long timeId, string attribute, object value) {
-		output.printf("\tgraph [ %s ];%n", outputAttribute(attribute, value, true));
+		output.printf("\tgraph [ {0} ];\n", outputAttribute(attribute, value, true));
 	}
 
 	public void graphAttributeChanged(string graphId, long timeId, string attribute, object oldValue, object newValue) {
-		output.printf("\tgraph [ %s ];%n", outputAttribute(attribute, newValue, true));
+		output.printf("\tgraph [ {0} ];\n", outputAttribute(attribute, newValue, true));
 	}
 
 	public void graphAttributeRemoved(string graphId, long timeId, string attribute) {
@@ -162,12 +162,12 @@ public class FileSinkDOT : FileSinkBase {
 	}
 
 	public void nodeAttributeAdded(string graphId, long timeId, string nodeId, string attribute, object value) {
-		output.printf("\t\"%s\" [ %s ];%n", nodeId, outputAttribute(attribute, value, true));
+		output.printf("\t\"{0}\" [ %s ];%n", nodeId, outputAttribute(attribute, value, true));
 	}
 
 	public void nodeAttributeChanged(string graphId, long timeId, string nodeId, string attribute, object oldValue,
 			object newValue) {
-		output.printf("\t\"%s\" [ %s ];%n", nodeId, outputAttribute(attribute, newValue, true));
+		output.printf("\t\"{0}\" [ %s ];%n", nodeId, outputAttribute(attribute, newValue, true));
 	}
 
 	public void nodeAttributeRemoved(string graphId, long timeId, string nodeId, string attribute) {
@@ -177,14 +177,14 @@ public class FileSinkDOT : FileSinkBase {
 	public void edgeAdded(string graphId, long timeId, string edgeId, string fromNodeId, string toNodeId,
 			bool directed) {
 		if (digraph) {
-			output.printf("\t\"%s\" -> \"%s\"", fromNodeId, toNodeId);
+			output.printf("\t\"{0}\" -> \"{0}\"", fromNodeId, toNodeId);
 
 			if (!directed)
-				output.printf(" -> \"%s\"", fromNodeId);
+				output.printf(" -> \"{0}\"", fromNodeId);
 
 			output.printf(";%n");
 		} else
-			output.printf("\t\"%s\" -- \"%s\";%n", fromNodeId, toNodeId);
+			output.printf("\t\"{0}\" -- \"{0}\";%n", fromNodeId, toNodeId);
 	}
 
 	public void edgeRemoved(string graphId, long timeId, string edgeId) {
@@ -196,7 +196,7 @@ public class FileSinkDOT : FileSinkBase {
 	}
 
 	public void nodeAdded(string graphId, long timeId, string nodeId) {
-		output.printf("\t\"%s\";%n", nodeId);
+		output.printf("\t\"{0}\";%n", nodeId);
 	}
 
 	public void nodeRemoved(string graphId, long timeId, string nodeId) {
@@ -231,14 +231,14 @@ public class FileSinkDOT : FileSinkBase {
 		if (value is IConvertible)
 			quote = false;
 
-		return string.Format("{0}\"%s\"=%s%s%s", first ? "" : ",", key, quote ? "\"" : "", value, quote ? "\"" : "");
+		return string.Format("{0}\"{0}\"=%s%s%s", first ? "" : ",", key, quote ? "\"" : "", value, quote ? "\"" : "");
 	}
 
 	protected string outputAttributes(IElement e) {
 		if (e.getAttributeCount() == 0)
 			return "";
 
-		System.Text.System.Text.StringBuilder buffer = new System.Text.System.Text.StringBuilder("[");
+		System.Text.StringBuilder buffer = new System.Text.StringBuilder("[");
 		AtomicBoolean first = new AtomicBoolean(true);
 
 		e.attributeKeys().ToList().ForEach(key => {
@@ -248,7 +248,7 @@ public class FileSinkDOT : FileSinkBase {
 			if (value is IConvertible)
 				quote = false;
 
-			buffer.Append(string.Format("{0}\"%s\"=%s%s%s", first[] ? "" : ",", key, quote ? "\"" : "", value,
+			buffer.Append(string.Format("{0}\"{0}\"=%s%s%s", first[] ? "" : ",", key, quote ? "\"" : "", value,
 					quote ? "\"" : ""));
 
 			first.set(false);

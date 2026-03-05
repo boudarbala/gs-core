@@ -140,7 +140,7 @@ abstract class FileSinkBase : IFileSink {
 	 */
 	public void flush(){
 		if (output != null)
-			output.Flush();
+			/* output.Flush(); */
 	}
 
 	/*
@@ -150,7 +150,7 @@ abstract class FileSinkBase : IFileSink {
 	 */
 	public void end(){
 		outputEndOfFile();
-		output.Flush();
+		/* output.Flush(); */
 		output.Close();
 		output = null;
 	}

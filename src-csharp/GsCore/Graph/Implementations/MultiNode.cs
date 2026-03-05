@@ -46,7 +46,7 @@ public class MultiNode : AdjacencyListNode {
 
 	
 	
-	protected T locateEdge<T>(INode opposite, char type) { where T : IEdge
+	protected T locateEdge<T>(INode opposite, char type) where T : IEdge {
 		List<AbstractEdge> l = neighborMap[opposite];
 		if (l == null)
 			return null;
@@ -92,18 +92,18 @@ public class MultiNode : AdjacencyListNode {
 	// *** Others ***
 
 	
-	public ICollection<T> getEdgeSetBetween<T>(INode node) { where T : IEdge
+	public ICollection<T> getEdgeSetBetween<T>(INode node) where T : IEdge {
 		List<AbstractEdge> l = neighborMap[node];
 		if (l == null)
 			return new List<object>();
 		return (ICollection<T>) new List<object>(l);
 	}
 
-	public ICollection<T> getEdgeSetBetween<T>(string id) { where T : IEdge
+	public ICollection<T> getEdgeSetBetween<T>(string id) where T : IEdge {
 		return getEdgeSetBetween(graph.getNode(id));
 	}
 
-	public ICollection<T> getEdgeSetBetween<T>(int index) { where T : IEdge
+	public ICollection<T> getEdgeSetBetween<T>(int index) where T : IEdge {
 		return getEdgeSetBetween(graph.getNode(index));
 	}
 }

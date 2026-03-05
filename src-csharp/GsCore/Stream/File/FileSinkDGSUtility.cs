@@ -41,18 +41,18 @@ public class FileSinkDGSUtility {
 			return null;
 
 		if (remove) {
-			return string.Format(" -\"%s\"", key);
+			return string.Format(" -\"{0}\"", key);
 		} else {
 			if (value != null && value.GetType().IsArray)
-				return string.Format(" \"%s\":%s", key, arrayString(value));
+				return string.Format(" \"{0}\":%s", key, arrayString(value));
 			else
-				return string.Format(" \"%s\":%s", key, valueString(value));
+				return string.Format(" \"{0}\":%s", key, valueString(value));
 		}
 	}
 
 	protected static string arrayString(object value) {
 		if (value != null && value.GetType().IsArray) {
-			System.Text.System.Text.StringBuilder sb = new System.Text.System.Text.StringBuilder();
+			System.Text.StringBuilder sb = new System.Text.StringBuilder();
 			sb.Append("{");
 
 			if (Array.getLength(value) == 0)
@@ -76,9 +76,9 @@ public class FileSinkDGSUtility {
 
 		if (value is string) {
 			if (value is string)
-				return string.Format("\"%s\"", formatStringForQuoting((string) value));
+				return string.Format("\"{0}\"", formatStringForQuoting((string) value));
 			else
-				return string.Format("\"%s\"", (string) value);
+				return string.Format("\"{0}\"", (string) value);
 		} else if (value is IConvertible) {
 			IConvertible nval = (IConvertible) value;
 
@@ -112,12 +112,12 @@ public class FileSinkDGSUtility {
 			Color c = (Color) value;
 			return string.Format("#{0}{1}{2}{3}", c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
 		} else {
-			return string.Format("\"%s\"", value.ToString());
+			return string.Format("\"{0}\"", value.ToString());
 		}
 	}
 
 	protected static string hashToString(Dictionary<object, object> hash) {
-		System.Text.System.Text.StringBuilder sb = new System.Text.System.Text.StringBuilder();
+		System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
 		sb.Append("[ ");
 

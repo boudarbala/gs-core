@@ -111,13 +111,13 @@ public class FileSourceGraphML : FileSourceXML {
 				case INT:
 					return int.Parse(value);
 				case LONG:
-					return long.valueOf(value);
+					return (long)Enum.Parse(typeof(long), value);
 				case FLOAT:
-					return float.valueOf(value);
+					return float.Parse(value);
 				case DOUBLE:
-					return double.valueOf(value);
+					return double.Parse(value);
 				case BOOLEAN:
-					return bool.valueOf(value);
+					return bool.Parse(value);
 				}
 
 				return value;
@@ -252,19 +252,19 @@ public class FileSourceGraphML : FileSourceXML {
 				return int.Parse(0);
 			case LONG:
 				if (key.def != null)
-					return long.valueOf(key.def);
+					return (long)Enum.Parse(typeof(long), key.def);
 
-				return long.valueOf(0);
+				return (long)Enum.Parse(typeof(long), 0);
 			case FLOAT:
 				if (key.def != null)
-					return float.valueOf(key.def);
+					return float.Parse(key.def);
 
-				return float.valueOf(0.0f);
+				return float.Parse(0.0f);
 			case DOUBLE:
 				if (key.def != null)
-					return double.valueOf(key.def);
+					return double.Parse(key.def);
 
-				return double.valueOf(0.0);
+				return double.Parse(0.0);
 			case STRING:
 				if (key.def != null)
 					return key.def;
@@ -353,7 +353,7 @@ public class FileSourceGraphML : FileSourceXML {
 				Attribute a = attributes.next();
 
 				try {
-					LocatorAttribute attribute = LocatorAttribute.valueOf(toConstantName(a));
+					LocatorAttribute attribute = (LocatorAttribute)Enum.Parse(typeof(LocatorAttribute), toConstantName(a));
 
 					switch (attribute) {
 					case XMLNS_XLINK:
@@ -367,7 +367,7 @@ public class FileSourceGraphML : FileSourceXML {
 						break;
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, false, "invalid locator attribute '%s'", a.Name.getLocalPart());
+					newParseError(e, false, "invalid locator attribute '{0}'", a.Name.getLocalPart());
 				}
 			}
 
@@ -402,7 +402,7 @@ public class FileSourceGraphML : FileSourceXML {
 				Attribute a = attributes.next();
 
 				try {
-					KeyAttribute attribute = KeyAttribute.valueOf(toConstantName(a));
+					KeyAttribute attribute = (KeyAttribute)Enum.Parse(typeof(KeyAttribute), toConstantName(a));
 
 					switch (attribute) {
 					case ID:
@@ -411,17 +411,17 @@ public class FileSourceGraphML : FileSourceXML {
 						break;
 					case FOR:
 						try {
-							domain = KeyDomain.valueOf(toConstantName(a.Value));
+							domain = (KeyDomain)Enum.Parse(typeof(KeyDomain), toConstantName(a.Value));
 						} catch (ArgumentException ex) {
-							newParseError(e, false, "invalid key domain '%s'", a.Value);
+							newParseError(e, false, "invalid key domain '{0}'", a.Value);
 						}
 
 						break;
 					case ATTR_TYPE:
 						try {
-							type = KeyAttrType.valueOf(toConstantName(a.Value));
+							type = (KeyAttrType)Enum.Parse(typeof(KeyAttrType), toConstantName(a.Value));
 						} catch (ArgumentException ex) {
-							newParseError(e, false, "invalid key type '%s'", a.Value);
+							newParseError(e, false, "invalid key type '{0}'", a.Value);
 						}
 
 						break;
@@ -431,7 +431,7 @@ public class FileSourceGraphML : FileSourceXML {
 						break;
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, false, "invalid key attribute '%s'", a.Name.getLocalPart());
+					newParseError(e, false, "invalid key attribute '{0}'", a.Name.getLocalPart());
 				}
 			}
 
@@ -480,7 +480,7 @@ public class FileSourceGraphML : FileSourceXML {
 				Attribute a = attributes.next();
 
 				try {
-					PortAttribute attribute = PortAttribute.valueOf(toConstantName(a));
+					PortAttribute attribute = (PortAttribute)Enum.Parse(typeof(PortAttribute), toConstantName(a));
 
 					switch (attribute) {
 					case NAME:
@@ -488,7 +488,7 @@ public class FileSourceGraphML : FileSourceXML {
 						break;
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, false, "invalid attribute '%s' for '<port>'", a.Name.getLocalPart());
+					newParseError(e, false, "invalid attribute '{0}' for '<port>'", a.Name.getLocalPart());
 				}
 			}
 
@@ -545,7 +545,7 @@ public class FileSourceGraphML : FileSourceXML {
 				Attribute a = attributes.next();
 
 				try {
-					EndPointAttribute attribute = EndPointAttribute.valueOf(toConstantName(a));
+					EndPointAttribute attribute = (EndPointAttribute)Enum.Parse(typeof(EndPointAttribute), toConstantName(a));
 
 					switch (attribute) {
 					case NODE:
@@ -559,15 +559,15 @@ public class FileSourceGraphML : FileSourceXML {
 						break;
 					case TYPE:
 						try {
-							ep.type = EndPointType.valueOf(toConstantName(a.Value));
+							ep.type = (EndPointType)Enum.Parse(typeof(EndPointType), toConstantName(a.Value));
 						} catch (ArgumentException ex) {
-							newParseError(e, false, "invalid end point type '%s'", a.Value);
+							newParseError(e, false, "invalid end point type '{0}'", a.Value);
 						}
 
 						break;
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, false, "invalid attribute '%s' for '<endpoint>'", a.Name.getLocalPart());
+					newParseError(e, false, "invalid attribute '{0}' for '<endpoint>'", a.Name.getLocalPart());
 				}
 			}
 
@@ -605,7 +605,7 @@ public class FileSourceGraphML : FileSourceXML {
 				Attribute a = attributes.next();
 
 				try {
-					DataAttribute attribute = DataAttribute.valueOf(toConstantName(a));
+					DataAttribute attribute = (DataAttribute)Enum.Parse(typeof(DataAttribute), toConstantName(a));
 
 					switch (attribute) {
 					case KEY:
@@ -616,7 +616,7 @@ public class FileSourceGraphML : FileSourceXML {
 						break;
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, false, "invalid attribute '%s' for '<data>'", a.Name.getLocalPart());
+					newParseError(e, false, "invalid attribute '{0}' for '<data>'", a.Name.getLocalPart());
 				}
 			}
 
@@ -629,7 +629,7 @@ public class FileSourceGraphML : FileSourceXML {
 			checkValid(e, XMLEvent.END_ELEMENT, "data");
 
 			if (!keys.ContainsKey(key))
-				newParseError(e, true, "unknown key '%s'", key);
+				newParseError(e, true, "unknown key '{0}'", key);
 
 			Data d = new Data();
 
@@ -661,7 +661,7 @@ public class FileSourceGraphML : FileSourceXML {
 				Attribute a = attributes.next();
 
 				try {
-					GraphAttribute attribute = GraphAttribute.valueOf(toConstantName(a));
+					GraphAttribute attribute = (GraphAttribute)Enum.Parse(typeof(GraphAttribute), toConstantName(a));
 
 					switch (attribute) {
 					case ID:
@@ -673,14 +673,14 @@ public class FileSourceGraphML : FileSourceXML {
 						else if (a.Value.Equals("undirected"))
 							directed = false;
 						else
-							newParseError(e, true, "invalid 'edgedefault' value '%s'", a.Value);
+							newParseError(e, true, "invalid 'edgedefault' value '{0}'", a.Value);
 
 						directedSet = true;
 
 						break;
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, false, "invalid node attribute '%s'", a.Name.getLocalPart());
+					newParseError(e, false, "invalid node attribute '{0}'", a.Name.getLocalPart());
 				}
 			}
 
@@ -690,14 +690,14 @@ public class FileSourceGraphML : FileSourceXML {
 			string gid = "";
 
 			if (graphId.Count > 0)
-				gid = graphId.peek() + ":";
+				gid = graphId.Peek() + ":";
 
 			if (id != null)
 				gid += id;
 			else
 				gid += int.toString(graphCounter++);
 
-			graphId.push(gid);
+			graphId.Push(gid);
 
 			e = getNextEvent();
 
@@ -736,7 +736,7 @@ public class FileSourceGraphML : FileSourceXML {
 				}
 			}
 
-			graphId.pop();
+			graphId.Pop();
 			checkValid(e, XMLEvent.END_ELEMENT, "graph");
 		}
 
@@ -760,7 +760,7 @@ public class FileSourceGraphML : FileSourceXML {
 				Attribute a = attributes.next();
 
 				try {
-					NodeAttribute attribute = NodeAttribute.valueOf(toConstantName(a));
+					NodeAttribute attribute = (NodeAttribute)Enum.Parse(typeof(NodeAttribute), toConstantName(a));
 
 					switch (attribute) {
 					case ID:
@@ -769,7 +769,7 @@ public class FileSourceGraphML : FileSourceXML {
 					}
 				} catch (ArgumentException ex) {
 					if (strictMode)
-						newParseError(e, false, "invalid node attribute '%s'", a.Name.getLocalPart());
+						newParseError(e, false, "invalid node attribute '{0}'", a.Name.getLocalPart());
 					unexpectedAttributes.Add(a);
 				}
 			}
@@ -825,7 +825,7 @@ public class FileSourceGraphML : FileSourceXML {
 				}
 			}
 
-			foreach (Key k in keys.Values) {
+			foreach (Key k in ((keys[])Enum.GetValues(typeof(keys)))) {
 				if ((k.domain == KeyDomain.NODE || k.domain == KeyDomain.ALL) && !sentAttributes.Contains(k))
 					sendNodeAttributeAdded(sourceId, id, k.name, getDefaultValue(k));
 			}
@@ -869,7 +869,7 @@ public class FileSourceGraphML : FileSourceXML {
 				Attribute a = attributes.next();
 
 				try {
-					EdgeAttribute attribute = EdgeAttribute.valueOf(toConstantName(a));
+					EdgeAttribute attribute = (EdgeAttribute)Enum.Parse(typeof(EdgeAttribute), toConstantName(a));
 
 					switch (attribute) {
 					case ID:
@@ -890,7 +890,7 @@ public class FileSourceGraphML : FileSourceXML {
 					}
 				} catch (ArgumentException ex) {
 					if (strictMode)
-						newParseError(e, false, "invalid graph attribute '%s'", a.Name.getLocalPart());
+						newParseError(e, false, "invalid graph attribute '{0}'", a.Name.getLocalPart());
 					unexpectedAttributes.Add(a);
 				}
 			}
@@ -941,7 +941,7 @@ public class FileSourceGraphML : FileSourceXML {
 				}
 			}
 
-			foreach (Key k in keys.Values) {
+			foreach (Key k in ((keys[])Enum.GetValues(typeof(keys)))) {
 				if ((k.domain == KeyDomain.EDGE || k.domain == KeyDomain.ALL) && !sentAttributes.Contains(k))
 					sendEdgeAttributeAdded(sourceId, id, k.name, getDefaultValue(k));
 			}
@@ -978,7 +978,7 @@ public class FileSourceGraphML : FileSourceXML {
 				Attribute a = attributes.next();
 
 				try {
-					HyperEdgeAttribute attribute = HyperEdgeAttribute.valueOf(toConstantName(a));
+					HyperEdgeAttribute attribute = (HyperEdgeAttribute)Enum.Parse(typeof(HyperEdgeAttribute), toConstantName(a));
 
 					switch (attribute) {
 					case ID:
@@ -986,7 +986,7 @@ public class FileSourceGraphML : FileSourceXML {
 						break;
 					}
 				} catch (ArgumentException ex) {
-					newParseError(e, false, "invalid attribute '%s' for '<endpoint>'", a.Name.getLocalPart());
+					newParseError(e, false, "invalid attribute '{0}' for '<endpoint>'", a.Name.getLocalPart());
 				}
 			}
 

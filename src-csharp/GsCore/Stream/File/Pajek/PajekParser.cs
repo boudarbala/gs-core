@@ -73,7 +73,7 @@ public class PajekParser : Parser, PajekParserConstants {
 /// Unused rule, call it to slurp in the whole file.
 /// </summary>
 	public void all(){
-		label_1: while (true) {
+		while (true) {
 			if (jj_2_1(2)) {
 				network();
 			} else if (jj_2_2(2)) {
@@ -91,7 +91,7 @@ public class PajekParser : Parser, PajekParserConstants {
 			if (jj_2_6(2)) {
 				;
 			} else {
-				break label_1;
+				break;
 			}
 		}
 		jj_consume_token(0);
@@ -108,7 +108,7 @@ public class PajekParser : Parser, PajekParserConstants {
 			edges();
 		} else if (jj_2_10(2)) {
 			k = jj_consume_token(COMMENT);
-			System.err.printf("got comment %s%n", k.image);
+			System.err.printf("got comment {0}\n", k.image);
 		} else if (jj_2_11(2)) {
 			jj_consume_token(EOL);
 		} else if (jj_2_12(2)) {
@@ -127,17 +127,17 @@ public class PajekParser : Parser, PajekParserConstants {
 		StringBuffer buf = new StringBuffer();
 		bool first = true;
 		jj_consume_token(NETWORK);
-		label_2: while (true) {
+		while (true) {
 			if (jj_2_13(2)) {
 				;
 			} else {
-				break label_2;
+				break;
 			}
 			if (jj_2_14(2)) {
 				k = jj_consume_token(STRING);
 				if (!first)
 					buf.Append(" ");
-				buf.Append(k.image.Substring(1, k.image.Length - 1));
+				buf.Append(k.image.Substring(1, k.image.Length - 2));
 				first = false;
 			} else if (jj_2_15(2)) {
 				k = jj_consume_token(KEY);
@@ -161,11 +161,11 @@ public class PajekParser : Parser, PajekParserConstants {
 		n = jj_consume_token(INT);
 		EO();
 		nodeCount = ctx.addNodes(n);
-		label_3: while (true) {
+		while (true) {
 			if (jj_2_16(2)) {
 				;
 			} else {
-				break label_3;
+				break;
 			}
 			if (jj_2_17(2)) {
 				vertex();
@@ -254,11 +254,11 @@ public class PajekParser : Parser, PajekParserConstants {
 				} else {
 					;
 				}
-				label_4: while (true) {
+				while (true) {
 					if (jj_2_33(2)) {
 						;
 					} else {
-						break label_4;
+						break;
 					}
 					if (jj_2_34(2)) {
 						k = jj_consume_token(SIZE);
@@ -339,11 +339,11 @@ public class PajekParser : Parser, PajekParserConstants {
 						throw new ParseException();
 					}
 				}
-				label_5: while (true) {
+				while (true) {
 					if (jj_2_49(2)) {
 						;
 					} else {
-						break label_5;
+						break;
 					}
 					if (jj_2_50(2)) {
 						k = validIdentifier();
@@ -353,7 +353,7 @@ public class PajekParser : Parser, PajekParserConstants {
 						jj_consume_token(-1);
 						throw new ParseException();
 					}
-					System.err.printf("%d:%d: unparsed garbage in .net (%s)%n", k.beginLine, k.beginColumn, k.image);
+					System.err.printf("{0}:{1}: unparsed garbage in .net ({2})\n", k.beginLine, k.beginColumn, k.image);
 				}
 			} else {
 				;
@@ -379,11 +379,11 @@ public class PajekParser : Parser, PajekParserConstants {
 			edgeListMode = false;
 			inVertices = false;
 			ctx.setDirected(true);
-			label_6: while (true) {
+			while (true) {
 				if (jj_2_54(2)) {
 					;
 				} else {
-					break label_6;
+					break;
 				}
 				if (jj_2_55(2)) {
 					edge();
@@ -400,11 +400,11 @@ public class PajekParser : Parser, PajekParserConstants {
 			edgeListMode = false;
 			inVertices = false;
 			ctx.setDirected(false);
-			label_7: while (true) {
+			while (true) {
 				if (jj_2_57(2)) {
 					;
 				} else {
-					break label_7;
+					break;
 				}
 				if (jj_2_58(2)) {
 					edge();
@@ -421,11 +421,11 @@ public class PajekParser : Parser, PajekParserConstants {
 			edgeListMode = true;
 			inVertices = false;
 			ctx.setDirected(true);
-			label_8: while (true) {
+			while (true) {
 				if (jj_2_60(2)) {
 					;
 				} else {
-					break label_8;
+					break;
 				}
 				if (jj_2_61(2)) {
 					edgeList();
@@ -442,11 +442,11 @@ public class PajekParser : Parser, PajekParserConstants {
 			edgeListMode = true;
 			inVertices = false;
 			ctx.setDirected(false);
-			label_9: while (true) {
+			while (true) {
 				if (jj_2_63(2)) {
 					;
 				} else {
-					break label_9;
+					break;
 				}
 				if (jj_2_64(2)) {
 					edgeList();
@@ -484,11 +484,11 @@ public class PajekParser : Parser, PajekParserConstants {
 				throw new ParseException();
 			}
 			ctx.addEdgeWeight(id, k);
-			label_10: while (true) {
+			while (true) {
 				if (jj_2_74(2)) {
 					;
 				} else {
-					break label_10;
+					break;
 				}
 				if (jj_2_77(2)) {
 					k = jj_consume_token(P);
@@ -622,11 +622,11 @@ public class PajekParser : Parser, PajekParserConstants {
 					throw new ParseException();
 				}
 			}
-			label_11: while (true) {
+			while (true) {
 				if (jj_2_97(2)) {
 					;
 				} else {
-					break label_11;
+					break;
 				}
 				if (jj_2_98(2)) {
 					k = validIdentifier();
@@ -636,7 +636,7 @@ public class PajekParser : Parser, PajekParserConstants {
 					jj_consume_token(-1);
 					throw new ParseException();
 				}
-				System.err.printf("%d:%d: unparsed garbage in .net (%s)%n", k.beginLine, k.beginColumn, k.image);
+				System.err.printf("{0}:{1}: unparsed garbage in .net ({2})\n", k.beginLine, k.beginColumn, k.image);
 			}
 		} else {
 			;
@@ -652,11 +652,11 @@ public class PajekParser : Parser, PajekParserConstants {
 		src = jj_consume_token(INT);
 		trg = jj_consume_token(INT);
 		id = ctx.addEdge(src.image, trg.image);
-		label_12: while (true) {
+		while (true) {
 			if (jj_2_101(2)) {
 				;
 			} else {
-				break label_12;
+				break;
 			}
 			more = jj_consume_token(INT);
 			if (edgeListMode)
@@ -670,15 +670,15 @@ public class PajekParser : Parser, PajekParserConstants {
 		EdgeMatrix mat = new EdgeMatrix(nodeCount);
 		List<string> line;
 		jj_consume_token(MATRIX);
-		label_13: while (true) {
+		while (true) {
 			jj_consume_token(EOL);
 			if (jj_2_102(2)) {
 				;
 			} else {
-				break label_13;
+				break;
 			}
 		}
-		label_14: while (true) {
+		while (true) {
 			if (jj_2_103(2)) {
 				line = matrixline(mat);
 				mat.addLine(line);
@@ -691,7 +691,7 @@ public class PajekParser : Parser, PajekParserConstants {
 			if (jj_2_105(2)) {
 				;
 			} else {
-				break label_14;
+				break;
 			}
 		}
 		ctx.addEdges(mat);
@@ -700,13 +700,13 @@ public class PajekParser : Parser, PajekParserConstants {
 	public List<string> matrixline(EdgeMatrix mat){
 		Token k;
 		List<string> line = new List<string>(nodeCount);
-		label_15: while (true) {
+		while (true) {
 			k = jj_consume_token(INT);
 			line.Add(k.image);
 			if (jj_2_106(2)) {
 				;
 			} else {
-				break label_15;
+				break;
 			}
 		}
 		EO();
@@ -723,7 +723,7 @@ public class PajekParser : Parser, PajekParserConstants {
 			value = k.image;
 		} else if (jj_2_108(2)) {
 			k = jj_consume_token(STRING);
-			value = k.image.Substring(1, k.image.Length - 1);
+			value = k.image.Substring(1, k.image.Length - 2);
 		} else {
 			jj_consume_token(-1);
 			throw new ParseException();
@@ -771,12 +771,12 @@ public class PajekParser : Parser, PajekParserConstants {
 
 	public void EO(){
 		if (jj_2_115(2)) {
-			label_16: while (true) {
+			while (true) {
 				jj_consume_token(EOL);
 				if (jj_2_114(2)) {
 					;
 				} else {
-					break label_16;
+					break;
 				}
 			}
 		} else if (jj_2_116(2)) {

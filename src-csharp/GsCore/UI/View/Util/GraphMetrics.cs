@@ -253,7 +253,7 @@ public class GraphMetrics {
 
 	
 	public string toString() {
-		System.Text.System.Text.StringBuilder builder = new System.Text.System.Text.StringBuilder(string.Format("IGraph Metrics :\n"));
+		System.Text.StringBuilder builder = new System.Text.StringBuilder(string.Format("IGraph Metrics :\n"));
 
 		builder.Append(string.Format("        lo         = {0}\n", lo));
 		builder.Append(string.Format("        hi         = {0}\n", hi));

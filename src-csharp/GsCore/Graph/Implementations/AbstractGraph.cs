@@ -246,7 +246,7 @@ class AbstractGraph : AbstractElement, IGraph, IReplayable {
 
 		if (edge == null) {
 			if (strictChecking)
-				throw new ElementNotFoundException("There is no edge from \"%s\" to \"%s\". Cannot remove it.",
+				throw new ElementNotFoundException("There is no edge from \"{0}\" to \"{0}\". Cannot remove it.",
 						node1.getId(), node2.getId());
 			return null;
 		}

@@ -130,7 +130,7 @@ public class SpriteManager : IEnumerable<ISprite>, IAttributeSink {
 /// </summary>
 /// <returns>The set of sprites.</returns>
 	public IEnumerable<ISprite> sprites() {
-		return sprites.Values;
+		return ((sprites[])Enum.GetValues(typeof(sprites)));
 	}
 
 	/// <summary>
@@ -138,7 +138,7 @@ public class SpriteManager : IEnumerable<ISprite>, IAttributeSink {
 /// </summary>
 /// <returns>An iterator on sprites.</returns>
 	public IEnumerator<ISprite> spriteIterator() {
-		return sprites.Values.GetEnumerator();
+		return ((sprites[])Enum.GetValues(typeof(sprites))).GetEnumerator();
 	}
 
 	/// <summary>
@@ -146,7 +146,7 @@ public class SpriteManager : IEnumerable<ISprite>, IAttributeSink {
 /// </summary>
 /// <returns>An iterator on sprites.</returns>
 	public IEnumerator<ISprite> iterator() {
-		return sprites.Values.GetEnumerator();
+		return ((sprites[])Enum.GetValues(typeof(sprites))).GetEnumerator();
 	}
 
 	/// <summary>
@@ -224,7 +224,7 @@ public class SpriteManager : IEnumerable<ISprite>, IAttributeSink {
 /// <param name="identifier"> The identifier of the new sprite to add.</param>
 /// <param name="spriteClass"> The class of the new sprite to add.</param>
 /// <returns>The created sprite.</returns>
-	public T addSprite<T>(string identifier, Type spriteClass) { where T : ISprite
+	public T addSprite<T>(string identifier, Type spriteClass) where T : ISprite {
 		return addSprite(identifier, spriteClass, null);
 	}
 
@@ -235,7 +235,7 @@ public class SpriteManager : IEnumerable<ISprite>, IAttributeSink {
 /// <param name="spriteClass"> The class of the new sprite to add.</param>
 /// <param name="position"> The sprite position, or null for position (0, 0, 0).</param>
 /// <returns>The created sprite.</returns>
-	public T addSprite<T>(string identifier, Type spriteClass, Values position) { where T : ISprite
+	public T addSprite<T>(string identifier, Type spriteClass, Values position) where T : ISprite {
 		try {
 			T sprite = spriteClass.newInstance();
 			sprite.init(identifier, this, position);
@@ -290,7 +290,7 @@ public class SpriteManager : IEnumerable<ISprite>, IAttributeSink {
 				}
 			} else {
 				Console.Error.WriteLine(string.Format("Cannot transform value '{0}' (length={1}) into a position.",
-						Arrays.toString(values), values.Length));
+						"[values]"(values), values.Length));
 			}
 		} else if (value is IConvertible) {
 			return new Values(Units.GU, ((IConvertible) value));
@@ -299,7 +299,7 @@ public class SpriteManager : IEnumerable<ISprite>, IAttributeSink {
 		} else if (value is Values) {
 			return new Values((Values) value);
 		} else {
-			System.err.printf("GraphicGraph : cannot place sprite with posiiton '%s' (instance of %s)%n", value,
+			System.err.printf("GraphicGraph : cannot place sprite with posiiton '{0}' (instance of {1})\n", value,
 					value.GetType().Name);
 		}
 

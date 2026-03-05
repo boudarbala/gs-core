@@ -83,7 +83,7 @@ public class FileSinkGraphML : FileSinkBase {
 					nodeAttributes[k] = id;
 
 					try {
-						print("\t<key id=\"%s\" for=\"node\" attr.name=\"%s\" attr.type=\"%s\"/>\n", id,
+						print("\t<key id=\"{0}\" for=\"node\" attr.name=\"{0}\" attr.type=\"{0}\"/>\n", id,
 								escapeXmlString(k), type);
 					} catch (Exception ex) {
 						onException.accept(ex);
@@ -119,7 +119,7 @@ public class FileSinkGraphML : FileSinkBase {
 					edgeAttributes[k] = id;
 
 					try {
-						print("\t<key id=\"%s\" for=\"edge\" attr.name=\"%s\" attr.type=\"%s\"/>\n", id,
+						print("\t<key id=\"{0}\" for=\"edge\" attr.name=\"{0}\" attr.type=\"{0}\"/>\n", id,
 								escapeXmlString(k), type);
 					} catch (Exception ex) {
 						onException.accept(ex);
@@ -129,18 +129,18 @@ public class FileSinkGraphML : FileSinkBase {
 		});
 
 		try {
-			print("\t<graph id=\"%s\" edgedefault=\"undirected\">\n", escapeXmlString(g.getId()));
+			print("\t<graph id=\"{0}\" edgedefault=\"undirected\">\n", escapeXmlString(g.getId()));
 		} catch (Exception e) {
 			onException.accept(e);
 		}
 
 		g.nodes().ToList().ForEach(n => {
 			try {
-				print("\t\t<node id=\"%s\">\n", n.getId());
+				print("\t\t<node id=\"{0}\">\n", n.getId());
 
 				n.attributeKeys().ToList().ForEach(k => {
 					try {
-						print("\t\t\t<data key=\"%s\">%s</data>\n", nodeAttributes[k],
+						print("\t\t\t<data key=\"{0}\">%s</data>\n", nodeAttributes[k],
 								escapeXmlString(n.getAttribute(k).ToString()));
 					} catch (System.IO.IOException e) {
 						onException.accept(e);
@@ -155,12 +155,12 @@ public class FileSinkGraphML : FileSinkBase {
 
 		g.edges().ToList().ForEach(e => {
 			try {
-				print("\t\t<edge id=\"%s\" source=\"%s\" target=\"%s\" directed=\"%s\">\n", e.getId(),
+				print("\t\t<edge id=\"{0}\" source=\"{0}\" target=\"{0}\" directed=\"{0}\">\n", e.getId(),
 						e.getSourceNode().getId(), e.getTargetNode().getId(), e.isDirected());
 
 				e.attributeKeys().ToList().ForEach(k => {
 					try {
-						print("\t\t\t<data key=\"%s\">%s</data>\n", edgeAttributes[k],
+						print("\t\t\t<data key=\"{0}\">%s</data>\n", edgeAttributes[k],
 								escapeXmlString(e.getAttribute(k).ToString()));
 					} catch (System.IO.IOException e1) {
 						onException.accept(e1);
