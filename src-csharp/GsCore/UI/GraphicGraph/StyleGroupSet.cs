@@ -594,7 +594,7 @@ public class StyleGroupSet : StyleSheetListener {
 		StyleGroup newGroup = getGroup(getElementGroup(element));
 
 		if (newGroup != null && events != null) {
-			foreach (string event in events.events)
+			foreach (string evt in events.events)
 				pushEventFor(element, evt);
 		}
 

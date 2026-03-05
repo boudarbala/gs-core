@@ -601,7 +601,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 			System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
 			builder.Append(string.Format("{0} events {", element.getId()));
-			foreach (string event in events)
+			foreach (string evt in events)
 				builder.Append(string.Format(" {0}", evt));
 			builder.Append(" }");
 

@@ -168,39 +168,39 @@ public class NetStreamUtils {
 
 	public static byte[] encodeValue(object input, int valueType) {
 		if (NetStreamConstants.TYPE_BOOLEAN == valueType) {
-			return encodeBoolean(in);
+			return encodeBoolean(input);
 		} else if (NetStreamConstants.TYPE_BOOLEAN_ARRAY == valueType) {
-			return encodeBooleanArray(in);
+			return encodeBooleanArray(input);
 		} else if (NetStreamConstants.TYPE_BYTE == valueType) {
-			return encodeByte(in);
+			return encodeByte(input);
 		} else if (NetStreamConstants.TYPE_BYTE_ARRAY == valueType) {
-			return encodeByteArray(in);
+			return encodeByteArray(input);
 		} else if (NetStreamConstants.TYPE_SHORT == valueType) {
-			return encodeShort(in);
+			return encodeShort(input);
 		} else if (NetStreamConstants.TYPE_SHORT_ARRAY == valueType) {
-			return encodeShortArray(in);
+			return encodeShortArray(input);
 		} else if (NetStreamConstants.TYPE_INT == valueType) {
-			return encodeInt(in);
+			return encodeInt(input);
 		} else if (NetStreamConstants.TYPE_INT_ARRAY == valueType) {
-			return encodeIntArray(in);
+			return encodeIntArray(input);
 		} else if (NetStreamConstants.TYPE_LONG == valueType) {
-			return encodeLong(in);
+			return encodeLong(input);
 		} else if (NetStreamConstants.TYPE_LONG_ARRAY == valueType) {
-			return encodeLongArray(in);
+			return encodeLongArray(input);
 		} else if (NetStreamConstants.TYPE_FLOAT == valueType) {
-			return encodeFloat(in);
+			return encodeFloat(input);
 		} else if (NetStreamConstants.TYPE_FLOAT_ARRAY == valueType) {
-			return encodeFloatArray(in);
+			return encodeFloatArray(input);
 		} else if (NetStreamConstants.TYPE_DOUBLE == valueType) {
-			return encodeDouble(in);
+			return encodeDouble(input);
 		} else if (NetStreamConstants.TYPE_DOUBLE_ARRAY == valueType) {
-			return encodeDoubleArray(in);
+			return encodeDoubleArray(input);
 		} else if (NetStreamConstants.TYPE_STRING == valueType) {
-			return encodeString(in);
+			return encodeString(input);
 		} else if (NetStreamConstants.TYPE_STRING_ARRAY == valueType) {
-			return encodeStringArray(in);
+			return encodeStringArray(input);
 		} else if (NetStreamConstants.TYPE_ARRAY == valueType) {
-			return encodeArray(in);
+			return encodeArray(input);
 		} else if (NetStreamConstants.TYPE_NULL == valueType) {
 			return NULL_BUFFER;
 		}
@@ -336,37 +336,37 @@ public class NetStreamUtils {
 	/// <param name="in"> The long array to encode</param>
 /// <returns>ByteBuffer with encoded long array in it</returns>
 	public static byte[] encodeLongArray(object input) {
-		return encodeVarintArray(in);
+		return encodeVarintArray(input);
 	}
 
 	/// <param name="in"> The long to encode</param>
 /// <returns>ByteBuffer with encoded long in it</returns>
 	public static byte[] encodeLong(object input) {
-		return encodeVarint(in);
+		return encodeVarint(input);
 	}
 
 	/// <param name="in"> The integer array to encode</param>
 /// <returns>ByteBuffer with encoded integer array in it</returns>
 	public static byte[] encodeIntArray(object input) {
-		return encodeVarintArray(in);
+		return encodeVarintArray(input);
 	}
 
 	/// <param name="in"> The integer to encode</param>
 /// <returns>ByteBuffer with encoded integer in it</returns>
 	public static byte[] encodeInt(object input) {
-		return encodeVarint(in);
+		return encodeVarint(input);
 	}
 
 	/// <param name="in"></param>
 /// <returns></returns>
 	public static byte[] encodeShortArray(object input) {
-		return encodeVarintArray(in);
+		return encodeVarintArray(input);
 	}
 
 	/// <param name="in"></param>
 /// <returns></returns>
 	public static byte[] encodeShort(object input) {
-		return encodeVarint(in);
+		return encodeVarint(input);
 	}
 
 	/// <param name="in"></param>

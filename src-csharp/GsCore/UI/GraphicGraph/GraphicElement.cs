@@ -200,7 +200,7 @@ abstract class GraphicElement : AbstractElement {
 				// {
 				// if( newValue == null )
 				// state = null;
-				// else if( newValue instanceof String )
+				// else if( newValue is String )
 				// state = (String) newValue;
 				// }
 			} else if (attribute.Equals("label")) {

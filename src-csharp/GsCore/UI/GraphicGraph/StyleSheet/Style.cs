@@ -134,7 +134,7 @@ public class Style : StyleConstants {
 		bool hasValue = false;
 
 		if (events != null && events.Length > 0 && alternates != null) {
-			foreach (string event in events) {
+			foreach (string evt in events) {
 				Rule rule = alternates[evt];
 
 				if (rule != null) {

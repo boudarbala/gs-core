@@ -275,7 +275,7 @@ public class GraphDiff {
 		 * graph.Graph)
 		 */
 		public void reverse(string sourceId, long timeId, ISink g) {
-			base.apply(sourceId, timeId, g);
+			base(sourceId, timeId, g);
 		}
 
 		/*
@@ -626,7 +626,7 @@ public class GraphDiff {
 		 * graph.Graph)
 		 */
 		public void reverse(string sourceId, long timeId, ISink g) {
-			base.apply(sourceId, timeId, g);
+			base(sourceId, timeId, g);
 		}
 
 		/*
@@ -716,7 +716,7 @@ public class GraphDiff {
 				FileSourceDGS dgs = new FileSourceDGS();
 
 				dgs.addSink(g);
-				dgs.readAll(in);
+				dgs.readAll(input);
 				dgs.removeSink(g);
 
 				input.Close();

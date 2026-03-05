@@ -99,7 +99,7 @@ public class Timeline : ISource, IReplayable, IEnumerable<IGraph> {
 				j++;
 
 			for (int k = i; k <= j; k++)
-				diffs[k].diff.apply(sink);
+				diffs[k].diff(sink);
 		}
 	}
 
@@ -139,7 +139,7 @@ public class Timeline : ISource, IReplayable, IEnumerable<IGraph> {
 		if (seeker >= diffs.Count)
 			return;
 
-		diffs[seeker++].diff.apply(pipe);
+		diffs[seeker++].diff(pipe);
 	}
 
 	public bool hasPrevious() {
@@ -258,7 +258,7 @@ public class Timeline : ISource, IReplayable, IEnumerable<IGraph> {
 			if (idx >= diffs.Count)
 				return null;
 
-			diffs[idx++].diff.apply(current);
+			diffs[idx++].diff(current);
 			return Graphs.clone(current);
 		}
 

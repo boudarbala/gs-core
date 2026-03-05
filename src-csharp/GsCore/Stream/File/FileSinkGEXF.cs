@@ -148,7 +148,7 @@ public class FileSinkGEXF : FileSinkBase {
 		GEXFAttributeMap nodeAttributes = new GEXFAttributeMap("node", g);
 		GEXFAttributeMap edgeAttributes = new GEXFAttributeMap("edge", g);
 
-		Consumer<Exception> onException = Exception::printStackTrace;
+		Action<Exception> onException = Exception::printStackTrace;
 
 		try {
 			startElement(stream, "graph");
@@ -174,7 +174,7 @@ public class FileSinkGEXF : FileSinkBase {
 							try {
 								nodeAttributes.Push(stream, n, key);
 							} catch (Exception e) {
-								onException.accept(e);
+								onException(e);
 							}
 						});
 
@@ -183,7 +183,7 @@ public class FileSinkGEXF : FileSinkBase {
 
 					endElement(stream, n.getAttributeCount() == 0);
 				} catch (Exception ex) {
-					onException.accept(ex);
+					onException(ex);
 				}
 			});
 			endElement(stream, false);
@@ -204,7 +204,7 @@ public class FileSinkGEXF : FileSinkBase {
 							try {
 								edgeAttributes.Push(stream, e, key);
 							} catch (Exception e1) {
-								onException.accept(e1);
+								onException(e1);
 							}
 						});
 
@@ -213,14 +213,14 @@ public class FileSinkGEXF : FileSinkBase {
 
 					endElement(stream, e.getAttributeCount() == 0);
 				} catch (Exception ex) {
-					onException.accept(ex);
+					onException(ex);
 				}
 			});
 			endElement(stream, false);
 
 			endElement(stream, false);
 		} catch (Exception e1) {
-			onException.accept(e1);
+			onException(e1);
 		}
 	}
 

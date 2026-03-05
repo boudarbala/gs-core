@@ -57,8 +57,8 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 	protected List<GraphEvents> events;
 	protected List<object[]> eventsData;
 
-	protected object lock;
-	protected Condition notEmpty;
+	protected object lockObj;
+	protected object notEmpty; /* Condition */
 
 	/// <summary>
 /// Used only to remove the listener. We ensure this is done in the source thread.
@@ -73,8 +73,8 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 	public ThreadProxyPipe() {
 		this.events = new List<GraphEvents>();
 		this.eventsData = new List<object[]>();
-		this.lock = new object();
-		this.notEmpty = this.lock.newCondition();
+		this.lockObj = new object();
+		this.notEmpty = this.lockObj;
 		this.from = "<in>";
 		this.input = null;
 	}
@@ -129,7 +129,7 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 /// <param name="source"> source of the events</param>
 /// <param name="replay"> true if the source should be replayed. You need a {@link org.graphstream.stream.Replayable} source to enable replay, else nothing happens.</param>
 	public void init(ISource source, bool replay) {
-		System.Threading.Monitor.Enter(lock);
+		System.Threading.Monitor.Enter(lockObj);
 
 		try {
 			if (this.input != null)
@@ -140,7 +140,7 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 			this.events.Clear();
 			this.eventsData.Clear();
 		} finally {
-			System.Threading.Monitor.Exit(lock);
+			System.Threading.Monitor.Exit(lockObj);
 		}
 
 		if (source != null) {
@@ -184,13 +184,13 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 		object[] data = null;
 
 		do {
-			System.Threading.Monitor.Enter(lock);
+			System.Threading.Monitor.Enter(lockObj);
 
 			try {
-				e = events.poll();
-				data = eventsData.poll();
+				e = eventsevents.Count > 0 ? events[0] : default;
+				data = eventsDataeventsData.Count > 0 ? eventsData[0] : default;
 			} finally {
-				System.Threading.Monitor.Exit(lock);
+				System.Threading.Monitor.Exit(lockObj);
 			}
 
 			if (e != null)
@@ -211,27 +211,27 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 		GraphEvents e;
 		object[] data;
 
-		System.Threading.Monitor.Enter(lock);
+		System.Threading.Monitor.Enter(lockObj);
 
 		try {
 			if (timeout > 0)
 				while (events.Count == 0)
-					notEmpty.await(timeout, TimeUnit.MILLISECONDS);
+					Monitor.Wait(lockObj, (int)timeout);
 			else
 				while (events.Count == 0)
-					notEmpty.await();
+					Monitor.Wait(lockObj);
 		} finally {
-			System.Threading.Monitor.Exit(lock);
+			System.Threading.Monitor.Exit(lockObj);
 		}
 
 		do {
-			System.Threading.Monitor.Enter(lock);
+			System.Threading.Monitor.Enter(lockObj);
 
 			try {
-				e = events.poll();
-				data = eventsData.poll();
+				e = eventsevents.Count > 0 ? events[0] : default;
+				data = eventsDataeventsData.Count > 0 ? eventsData[0] : default;
 			} finally {
-				System.Threading.Monitor.Exit(lock);
+				System.Threading.Monitor.Exit(lockObj);
 			}
 
 			if (e != null)
@@ -241,12 +241,12 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 	public bool hasPostRemaining() {
 		bool r = true;
-		System.Threading.Monitor.Enter(lock);
+		System.Threading.Monitor.Enter(lockObj);
 
 		try {
 			r = events.Count > 0;
 		} finally {
-			System.Threading.Monitor.Exit(lock);
+			System.Threading.Monitor.Exit(lockObj);
 		}
 
 		return r;
@@ -259,26 +259,25 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 		ADD_NODE, DEL_NODE, ADD_EDGE, DEL_EDGE, STEP, CLEARED, ADD_GRAPH_ATTR, CHG_GRAPH_ATTR, DEL_GRAPH_ATTR, ADD_NODE_ATTR, CHG_NODE_ATTR, DEL_NODE_ATTR, ADD_EDGE_ATTR, CHG_EDGE_ATTR, DEL_EDGE_ATTR
 	}
 
-	protected bool maybeUnregister {
-		if {
-			if
-				input.removeSink;
+	protected bool maybeUnregister() {
+		if (unregisterWhenPossible) {
+			input.removeSink(this);
 			return true;
 		}
 
 		return false;
 	}
 
-	protected void post {
-		lock.lock;
+	protected void post(GraphEvents e, params object[] data) {
+		Monitor.Enter(lockObj);
 
 		try {
-			events.add;
-			eventsData.add;
+			events.Add(e);
+			eventsData.Add(data);
 
-			notEmpty.signal();
+			Monitor.Pulse(lockObj);
 		} finally {
-			System.Threading.Monitor.Exit(lock);
+			System.Threading.Monitor.Exit(lockObj);
 		}
 	}
 
@@ -398,21 +397,21 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 		object newValue, oldValue;
 
 		switch (e) {
-		case ADD_NODE:
+		case GraphEvents.ADD_NODE:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			elementId = (string) data[2];
 
 			sendNodeAdded(graphId, timeId, elementId);
 			break;
-		case DEL_NODE:
+		case GraphEvents.DEL_NODE:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			elementId = (string) data[2];
 
 			sendNodeRemoved(graphId, timeId, elementId);
 			break;
-		case ADD_EDGE:
+		case GraphEvents.ADD_EDGE:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			elementId = (string) data[2];
@@ -423,14 +422,14 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 			sendEdgeAdded(graphId, timeId, elementId, fromId, toId, directed);
 			break;
-		case DEL_EDGE:
+		case GraphEvents.DEL_EDGE:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			elementId = (string) data[2];
 
 			sendEdgeRemoved(graphId, timeId, elementId);
 			break;
-		case STEP:
+		case GraphEvents.STEP:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 
@@ -438,7 +437,7 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 			sendStepBegins(graphId, timeId, step);
 			break;
-		case ADD_GRAPH_ATTR:
+		case GraphEvents.ADD_GRAPH_ATTR:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			attribute = (string) data[2];
@@ -446,7 +445,7 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 			sendGraphAttributeAdded(graphId, timeId, attribute, newValue);
 			break;
-		case CHG_GRAPH_ATTR:
+		case GraphEvents.CHG_GRAPH_ATTR:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			attribute = (string) data[2];
@@ -455,14 +454,14 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 			sendGraphAttributeChanged(graphId, timeId, attribute, oldValue, newValue);
 			break;
-		case DEL_GRAPH_ATTR:
+		case GraphEvents.DEL_GRAPH_ATTR:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			attribute = (string) data[2];
 
 			sendGraphAttributeRemoved(graphId, timeId, attribute);
 			break;
-		case ADD_EDGE_ATTR:
+		case GraphEvents.ADD_EDGE_ATTR:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			elementId = (string) data[2];
@@ -471,7 +470,7 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 			sendEdgeAttributeAdded(graphId, timeId, elementId, attribute, newValue);
 			break;
-		case CHG_EDGE_ATTR:
+		case GraphEvents.CHG_EDGE_ATTR:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			elementId = (string) data[2];
@@ -481,7 +480,7 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 			sendEdgeAttributeChanged(graphId, timeId, elementId, attribute, oldValue, newValue);
 			break;
-		case DEL_EDGE_ATTR:
+		case GraphEvents.DEL_EDGE_ATTR:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			elementId = (string) data[2];
@@ -489,7 +488,7 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 			sendEdgeAttributeRemoved(graphId, timeId, elementId, attribute);
 			break;
-		case ADD_NODE_ATTR:
+		case GraphEvents.ADD_NODE_ATTR:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			elementId = (string) data[2];
@@ -498,7 +497,7 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 			sendNodeAttributeAdded(graphId, timeId, elementId, attribute, newValue);
 			break;
-		case CHG_NODE_ATTR:
+		case GraphEvents.CHG_NODE_ATTR:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			elementId = (string) data[2];
@@ -508,7 +507,7 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 			sendNodeAttributeChanged(graphId, timeId, elementId, attribute, oldValue, newValue);
 			break;
-		case DEL_NODE_ATTR:
+		case GraphEvents.DEL_NODE_ATTR:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 			elementId = (string) data[2];
@@ -516,7 +515,7 @@ public class ThreadProxyPipe : SourceBase, IProxyPipe {
 
 			sendNodeAttributeRemoved(graphId, timeId, elementId, attribute);
 			break;
-		case CLEARED:
+		case GraphEvents.CLEARED:
 			graphId = (string) data[0];
 			timeId = (long) data[1];
 

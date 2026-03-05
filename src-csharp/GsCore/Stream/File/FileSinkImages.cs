@@ -452,7 +452,7 @@ abstract class FileSinkImages : IFileSink {
 		object image = getRenderedImage();
 
 		foreach (IFilter action in filters)
-			action.apply(image);
+			action(image);
 
 		/* image.Flush(); */
 
@@ -575,10 +575,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.edgeAttributeAdded(sourceId, timeId, edgeId, attribute, value);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_EDGE_EVENT:
-		case BY_EDGE_ATTRIBUTE:
-		case BY_ATTRIBUTE_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_EDGE_EVENT:
+		case OutputPolicy.BY_EDGE_ATTRIBUTE:
+		case OutputPolicy.BY_ATTRIBUTE_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -593,10 +593,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.edgeAttributeChanged(sourceId, timeId, edgeId, attribute, oldValue, newValue);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_EDGE_EVENT:
-		case BY_EDGE_ATTRIBUTE:
-		case BY_ATTRIBUTE_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_EDGE_EVENT:
+		case OutputPolicy.BY_EDGE_ATTRIBUTE:
+		case OutputPolicy.BY_ATTRIBUTE_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -610,10 +610,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.edgeAttributeRemoved(sourceId, timeId, edgeId, attribute);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_EDGE_EVENT:
-		case BY_EDGE_ATTRIBUTE:
-		case BY_ATTRIBUTE_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_EDGE_EVENT:
+		case OutputPolicy.BY_EDGE_ATTRIBUTE:
+		case OutputPolicy.BY_ATTRIBUTE_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -627,10 +627,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.graphAttributeAdded(sourceId, timeId, attribute, value);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_GRAPH_EVENT:
-		case BY_GRAPH_ATTRIBUTE:
-		case BY_ATTRIBUTE_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_GRAPH_EVENT:
+		case OutputPolicy.BY_GRAPH_ATTRIBUTE:
+		case OutputPolicy.BY_ATTRIBUTE_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -645,10 +645,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.graphAttributeChanged(sourceId, timeId, attribute, oldValue, newValue);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_GRAPH_EVENT:
-		case BY_GRAPH_ATTRIBUTE:
-		case BY_ATTRIBUTE_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_GRAPH_EVENT:
+		case OutputPolicy.BY_GRAPH_ATTRIBUTE:
+		case OutputPolicy.BY_ATTRIBUTE_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -662,10 +662,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.graphAttributeRemoved(sourceId, timeId, attribute);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_GRAPH_EVENT:
-		case BY_GRAPH_ATTRIBUTE:
-		case BY_ATTRIBUTE_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_GRAPH_EVENT:
+		case OutputPolicy.BY_GRAPH_ATTRIBUTE:
+		case OutputPolicy.BY_ATTRIBUTE_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -679,10 +679,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.nodeAttributeAdded(sourceId, timeId, nodeId, attribute, value);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_NODE_EVENT:
-		case BY_NODE_ATTRIBUTE:
-		case BY_ATTRIBUTE_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_NODE_EVENT:
+		case OutputPolicy.BY_NODE_ATTRIBUTE:
+		case OutputPolicy.BY_ATTRIBUTE_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -697,10 +697,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.nodeAttributeChanged(sourceId, timeId, nodeId, attribute, oldValue, newValue);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_NODE_EVENT:
-		case BY_NODE_ATTRIBUTE:
-		case BY_ATTRIBUTE_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_NODE_EVENT:
+		case OutputPolicy.BY_NODE_ATTRIBUTE:
+		case OutputPolicy.BY_ATTRIBUTE_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -714,10 +714,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.nodeAttributeRemoved(sourceId, timeId, nodeId, attribute);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_NODE_EVENT:
-		case BY_NODE_ATTRIBUTE:
-		case BY_ATTRIBUTE_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_NODE_EVENT:
+		case OutputPolicy.BY_NODE_ATTRIBUTE:
+		case OutputPolicy.BY_ATTRIBUTE_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -732,10 +732,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.edgeAdded(sourceId, timeId, edgeId, fromNodeId, toNodeId, directed);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_EDGE_EVENT:
-		case BY_EDGE_ADDED_REMOVED:
-		case BY_ELEMENT_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_EDGE_EVENT:
+		case OutputPolicy.BY_EDGE_ADDED_REMOVED:
+		case OutputPolicy.BY_ELEMENT_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -749,10 +749,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.edgeRemoved(sourceId, timeId, edgeId);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_EDGE_EVENT:
-		case BY_EDGE_ADDED_REMOVED:
-		case BY_ELEMENT_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_EDGE_EVENT:
+		case OutputPolicy.BY_EDGE_ADDED_REMOVED:
+		case OutputPolicy.BY_ELEMENT_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -766,11 +766,11 @@ abstract class FileSinkImages : IFileSink {
 		sink.graphCleared(sourceId, timeId);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_GRAPH_EVENT:
-		case BY_NODE_ADDED_REMOVED:
-		case BY_EDGE_ADDED_REMOVED:
-		case BY_ELEMENT_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_GRAPH_EVENT:
+		case OutputPolicy.BY_NODE_ADDED_REMOVED:
+		case OutputPolicy.BY_EDGE_ADDED_REMOVED:
+		case OutputPolicy.BY_ELEMENT_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -784,10 +784,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.nodeAdded(sourceId, timeId, nodeId);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_NODE_EVENT:
-		case BY_NODE_ADDED_REMOVED:
-		case BY_ELEMENT_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_NODE_EVENT:
+		case OutputPolicy.BY_NODE_ADDED_REMOVED:
+		case OutputPolicy.BY_ELEMENT_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -801,10 +801,10 @@ abstract class FileSinkImages : IFileSink {
 		sink.nodeRemoved(sourceId, timeId, nodeId);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_NODE_EVENT:
-		case BY_NODE_ADDED_REMOVED:
-		case BY_ELEMENT_EVENT:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_NODE_EVENT:
+		case OutputPolicy.BY_NODE_ADDED_REMOVED:
+		case OutputPolicy.BY_ELEMENT_EVENT:
 			if (hasBegun)
 				outputNewImage();
 			break;
@@ -818,8 +818,8 @@ abstract class FileSinkImages : IFileSink {
 		sink.stepBegins(sourceId, timeId, step);
 
 		switch (outputPolicy) {
-		case BY_EVENT:
-		case BY_STEP:
+		case OutputPolicy.BY_EVENT:
+		case OutputPolicy.BY_STEP:
 			if (hasBegun)
 				outputNewImage();
 			break;

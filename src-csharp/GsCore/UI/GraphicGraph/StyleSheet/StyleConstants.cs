@@ -463,7 +463,7 @@ public class StyleConstants {
 	 * 
 	 * @return The converted edge style or null if the value does not identifies an
 	 * edge style. public static EdgeStyle convertEdgeStyle( object value ) { if(
-	 * value instanceof CharSequence ) { String s = ( (CharSequence) value
+	 * value is CharSequence ) { String s = ( (CharSequence) value
 	 * ).toString().toLowerCase();
 	 * 
 	 * if( s.equals( "dots" ) ) { return EdgeStyle.DOTS; } else if( s.equals(

@@ -63,7 +63,7 @@ public class NetStreamEncoder : ByteEncoder {
 	}
 
 	protected byte[] getEncodedValue(object input, int valueType) {
-		byte[] value = encodeValue(in, valueType);
+		byte[] value = encodeValue(input, valueType);
 
 		if (value == null) {
 			Console.Error.WriteLine(string.Format("unknown value type {0}\n", valueType));

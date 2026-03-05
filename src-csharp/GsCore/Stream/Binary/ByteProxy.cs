@@ -235,7 +235,7 @@ public class ByteProxy : SourceBase, IPipe, Action {
 				System.Diagnostics.Debug.Assert(mode == Mode.SERVER);
 
 				ServerSocketChannel ssocket = (ServerSocketChannel) key.channel();
-				SocketChannel socketChannel = ssocket.accept();
+				SocketChannel socketChannel = ssocket();
 
 				Console.WriteLine(string.Format("accepting socket {0} {1}", socketChannel.socket().getInetAddress(),
 						socketChannel.socket().getPort()));

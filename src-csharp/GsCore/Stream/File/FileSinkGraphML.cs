@@ -50,7 +50,7 @@ public class FileSinkGraphML : FileSinkBase {
 
 	
 	protected void exportGraph(IGraph g) {
-		Consumer<Exception> onException = Exception::printStackTrace;
+		Action<Exception> onException = Exception::printStackTrace;
 
 		AtomicInteger attribute = new AtomicInteger(0);
 		Dictionary<string, string> nodeAttributes = new Dictionary<object, object>();
@@ -86,7 +86,7 @@ public class FileSinkGraphML : FileSinkBase {
 						print("\t<key id=\"{0}\" for=\"node\" attr.name=\"{0}\" attr.type=\"{0}\"/>\n", id,
 								escapeXmlString(k), type);
 					} catch (Exception ex) {
-						onException.accept(ex);
+						onException(ex);
 					}
 				}
 			});
@@ -122,7 +122,7 @@ public class FileSinkGraphML : FileSinkBase {
 						print("\t<key id=\"{0}\" for=\"edge\" attr.name=\"{0}\" attr.type=\"{0}\"/>\n", id,
 								escapeXmlString(k), type);
 					} catch (Exception ex) {
-						onException.accept(ex);
+						onException(ex);
 					}
 				}
 			});
@@ -131,7 +131,7 @@ public class FileSinkGraphML : FileSinkBase {
 		try {
 			print("\t<graph id=\"{0}\" edgedefault=\"undirected\">\n", escapeXmlString(g.getId()));
 		} catch (Exception e) {
-			onException.accept(e);
+			onException(e);
 		}
 
 		g.nodes().ToList().ForEach(n => {
@@ -143,13 +143,13 @@ public class FileSinkGraphML : FileSinkBase {
 						print("\t\t\t<data key=\"{0}\">%s</data>\n", nodeAttributes[k],
 								escapeXmlString(n.getAttribute(k).ToString()));
 					} catch (System.IO.IOException e) {
-						onException.accept(e);
+						onException(e);
 					}
 				});
 
 				print("\t\t</node>\n");
 			} catch (Exception ex) {
-				onException.accept(ex);
+				onException(ex);
 			}
 		});
 
@@ -163,20 +163,20 @@ public class FileSinkGraphML : FileSinkBase {
 						print("\t\t\t<data key=\"{0}\">%s</data>\n", edgeAttributes[k],
 								escapeXmlString(e.getAttribute(k).ToString()));
 					} catch (System.IO.IOException e1) {
-						onException.accept(e1);
+						onException(e1);
 					}
 				});
 
 				print("\t\t</edge>\n");
 			} catch (Exception ex) {
-				onException.accept(ex);
+				onException(ex);
 			}
 		});
 
 		try {
 			print("\t</graph>\n");
 		} catch (Exception e) {
-			onException.accept(e);
+			onException(e);
 		}
 	}
 
