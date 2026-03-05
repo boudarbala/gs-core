@@ -369,7 +369,7 @@ public class DGSParser : Parser {
 				skipWhitespaces();
 				value = value(true);
 			} else {
-				value = bool.TRUE;
+				value = true;
 				pushback(c);
 			}
 		}
@@ -418,7 +418,7 @@ public class DGSParser : Parser {
 			case MAP_OPEN:
 				o = map();
 				break;
-			default {
+			default: {
 				string word = id();
 
 				if (word == null)
@@ -440,9 +440,9 @@ public class DGSParser : Parser {
 					}
 				} else {
 					if (word.Equals("true"))
-						o = bool.TRUE;
+						o = true;
 					else if (word.Equals("false"))
-						o = bool.FALSE;
+						o = false;
 					else
 						o = word;
 				}
@@ -482,28 +482,28 @@ public class DGSParser : Parser {
 			c = nextChar();
 
 			if ((c >= 0 && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))
-				hexa.appendCodePoint(c);
+				hexa.Append((char)c);
 			else
 				throw parseException("hexadecimal value expected");
 		}
 
 		r = int.Parse(hexa.Substring(0, 2), 16);
-		g = int.Parse(hexa.Substring(2, 4), 16);
-		b = int.Parse(hexa.Substring(4, 6), 16);
+		g = int.Parse(hexa.Substring(2, 2), 16);
+		b = int.Parse(hexa.Substring(4, 2), 16);
 
 		c = nextChar();
 
 		if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')) {
-			hexa.appendCodePoint(c);
+			hexa.Append((char)c);
 
 			c = nextChar();
 
 			if ((c >= 0 && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))
-				hexa.appendCodePoint(c);
+				hexa.Append((char)c);
 			else
 				throw parseException("hexadecimal value expected");
 
-			a = int.Parse(hexa.Substring(6, 8), 16);
+			a = int.Parse(hexa.Substring(6, 2), 16);
 		} else {
 			a = 255;
 			pushback(c);
@@ -573,7 +573,7 @@ public class DGSParser : Parser {
 				skipWhitespaces();
 				value = value(false);
 			} else {
-				value = bool.TRUE;
+				value = true;
 				pushback(c);
 			}
 
@@ -664,7 +664,7 @@ public class DGSParser : Parser {
 		throw parseException("unknown directive '%c%c'", c1, c2);
 	}
 
-	protected string string(){
+	protected string getString(){
 		int c, s;
 		System.Text.StringBuilder builder;
 		bool slash;
@@ -685,10 +685,10 @@ public class DGSParser : Parser {
 			slash = c == '\\';
 
 			if (!slash) {
-				if (!char.isValidCodePoint(c))
+				if (!(c >= 0 && c <= 0x10FFFF))
 					throw parseException("invalid code-point 0x%X", c);
 
-				builder.appendCodePoint(c);
+				builder.Append((char)c);
 			}
 		}
 
@@ -704,34 +704,34 @@ public class DGSParser : Parser {
 		pushback(c);
 
 		if (c == '\"' || c == '\'') {
-			return string();
+			return getString();
 		} else {
 			bool stop = false;
 
 			while (!stop) {
 				c = nextChar();
 
-				switch (char.getType(c)) {
-				case char.LOWERCASE_LETTER:
-				case char.UPPERCASE_LETTER:
-				case char.DECIMAL_DIGIT_NUMBER:
+				switch (System.Globalization.CharUnicodeInfo.GetUnicodeCategory((char)c)) {
+				case System.Globalization.UnicodeCategory.LowercaseLetter:
+				case System.Globalization.UnicodeCategory.UppercaseLetter:
+				case System.Globalization.UnicodeCategory.DecimalDigitNumber:
 					break;
-				case char.DASH_PUNCTUATION:
+				case System.Globalization.UnicodeCategory.DashPunctuation:
 					if (c != '-')
 						stop = true;
 
 					break;
-				case char.MATH_SYMBOL:
+				case System.Globalization.UnicodeCategory.MathSymbol:
 					if (c != '+')
 						stop = true;
 
 					break;
-				case char.CONNECTOR_PUNCTUATION:
+				case System.Globalization.UnicodeCategory.ConnectorPunctuation:
 					if (c != '_')
 						stop = true;
 
 					break;
-				case char.OTHER_PUNCTUATION:
+				case System.Globalization.UnicodeCategory.OtherPunctuation:
 					if (c != '.')
 						stop = true;
 
@@ -742,7 +742,7 @@ public class DGSParser : Parser {
 				}
 
 				if (!stop)
-					builder.appendCodePoint(c);
+					builder.Append((char)c);
 			}
 
 			pushback(c);
@@ -763,7 +763,7 @@ public class DGSParser : Parser {
 	 * switch (c) { case '"': case '\'': time = getString(); break; default:
 	 * System.Text.StringBuilder builder = new System.Text.StringBuilder();
 	 * 
-	 * while ((c = nextChar()) != '\n' && c != '"') builder.appendCodePoint(c);
+	 * while ((c = nextChar()) != '\n' && c != '"') builder.Append((char)c);
 	 * 
 	 * pushback(c); time = builder.toString(); break; }
 	 * 

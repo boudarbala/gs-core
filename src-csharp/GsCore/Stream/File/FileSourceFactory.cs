@@ -155,7 +155,7 @@ public class FileSourceFactory {
 		string root;
 
 		try {
-			reader = XMLInputFactory.newInstance().createXMLEventReader(stream);
+			reader = System.Xml.new XmlReaderSettings().createXMLEventReader(stream);
 
 			do {
 				e = reader.nextEvent();

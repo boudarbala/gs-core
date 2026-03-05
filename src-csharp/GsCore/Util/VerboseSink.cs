@@ -130,7 +130,7 @@ public class VerboseSink : ISink {
 		formats[EventType.STEP_BEGINS] = DEFAULT_ST_FORMAT;
 
 		foreach (EventType t in ((EventType[])Enum.GetValues(typeof(EventType))))
-			enable[t] = bool.TRUE;
+			enable[t] = true;
 
 		suffix = "";
 		prefix = "";

@@ -278,10 +278,10 @@ public class StyleConstants {
 							c = null;
 						}
 					} else if (value.Length == 9) {
-						int r = int.Parse(m.Groups[1].Value, 16);
-						int g = int.Parse(m.Groups[2].Value, 16);
-						int b = int.Parse(m.Groups[3].Value, 16);
-						int a = int.Parse(m.Groups[4].Value, 16);
+						int r = int.Parse(m.Groups[1].Value, System.Globalization.NumberStyles.HexNumber);
+						int g = int.Parse(m.Groups[2].Value, System.Globalization.NumberStyles.HexNumber);
+						int b = int.Parse(m.Groups[3].Value, System.Globalization.NumberStyles.HexNumber);
+						int a = int.Parse(m.Groups[4].Value, System.Globalization.NumberStyles.HexNumber);
 
 						return new Color(r, g, b, a);
 					}
@@ -291,13 +291,13 @@ public class StyleConstants {
 
 				if (m.Success) {
 					if (value.Length >= 4) {
-						int r = int.Parse(m.Groups[1].Value, 16) * 16;
-						int g = int.Parse(m.Groups[2].Value, 16) * 16;
-						int b = int.Parse(m.Groups[3].Value, 16) * 16;
+						int r = int.Parse(m.Groups[1].Value, System.Globalization.NumberStyles.HexNumber) * 16;
+						int g = int.Parse(m.Groups[2].Value, System.Globalization.NumberStyles.HexNumber) * 16;
+						int b = int.Parse(m.Groups[3].Value, System.Globalization.NumberStyles.HexNumber) * 16;
 						int a = 255;
 
 						if (value.Length == 5)
-							a = int.Parse(m.Groups[4].Value, 16) * 16;
+							a = int.Parse(m.Groups[4].Value, System.Globalization.NumberStyles.HexNumber) * 16;
 
 						return new Color(r, g, b, a);
 					}
@@ -339,8 +339,8 @@ public class StyleConstants {
 						string b = m.Groups[3].Value;
 						string a = m.Groups[4].Value;
 
-						return new Color(int.Parse(r, 16), int.Parse(g, 16), int.Parse(b, 16),
-								int.Parse(a, 16));
+						return new Color(int.Parse(r, System.Globalization.NumberStyles.HexNumber), int.Parse(g, System.Globalization.NumberStyles.HexNumber), int.Parse(b, System.Globalization.NumberStyles.HexNumber),
+								int.Parse(a, System.Globalization.NumberStyles.HexNumber));
 					}
 				}
 			} else if (value.StartsWith("java.awt.Color[")) {
@@ -464,7 +464,7 @@ public class StyleConstants {
 	 * @return The converted edge style or null if the value does not identifies an
 	 * edge style. public static EdgeStyle convertEdgeStyle( object value ) { if(
 	 * value is CharSequence ) { String s = ( (CharSequence) value
-	 * ).toString().toLowerCase();
+	 * ).toString().ToLower();
 	 * 
 	 * if( s.equals( "dots" ) ) { return EdgeStyle.DOTS; } else if( s.equals(
 	 * "dashes" ) ) { return EdgeStyle.DASHES; } else { return EdgeStyle.PLAIN; } }

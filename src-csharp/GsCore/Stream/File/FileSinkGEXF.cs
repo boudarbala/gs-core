@@ -42,7 +42,7 @@ public class FileSinkGEXF : FileSinkBase {
 		}
 	}
 
-	XMLStreamWriter stream;
+	System.Xml.XmlWriter stream;
 	bool smart;
 	int depth;
 	int currentAttributeIndex = 0;
@@ -65,14 +65,14 @@ public class FileSinkGEXF : FileSinkBase {
 			string start = s.isStartOpen() ? "startopen" : "start";
 			string date = timeFormat.format.format(s.getStartDate());
 
-			stream.writeAttribute(start, date);
+			stream.WriteAttributeString(start, date);
 		}
 
 		if (s.isEnded()) {
 			string end = s.isEndOpen() ? "endopen" : "end";
 			string date = timeFormat.format.format(s.getEndDate());
 
-			stream.writeAttribute(end, date);
+			stream.WriteAttributeString(end, date);
 		}
 	}
 
@@ -84,7 +84,7 @@ public class FileSinkGEXF : FileSinkBase {
 			}
 
 			endElement(stream, false);
-			stream.writeEndDocument();
+			stream.WriteEndDocument();
 			/* stream.Flush(); */
 		} catch (Exception e) {
 			throw new System.IO.IOException(e);
@@ -97,20 +97,20 @@ public class FileSinkGEXF : FileSinkBase {
 		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 
 		try {
-			stream = XMLOutputFactory.newFactory().createXMLStreamWriter(output);
+			stream = System.Xml.XmlWriterSettings.newFactory().createXMLStreamWriter(output);
 			stream.writeStartDocument("UTF-8", "1.0");
 
 			startElement(stream, "gexf");
-			stream.writeAttribute("xmlns", "http://www.gexf.net/1.2draft");
-			stream.writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			stream.writeAttribute("xsi:schemaLocation",
+			stream.WriteAttributeString("xmlns", "http://www.gexf.net/1.2draft");
+			stream.WriteAttributeString("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+			stream.WriteAttributeString("xsi:schemaLocation",
 					"http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd");
-			stream.writeAttribute("version", "1.2");
+			stream.WriteAttributeString("version", "1.2");
 
 			startElement(stream, "meta");
-			stream.writeAttribute("lastmodifieddate", df.format(date));
+			stream.WriteAttributeString("lastmodifieddate", df.format(date));
 			startElement(stream, "creator");
-			stream.writeCharacters("GraphStream - " + getClass().Name);
+			stream.WriteString("GraphStream - " + getClass().Name);
 			endElement(stream, true);
 			endElement(stream, false);
 		} catch (Exception | Exception e) {
@@ -118,29 +118,29 @@ public class FileSinkGEXF : FileSinkBase {
 		}
 	}
 
-	protected void startElement(XMLStreamWriter stream, string name){
+	protected void startElement(System.Xml.XmlWriter stream, string name){
 		if (smart) {
-			stream.writeCharacters("\n");
+			stream.WriteString("\n");
 
 			for (int i = 0; i < depth; i++)
-				stream.writeCharacters(" ");
+				stream.WriteString(" ");
 		}
 
-		stream.writeStartElement(name);
+		stream.WriteStartElement(name);
 		depth++;
 	}
 
-	protected void endElement(XMLStreamWriter stream, bool leaf){
+	protected void endElement(System.Xml.XmlWriter stream, bool leaf){
 		depth--;
 
 		if (smart && !leaf) {
-			stream.writeCharacters("\n");
+			stream.WriteString("\n");
 
 			for (int i = 0; i < depth; i++)
-				stream.writeCharacters(" ");
+				stream.WriteString(" ");
 		}
 
-		stream.writeEndElement();
+		stream.WriteEndElement();
 	}
 
 	
@@ -152,7 +152,7 @@ public class FileSinkGEXF : FileSinkBase {
 
 		try {
 			startElement(stream, "graph");
-			stream.writeAttribute("defaultedgetype", "undirected");
+			stream.WriteAttributeString("defaultedgetype", "undirected");
 
 			nodeAttributes.export(stream);
 			edgeAttributes.export(stream);
@@ -162,12 +162,12 @@ public class FileSinkGEXF : FileSinkBase {
 			g.nodes().ToList().ForEach(n => {
 				try {
 					startElement(stream, "node");
-					stream.writeAttribute("id", n.getId());
+					stream.WriteAttributeString("id", n.getId());
 
 					if (n.hasAttribute("label"))
-						stream.writeAttribute("label", n.getAttribute("label").ToString());
+						stream.WriteAttributeString("label", n.getAttribute("label").ToString());
 
-					if (n.getAttributeCount() > 0) {
+					if (n.AttributeCount > 0) {
 						startElement(stream, "attvalues");
 
 						n.attributeKeys().ToList().ForEach(key => {
@@ -181,7 +181,7 @@ public class FileSinkGEXF : FileSinkBase {
 						endElement(stream, false);
 					}
 
-					endElement(stream, n.getAttributeCount() == 0);
+					endElement(stream, n.AttributeCount == 0);
 				} catch (Exception ex) {
 					onException(ex);
 				}
@@ -193,11 +193,11 @@ public class FileSinkGEXF : FileSinkBase {
 				try {
 					startElement(stream, "edge");
 
-					stream.writeAttribute("id", e.getId());
-					stream.writeAttribute("source", e.getSourceNode().getId());
-					stream.writeAttribute("target", e.getTargetNode().getId());
+					stream.WriteAttributeString("id", e.getId());
+					stream.WriteAttributeString("source", e.getSourceNode().getId());
+					stream.WriteAttributeString("target", e.getTargetNode().getId());
 
-					if (e.getAttributeCount() > 0) {
+					if (e.AttributeCount > 0) {
 						startElement(stream, "attvalues");
 
 						e.attributeKeys().ToList().ForEach(key => {
@@ -211,7 +211,7 @@ public class FileSinkGEXF : FileSinkBase {
 						endElement(stream, false);
 					}
 
-					endElement(stream, e.getAttributeCount() == 0);
+					endElement(stream, e.AttributeCount == 0);
 				} catch (Exception ex) {
 					onException(ex);
 				}
@@ -230,9 +230,9 @@ public class FileSinkGEXF : FileSinkBase {
 
 		try {
 			startElement(stream, "graph");
-			stream.writeAttribute("mode", "dynamic");
-			stream.writeAttribute("defaultedgetype", "undirected");
-			stream.writeAttribute("timeformat", timeFormat.ToString().ToLower());
+			stream.WriteAttributeString("mode", "dynamic");
+			stream.WriteAttributeString("defaultedgetype", "undirected");
+			stream.WriteAttributeString("timeformat", timeFormat.ToString().ToLower());
 
 			nodeAttributes.export(stream);
 			edgeAttributes.export(stream);
@@ -240,13 +240,13 @@ public class FileSinkGEXF : FileSinkBase {
 			startElement(stream, "nodes");
 			foreach (string nodeId in graphSpells.getNodes()) {
 				startElement(stream, "node");
-				stream.writeAttribute("id", nodeId);
+				stream.WriteAttributeString("id", nodeId);
 
 				CumulativeAttributes attr = graphSpells.getNodeAttributes(nodeId);
 				object label = attr.getAny("label");
 
 				if (label != null)
-					stream.writeAttribute("label", label.ToString());
+					stream.WriteAttributeString("label", label.ToString());
 
 				CumulativeSpells spells = graphSpells.getNodeSpells(nodeId);
 
@@ -278,9 +278,9 @@ public class FileSinkGEXF : FileSinkBase {
 
 				GraphSpells.EdgeData data = graphSpells.getEdgeData(edgeId);
 
-				stream.writeAttribute("id", edgeId);
-				stream.writeAttribute("source", data.getSource());
-				stream.writeAttribute("target", data.getTarget());
+				stream.WriteAttributeString("id", edgeId);
+				stream.WriteAttributeString("source", data.getSource());
+				stream.WriteAttributeString("target", data.getTarget());
 
 				CumulativeAttributes attr = graphSpells.getEdgeAttributes(edgeId);
 
@@ -489,25 +489,25 @@ public class FileSinkGEXF : FileSinkBase {
 			return string.Format("{0}@{1}", key, value.GetType().Name);
 		}
 
-		void export(XMLStreamWriter stream){
+		void export(System.Xml.XmlWriter stream){
 			if (size() == 0)
 				return;
 
 			startElement(stream, "attributes");
-			stream.writeAttribute("class", type);
+			stream.WriteAttributeString("class", type);
 
 			foreach (GEXFAttribute a in values()) {
 				startElement(stream, "attribute");
-				stream.writeAttribute("id", int.toString(a.index));
-				stream.writeAttribute("title", a.key);
-				stream.writeAttribute("type", a.type);
+				stream.WriteAttributeString("id", int.toString(a.index));
+				stream.WriteAttributeString("title", a.key);
+				stream.WriteAttributeString("type", a.type);
 				endElement(stream, true);
 			}
 
 			endElement(stream, size() == 0);
 		}
 
-		void push(XMLStreamWriter stream, IElement e, string key){
+		void push(System.Xml.XmlWriter stream, IElement e, string key){
 			string id = getID(key, e.getAttribute(key));
 			GEXFAttribute a = get(id);
 
@@ -517,12 +517,12 @@ public class FileSinkGEXF : FileSinkBase {
 			}
 
 			startElement(stream, "attvalue");
-			stream.writeAttribute("for", int.toString(a.index));
-			stream.writeAttribute("value", e.getAttribute(key).ToString());
+			stream.WriteAttributeString("for", int.toString(a.index));
+			stream.WriteAttributeString("value", e.getAttribute(key).ToString());
 			endElement(stream, true);
 		}
 
-		void push(XMLStreamWriter stream, string elementId, GraphSpells spells){
+		void push(System.Xml.XmlWriter stream, string elementId, GraphSpells spells){
 			CumulativeAttributes attr;
 
 			if (type.Equals("node"))
@@ -542,8 +542,8 @@ public class FileSinkGEXF : FileSinkBase {
 					}
 
 					startElement(stream, "attvalue");
-					stream.writeAttribute("for", int.toString(a.index));
-					stream.writeAttribute("value", value.ToString());
+					stream.WriteAttributeString("for", int.toString(a.index));
+					stream.WriteAttributeString("value", value.ToString());
 					putSpellAttributes(s);
 					endElement(stream, true);
 				}

@@ -244,7 +244,7 @@ public class FileSourceGraphML : FileSourceXML {
 		private object getDefaultValue(Key key) {
 			switch (key.type) {
 			case BOOLEAN:
-				return bool.TRUE;
+				return true;
 			case INT:
 				if (key.def != null)
 					return int.Parse(key.def);
@@ -272,7 +272,7 @@ public class FileSourceGraphML : FileSourceXML {
 				return "";
 			}
 
-			return key.def != null ? key.def : bool.TRUE;
+			return key.def != null ? key.def : true;
 		}
 
 		/// <summary>

@@ -214,7 +214,7 @@ public class FileSinkDOT : FileSinkBase {
 	 * 
 	 * boolean first = true;
 	 * 
-	 * for (String key : attributes.keySet()) { object value = attributes.get(key);
+	 * for (String key : attributes.Keys) { object value = attributes.get(key);
 	 * 
 	 * if (what == What.NODE) { // if( ! nodeForbiddenAttrs.contains( key ) ) {
 	 * first = outputAttribute(key, value, first); } } else if (what == What.EDGE) {
@@ -235,7 +235,7 @@ public class FileSinkDOT : FileSinkBase {
 	}
 
 	protected string outputAttributes(IElement e) {
-		if (e.getAttributeCount() == 0)
+		if (e.AttributeCount == 0)
 			return "";
 
 		System.Text.StringBuilder buffer = new System.Text.StringBuilder("[");

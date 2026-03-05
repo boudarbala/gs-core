@@ -67,14 +67,14 @@ public class GEXFEdge : IGEXFElement {
 	public void export(SmartXMLWriter stream){
 		stream.startElement("edge");
 
-		stream.stream.writeAttribute("id", id);
-		stream.stream.writeAttribute("label", label);
-		stream.stream.writeAttribute("source", source);
-		stream.stream.writeAttribute("target", target);
-		stream.stream.writeAttribute("type", directed ? "directed" : "undirected");
+		stream.stream.WriteAttributeString("id", id);
+		stream.stream.WriteAttributeString("label", label);
+		stream.stream.WriteAttributeString("source", source);
+		stream.stream.WriteAttributeString("target", target);
+		stream.stream.WriteAttributeString("type", directed ? "directed" : "undirected");
 
 		if (!double.IsNaN(weight))
-			stream.stream.writeAttribute("weight", double.toString(weight));
+			stream.stream.WriteAttributeString("weight", double.toString(weight));
 
 		if (root.isExtensionEnable(Extension.DYNAMICS))
 			spells.export(stream);

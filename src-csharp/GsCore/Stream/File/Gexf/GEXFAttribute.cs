@@ -59,11 +59,11 @@ public class GEXFAttribute : IGEXFElement {
 	 */
 	public void export(SmartXMLWriter stream){
 		stream.startElement("attribute");
-		stream.stream.writeAttribute("id", int.toString(id));
-		stream.stream.writeAttribute("type", type.qname);
+		stream.stream.WriteAttributeString("id", int.toString(id));
+		stream.stream.WriteAttributeString("type", type.qname);
 
 		if (title != null)
-			stream.stream.writeAttribute("title", title);
+			stream.stream.WriteAttributeString("title", title);
 
 		if (defaultValue != null)
 			stream.leafWithText("default", defaultValue);

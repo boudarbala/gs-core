@@ -264,7 +264,7 @@ public class Graphs {
 			System.Threading.Monitor.Enter(attributeLock);
 
 			try {
-				c = wrappedElement.getAttributeCount();
+				c = wrappedElement.AttributeCount;
 			} finally {
 				System.Threading.Monitor.Exit(attributeLock);
 			}

@@ -527,7 +527,7 @@ public class FileSourceGPX : FileSourceXML {
 			if (name == null)
 				name = string.Format("route#{0}", automaticRouteId++);
 
-			sendGraphAttributeAdded(sourceId, "routes." + name, bool.TRUE);
+			sendGraphAttributeAdded(sourceId, "routes." + name, true);
 			sendGraphAttributeAdded(sourceId, "routes." + name + ".desc", desc);
 			sendGraphAttributeAdded(sourceId, "routes." + name + ".cmt", cmt);
 			sendGraphAttributeAdded(sourceId, "routes." + name + ".src", src);
@@ -629,7 +629,7 @@ public class FileSourceGPX : FileSourceXML {
 			if (name == null)
 				name = string.Format("route#{0}", automaticRouteId++);
 
-			sendGraphAttributeAdded(sourceId, "tracks." + name, bool.TRUE);
+			sendGraphAttributeAdded(sourceId, "tracks." + name, true);
 			sendGraphAttributeAdded(sourceId, "tracks." + name + ".desc", desc);
 			sendGraphAttributeAdded(sourceId, "tracks." + name + ".cmt", cmt);
 			sendGraphAttributeAdded(sourceId, "tracks." + name + ".src", src);

@@ -470,7 +470,7 @@ public class Environment : ICloneable {
 /// </summary>
 /// <param name="fileName"> Name of the file to save the config in.</param>
 	public void writeParameterFile(string fileName){
-		BufferedWriter bw = new BufferedWriter(new System.IO.StreamWriter(fileName));
+		BufferedWriter bw = new System.IO.StreamWriter(new System.IO.StreamWriter(fileName));
 		HashSet<string> ks = parameters.Keys;
 
 		foreach (string key in ks) {

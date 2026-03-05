@@ -57,15 +57,15 @@ public class GEXFAttValue : IGEXFElement {
 	public void export(SmartXMLWriter stream){
 		stream.startElement("attvalue");
 
-		stream.stream.writeAttribute("for", forId);
-		stream.stream.writeAttribute("value", value);
+		stream.stream.WriteAttributeString("for", forId);
+		stream.stream.WriteAttributeString("value", value);
 
 		if (double.IsNaN(end))
 			end = root.step;
 
 		if (root.isExtensionEnable(Extension.DYNAMICS)) {
-			stream.stream.writeAttribute("start", root.getTimeFormat().format.format(start));
-			stream.stream.writeAttribute("end", root.getTimeFormat().format.format(end));
+			stream.stream.WriteAttributeString("start", root.getTimeFormat().format.format(start));
+			stream.stream.WriteAttributeString("end", root.getTimeFormat().format.format(end));
 		}
 
 		stream.endElement(); // ATTVALUE

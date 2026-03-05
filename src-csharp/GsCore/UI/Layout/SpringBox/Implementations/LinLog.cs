@@ -109,10 +109,10 @@ public class LinLog : BarnesHutLayout {
 	
 	protected void chooseNodePosition(NodeParticle n0, NodeParticle n1) {
 		// double delta = k * 0.1;
-		// if (n0.getEdges().size() == 1 && n1.getEdges().size() > 1) {
+		// if (n0.getEdges().Count == 1 && n1.getEdges().Count > 1) {
 		// org.miv.pherd.geom.Point3 pos = n1.getPosition();
 		// n0.moveTo(pos.x + delta, pos.y + delta, pos.z + delta);
-		// } else if (n1.getEdges().size() == 1 && n0.getEdges().size() > 1) {
+		// } else if (n1.getEdges().Count == 1 && n0.getEdges().Count > 1) {
 		// org.miv.pherd.geom.Point3 pos = n0.getPosition();
 		// n1.moveTo(pos.x + delta, pos.y + delta, pos.z + delta);
 		// }

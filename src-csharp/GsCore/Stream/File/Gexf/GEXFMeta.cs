@@ -60,7 +60,7 @@ public class GEXFMeta : IGEXFElement {
 		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 
 		stream.startElement("meta");
-		stream.stream.writeAttribute("lastmodifieddate", df.format(date));
+		stream.stream.WriteAttributeString("lastmodifieddate", df.format(date));
 
 		stream.leafWithText("creator", creator);
 		stream.leafWithText("keywords", keywords);

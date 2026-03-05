@@ -48,7 +48,7 @@ public class GraphReplay : SourceBase, ISource {
 			string nodeId = node.getId();
 			sendNodeAdded(sourceId, nodeId);
 
-			if (node.getAttributeCount() > 0)
+			if (node.AttributeCount > 0)
 				node.attributeKeys()
 						.ToList().ForEach(key => sendNodeAttributeAdded(sourceId, nodeId, key, node.getAttribute(key)));
 		});
@@ -57,7 +57,7 @@ public class GraphReplay : SourceBase, ISource {
 			string edgeId = edge.getId();
 			sendEdgeAdded(sourceId, edgeId, edge.getNode0().getId(), edge.getNode1().getId(), edge.isDirected());
 
-			if (edge.getAttributeCount() > 0)
+			if (edge.AttributeCount > 0)
 				edge.attributeKeys()
 						.ToList().ForEach(key => sendEdgeAttributeAdded(sourceId, edgeId, key, edge.getAttribute(key)));
 		});

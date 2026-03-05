@@ -54,7 +54,7 @@ public class GraphDiff {
 /// <param name="g2"></param>
 	public GraphDiff(IGraph g1, IGraph g2) : this() {
 
-		if (g2.getNodeCount() == 0 && g2.getEdgeCount() == 0 && g2.getAttributeCount() == 0
+		if (g2.getNodeCount() == 0 && g2.getEdgeCount() == 0 && g2.AttributeCount == 0
 				&& (g1.getNodeCount() > 0 || g1.getEdgeCount() > 0)) {
 			events.Add(new GraphCleared(g1));
 		} else {

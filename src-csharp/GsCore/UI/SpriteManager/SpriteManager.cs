@@ -78,7 +78,7 @@ public class SpriteManager : IEnumerable<ISprite>, IAttributeSink {
 	}
 
 	protected void lookForExistingSprites(){
-		if (graph.getAttributeCount() > 0) {
+		if (graph.AttributeCount > 0) {
 			graph.attributeKeys().Where(key => key.StartsWith("ui.sprite.")).ToList().ForEach(key => {
 				string id = key.Substring(10);
 
@@ -237,7 +237,7 @@ public class SpriteManager : IEnumerable<ISprite>, IAttributeSink {
 /// <returns>The created sprite.</returns>
 	public T addSprite<T>(string identifier, Type spriteClass, Values position) where T : ISprite {
 		try {
-			T sprite = spriteClass.newInstance();
+			T sprite = new spriteClass();
 			sprite.init(identifier, this, position);
 			return sprite;
 		} catch (Exception e) {

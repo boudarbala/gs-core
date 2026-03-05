@@ -88,14 +88,14 @@ public class GEXF : PipeBase, IGEXFElement {
 	public void export(SmartXMLWriter stream){
 		stream.startElement("gexf");
 
-		stream.stream.writeAttribute("xmlns", XMLNS);
-		stream.stream.writeAttribute("xmlns:xsi", XMLNS_XSI);
+		stream.stream.WriteAttributeString("xmlns", XMLNS);
+		stream.stream.WriteAttributeString("xmlns:xsi", XMLNS_XSI);
 
 		if (isExtensionEnable(Extension.VIZ))
-			stream.stream.writeAttribute("xmlns:viz", XMLNS_VIZ);
+			stream.stream.WriteAttributeString("xmlns:viz", XMLNS_VIZ);
 
-		stream.stream.writeAttribute("xsi:schemaLocation", XMLNS_SL);
-		stream.stream.writeAttribute("version", VERSION);
+		stream.stream.WriteAttributeString("xsi:schemaLocation", XMLNS_SL);
+		stream.stream.WriteAttributeString("version", VERSION);
 
 		meta.export(stream);
 		graph.export(stream);

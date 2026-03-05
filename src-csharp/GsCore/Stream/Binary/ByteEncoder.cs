@@ -31,7 +31,7 @@ namespace Org.GraphStream.Stream.Binary
 
 
 /// <summary>
-/// Define an encoder that transform received events into a binary buffer. <p/> A ByteEncoder is a sink that will produce a {@link ByteBuffer} from each received evt. Then these buffer can be sent to an end-point using a {@link ByteEncoder.Transport}. <p/> This is a generic way to define the encoding of events into bytes buffer. The main protocol used in GraphStream to do such things is NetStream, with is dedicated encoder {@link org.graphstream.stream.netstream.NetStreamEncoder}.
+/// Define an encoder that transform received events into a binary buffer. <p/> A ByteEncoder is a sink that will produce a {@link System.IO.MemoryStream} from each received evt. Then these buffer can be sent to an end-point using a {@link ByteEncoder.Transport}. <p/> This is a generic way to define the encoding of events into bytes buffer. The main protocol used in GraphStream to do such things is NetStream, with is dedicated encoder {@link org.graphstream.stream.netstream.NetStreamEncoder}.
 /// </summary>
 public interface ByteEncoder : ISink {
 	/// <summary>

@@ -1115,7 +1115,7 @@ public class FileSinkSVG : IFileSink {
 	}
 
 	class XMLWriter {
-		XMLStreamWriter out;
+		System.Xml.XmlWriter out;
 		int depth;
 		bool closed;
 
@@ -1123,37 +1123,37 @@ public class FileSinkSVG : IFileSink {
 			if (out != null)
 				end();
 
-			out = XMLOutputFactory.newInstance().createXMLStreamWriter(w);
-			output.writeStartDocument();
+			out = System.Xml.new XmlWriterSettings().createXMLStreamWriter(w);
+			output.WriteStartDocument();
 		}
 
 		void end(){
-			output.writeEndDocument();
+			output.WriteEndDocument();
 			/* output.Flush(); */
 			output.Close();
 			out = null;
 		}
 
 		void open(string name){
-			output.writeCharacters("\n");
+			output.WriteString("\n");
 			for (int i = 0; i < depth; i++)
-				output.writeCharacters("  ");
+				output.WriteString("  ");
 
-			output.writeStartElement(name);
+			output.WriteStartElement(name);
 			depth++;
 		}
 
 		void close(){
-			output.writeEndElement();
+			output.WriteEndElement();
 			depth--;
 		}
 
 		void attribute(string key, string value){
-			output.writeAttribute(key, value);
+			output.WriteAttributeString(key, value);
 		}
 
 		void characters(string data){
-			output.writeCharacters(data);
+			output.WriteString(data);
 		}
 	}
 

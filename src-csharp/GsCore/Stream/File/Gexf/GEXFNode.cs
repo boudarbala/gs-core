@@ -69,14 +69,14 @@ public class GEXFNode : IGEXFElement {
 	public void export(SmartXMLWriter stream){
 		stream.startElement("node");
 
-		stream.stream.writeAttribute("id", id);
-		stream.stream.writeAttribute("label", label);
+		stream.stream.WriteAttributeString("id", id);
+		stream.stream.WriteAttributeString("label", label);
 
 		if (position && root.isExtensionEnable(Extension.VIZ)) {
 			stream.startElement("viz:position");
-			stream.stream.writeAttribute("x", float.toString(x));
-			stream.stream.writeAttribute("y", float.toString(y));
-			stream.stream.writeAttribute("z", float.toString(z));
+			stream.stream.WriteAttributeString("x", float.toString(x));
+			stream.stream.WriteAttributeString("y", float.toString(y));
+			stream.stream.WriteAttributeString("z", float.toString(z));
 			stream.endElement(); // POSITION
 		}
 

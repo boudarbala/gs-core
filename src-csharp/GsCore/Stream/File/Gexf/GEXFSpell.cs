@@ -56,8 +56,8 @@ public class GEXFSpell : IGEXFElement {
 	public void export(SmartXMLWriter stream){
 		stream.startElement("spell");
 
-		stream.stream.writeAttribute("start", root.getTimeFormat().format.format(start));
-		stream.stream.writeAttribute("end", root.getTimeFormat().format.format(closed ? end : root.step));
+		stream.stream.WriteAttributeString("start", root.getTimeFormat().format.format(start));
+		stream.stream.WriteAttributeString("end", root.getTimeFormat().format.format(closed ? end : root.step));
 
 		stream.endElement(); // SPELL
 

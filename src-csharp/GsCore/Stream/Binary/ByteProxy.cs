@@ -331,7 +331,7 @@ public class ByteProxy : SourceBase, IPipe, Action {
 				Console.Error.WriteLine("Strange, no binary read.");
 			} else {
 				while (decoder.validate(buffer)) {
-					buffer.flip();
+					buffer /* .flip() - not needed in C# */;
 					decoder.decode(buffer);
 					buffer.compact();
 				}

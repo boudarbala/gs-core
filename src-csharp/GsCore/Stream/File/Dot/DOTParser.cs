@@ -598,7 +598,7 @@ public class DOTParser : Parser, DOTParserConstants {
 
 		Token t;
 		key = id();
-		val = bool.TRUE;
+		val = true;
 		switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
 		case EQUALS:
 			jj_consume_token(EQUALS);

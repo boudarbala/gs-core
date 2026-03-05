@@ -49,7 +49,7 @@ public interface IDisplay {
 			foreach (string candidate in candidates) {
 				try {
 					Type clazz = Type.GetType(candidate);
-					object object = clazz.newInstance();
+					object object = new clazz();
 
 					if (object is IDisplay) {
 						display = (IDisplay) object;

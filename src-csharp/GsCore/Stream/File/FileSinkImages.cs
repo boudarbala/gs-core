@@ -470,7 +470,7 @@ abstract class FileSinkImages : IFileSink {
 		if (output.Directory?.FullName != null && !output.Directory.Exists)
 			output.Directory?.Create();
 
-		/* ImageIO.Write not available in .NET */, output);
+		/* ImageIO.Write not available in .NET */
 	}
 
 	protected void printProgress() {

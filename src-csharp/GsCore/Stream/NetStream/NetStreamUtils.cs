@@ -261,7 +261,7 @@ public class NetStreamUtils {
 		putVarint(b, data.Length, ssize);
 
 		for (int i = 0; i < data.Length; i++) {
-			b.putDouble((double) data[i]);
+			b.Write(BitConverter.GetBytes((double) data[i]);
 		}
 		/* b.rewind() */;
 		return b;
@@ -299,15 +299,15 @@ public class NetStreamUtils {
 	}
 
 	/// <param name="in"> The double to encode</param>
-/// <returns>ByteBuffer with encoded double in it</returns>
+/// <returns>System.IO.MemoryStream with encoded double in it</returns>
 	public static byte[] encodeDouble(object input) {
-		byte[] bb = new byte[8].putDouble((double) in);
+		byte[] bb = new byte[8].Write(BitConverter.GetBytes((double) in);
 		/* bb.rewind() */;
 		return bb;
 	}
 
 	/// <param name="in"> The float array to encode</param>
-/// <returns>ByteBuffer with encoded float array in it</returns>
+/// <returns>System.IO.MemoryStream with encoded float array in it</returns>
 	public static byte[] encodeFloatArray(object input) {
 		object[] data = (object[]) in;
 
@@ -318,41 +318,41 @@ public class NetStreamUtils {
 		putVarint(b, data.Length, ssize);
 
 		for (int i = 0; i < data.Length; i++) {
-			b.putFloat((float) data[i]);
+			b.Write(BitConverter.GetBytes((float) data[i]);
 		}
 		/* b.rewind() */;
 		return b;
 	}
 
 	/// <param name="in"> The float to encode</param>
-/// <returns>ByteBuffer with encoded float in it</returns>
+/// <returns>System.IO.MemoryStream with encoded float in it</returns>
 	public static byte[] encodeFloat(object input) {
 		byte[] b = new byte[4];
-		b.putFloat(((float) in));
+		b.Write(BitConverter.GetBytes(((float) in));
 		/* b.rewind() */;
 		return b;
 	}
 
 	/// <param name="in"> The long array to encode</param>
-/// <returns>ByteBuffer with encoded long array in it</returns>
+/// <returns>System.IO.MemoryStream with encoded long array in it</returns>
 	public static byte[] encodeLongArray(object input) {
 		return encodeVarintArray(input);
 	}
 
 	/// <param name="in"> The long to encode</param>
-/// <returns>ByteBuffer with encoded long in it</returns>
+/// <returns>System.IO.MemoryStream with encoded long in it</returns>
 	public static byte[] encodeLong(object input) {
 		return encodeVarint(input);
 	}
 
 	/// <param name="in"> The integer array to encode</param>
-/// <returns>ByteBuffer with encoded integer array in it</returns>
+/// <returns>System.IO.MemoryStream with encoded integer array in it</returns>
 	public static byte[] encodeIntArray(object input) {
 		return encodeVarintArray(input);
 	}
 
 	/// <param name="in"> The integer to encode</param>
-/// <returns>ByteBuffer with encoded integer in it</returns>
+/// <returns>System.IO.MemoryStream with encoded integer in it</returns>
 	public static byte[] encodeInt(object input) {
 		return encodeVarint(input);
 	}
@@ -623,11 +623,11 @@ public class NetStreamUtils {
 	}
 
 	public static float decodeFloat(byte[] bb) {
-		return bb.getFloat();
+		return bb.ReadByte() /* getFloat */;
 	}
 
 	public static double decodeDouble(byte[] bb) {
-		return bb.getDouble();
+		return bb.ReadByte() /* getDouble */;
 	}
 
 	public static int[] decodeIntArray(byte[] bb) {
@@ -685,7 +685,7 @@ public class NetStreamUtils {
 			double[] res = new double[len];
 
 			for (int i = 0; i < len; i++) {
-				res[i] = bb.getDouble();
+				res[i] = bb.ReadByte() /* getDouble */;
 			}
 
 			return res;
@@ -703,7 +703,7 @@ public class NetStreamUtils {
 			float[] res = new float[len];
 
 			for (int i = 0; i < len; i++) {
-				res[i] = bb.getFloat();
+				res[i] = bb.ReadByte() /* getFloat */;
 			}
 
 			return res;

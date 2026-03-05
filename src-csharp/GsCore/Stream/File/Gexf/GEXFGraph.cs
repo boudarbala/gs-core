@@ -66,12 +66,12 @@ public class GEXFGraph : IGEXFElement {
 
 		stream.startElement("graph");
 
-		stream.stream.writeAttribute("idtype", idType.qname);
-		stream.stream.writeAttribute("mode", realMode.qname);
-		stream.stream.writeAttribute("defaultedgetype", defaultEdgeType.qname);
+		stream.stream.WriteAttributeString("idtype", idType.qname);
+		stream.stream.WriteAttributeString("mode", realMode.qname);
+		stream.stream.WriteAttributeString("defaultedgetype", defaultEdgeType.qname);
 
 		if (root.isExtensionEnable(Extension.DYNAMICS))
-			stream.stream.writeAttribute("timeformat", root.getTimeFormat().qname);
+			stream.stream.WriteAttributeString("timeformat", root.getTimeFormat().qname);
 
 		nodesAttributes.export(stream);
 		edgesAttributes.export(stream);

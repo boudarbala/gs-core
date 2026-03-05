@@ -95,7 +95,7 @@ public class GEXFAttributes : IGEXFElement, IAttributeSink {
 			return;
 
 		stream.startElement("attributes");
-		stream.stream.writeAttribute("class", type.qname);
+		stream.stream.WriteAttributeString("class", type.qname);
 
 		foreach (GEXFAttribute attribute in ((attributes[])Enum.GetValues(typeof(attributes))))
 			attribute.export(stream);

@@ -219,7 +219,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 /// <param name="name"> expected name</param>
 /// <returns>true is type and name are valid</returns>
 	protected bool isEvent(XMLEvent e, int type, string name) {
-		bool valid = e.getEventType() == type;
+		bool valid = e.NodeType == type;
 
 		if (valid) {
 			switch (type) {
@@ -261,7 +261,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 	private string gotWhat(XMLEvent e) {
 		string v = null;
 
-		switch (e.getEventType()) {
+		switch (e.NodeType) {
 		case START_ELEMENT:
 			v = e.asStartElement().Name.getLocalPart();
 			break;
@@ -273,7 +273,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 			break;
 		}
 
-		return gotWhat(e.getEventType(), v);
+		return gotWhat(e.NodeType, v);
 	}
 
 	private string gotWhat(int type, string v) {
@@ -327,7 +327,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 		try {
 			XMLEvent e;
 
-			reader = XMLInputFactory.newInstance().createXMLEventReader(stream);
+			reader = System.Xml.new XmlReaderSettings().createXMLEventReader(stream);
 
 			e = getNextEvent();
 			checkValid(e, XMLEvent.START_DOCUMENT, null);
@@ -386,7 +386,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 
 			e = getNextEvent();
 
-			while (e.getEventType() == XMLEvent.CHARACTERS) {
+			while (e.NodeType == XMLEvent.CHARACTERS) {
 				buffer.Append(e.asCharacters().getData());
 				e = getNextEvent();
 			}

@@ -47,7 +47,7 @@ public class NetStreamDecoder : SourceBase, ByteDecoder {
 	
 	public void decode(byte[] bb) {
 		try {
-			int size = bb.getInt();
+			int size = bb.ReadByte() /* getInt */;
 			string streamId = NetStreamUtils.decodeString(bb);
 			int cmd = bb[];
 

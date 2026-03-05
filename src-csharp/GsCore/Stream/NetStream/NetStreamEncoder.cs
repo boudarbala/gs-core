@@ -95,7 +95,7 @@ public class NetStreamEncoder : ByteEncoder {
 				+ messageSize;
 
 		byte[] bb = new byte[size];
-		/* bb.putInt( */size).Add(streamBuffer).Add((byte) eventType).Add(sourceIdBuff).Add(encodeUnsignedVarint(timeId));
+		/* bb.Write(BitConverter.GetBytes( */size).Add(streamBuffer).Add((byte) eventType).Add(sourceIdBuff).Add(encodeUnsignedVarint(timeId));
 
 		return bb;
 	}
@@ -423,7 +423,7 @@ public class NetStreamEncoder : ByteEncoder {
 	 */
 	public void stepBegins(string sourceId, long timeId, double step) {
 		byte[] buff = getAndPrepareBuffer(sourceId, timeId, NetStreamConstants.EVENT_STEP, 8);
-		buff.putDouble(step);
+		buff.Write(BitConverter.GetBytes(step);
 
 		doSend(buff);
 	}

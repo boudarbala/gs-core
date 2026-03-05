@@ -32,14 +32,14 @@ namespace Org.GraphStream.Stream.File.Gexf
 
 
 public class SmartXMLWriter {
-	public XMLStreamWriter stream;
+	public System.Xml.XmlWriter stream;
 
 	bool smart;
 	int depth;
 	List<int> childrenCount;
 
 	public SmartXMLWriter(System.IO.TextWriter output, bool smart){
-		stream = XMLOutputFactory.newFactory().createXMLStreamWriter(output);
+		stream = System.Xml.XmlWriterSettings.newFactory().createXMLStreamWriter(output);
 		stream.writeStartDocument("UTF-8", "1.0");
 
 		this.smart = smart;
@@ -50,16 +50,16 @@ public class SmartXMLWriter {
 
 	public void startElement(string name){
 		if (smart) {
-			stream.writeCharacters("\n");
+			stream.WriteString("\n");
 
 			for (int i = 0; i < depth; i++)
-				stream.writeCharacters(" ");
+				stream.WriteString(" ");
 		}
 
 		childrenCount.set(0, childrenCount[0] + 1);
 		childrenCount.addFirst(0);
 
-		stream.writeStartElement(name);
+		stream.WriteStartElement(name);
 		depth++;
 	}
 
@@ -69,18 +69,18 @@ public class SmartXMLWriter {
 		bool leaf = (childrenCount.Pop() == 0);
 
 		if (smart && !leaf) {
-			stream.writeCharacters("\n");
+			stream.WriteString("\n");
 
 			for (int i = 0; i < depth; i++)
-				stream.writeCharacters(" ");
+				stream.WriteString(" ");
 		}
 
-		stream.writeEndElement();
+		stream.WriteEndElement();
 	}
 
 	public void leafWithText(string name, string content){
 		startElement(name);
-		stream.writeCharacters(content);
+		stream.WriteString(content);
 		endElement();
 	}
 
@@ -93,7 +93,7 @@ public class SmartXMLWriter {
 	}
 
 	public void close(){
-		stream.writeEndDocument();
+		stream.WriteEndDocument();
 		/* stream.Flush(); */
 
 		stream.Close();

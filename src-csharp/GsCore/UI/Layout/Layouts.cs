@@ -61,7 +61,7 @@ public class Layouts {
 		if (layoutClassName != null) {
 			try {
 				Type c = Type.GetType(layoutClassName);
-				object object = c.newInstance();
+				object object = new c();
 
 				if (object is ILayout) {
 					return (ILayout) object;

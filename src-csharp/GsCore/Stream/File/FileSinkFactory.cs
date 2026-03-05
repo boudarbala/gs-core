@@ -69,7 +69,7 @@ public class FileSinkFactory {
 				Type fsink = ext2sink[ext];
 
 				try {
-					return fsink.newInstance();
+					return new fsink();
 				} catch (InstantiationException e) {
 					Console.Error.WriteLine(e);
 				} catch (IllegalAccessException e) {
