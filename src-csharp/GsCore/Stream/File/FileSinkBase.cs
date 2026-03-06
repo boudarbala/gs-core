@@ -139,8 +139,9 @@ abstract class FileSinkBase : IFileSink {
 	 * @see org.graphstream.stream.file.FileSink#flush()
 	 */
 	public void flush(){
-		if (output != null)
-			/* output.Flush(); */
+		if (output != null) {
+			// output.Flush();
+		}
 	}
 
 	/*

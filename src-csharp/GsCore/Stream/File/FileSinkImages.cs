@@ -935,6 +935,7 @@ abstract class FileSinkImages : IFileSink {
 		}
 	}
 
+/*
 	public static void usage() {
 		Console.WriteLine(string.Format("usage: java {0} [options] fichier.dgs\n", typeof(FileSinkImages).Name));
 		Console.WriteLine(string.Format("where options in:\n"));
@@ -942,9 +943,8 @@ abstract class FileSinkImages : IFileSink {
 			Console.WriteLine(string.Format("\n --{0}{1} , -{2} {3}\n{4}\n", option.fullopts, option.valuable ? "=..." : "",
 					option.shortopts, option.valuable ? "..." : "", option.description));
 		}
-	}
 
-	public static void main(params string[] args){
+		public static void main(params string[] args){
 
 		Dictionary<Option, string> options = new Dictionary<Option, string>();
 		List<string> others = new List<string>();
