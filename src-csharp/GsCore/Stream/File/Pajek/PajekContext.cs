@@ -73,7 +73,7 @@ public class PajekContext {
 	}
 
 	protected void addNodePosition(string id, Token x, Token y, Token z){
-		object pos[] = new object[3];
+		object[] pos = new object[3];
 		pos[0] = (double) getReal(x);
 		pos[1] = (double) getReal(y);
 		pos[2] = z != null ? (double) getReal(z) : 0;
@@ -221,12 +221,15 @@ class EdgeGraphics : Graphics {
 class EdgeMatrix {
 	// Line first, col second.
 	// Line = from node, col = to node.
-	protected bool mat[][];
+	protected bool[][] mat;
 
 	protected int curLine = 0;
 
 	public EdgeMatrix(int size) {
-		mat = new bool[size][size]; // Horror !
+		mat = new bool[size][];
+		for (int i = 0; i < size; i++) {
+			mat[i] = new bool[size];
+		}
 	}
 
 	public int size() {

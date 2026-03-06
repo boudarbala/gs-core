@@ -68,7 +68,7 @@ abstract class NodeParticle : Particle {
 	/// <summary>
 /// If non null, all this node statistics will be output to this stream.
 /// </summary>
-	public System.IO.TextWriter out;
+	public System.IO.TextWriter writer;
 
 	/// <summary>
 /// The box.

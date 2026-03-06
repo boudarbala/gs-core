@@ -55,24 +55,24 @@ public class FileSourceDGS : FileSourceParser {
 
 	
 	protected System.IO.TextReader createReaderForFile(string filename){
-		System.IO.Stream is = null;
+		System.IO.Stream stream = null;
 
-		is = new FileInputStream(filename);
+		is = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
-		if (is.markSupported())
-			is.mark(128);
+		if (stream.CanSeek)
+			stream.Seek(128, SeekOrigin.Begin);
 
 		try {
-			is = new GZIPInputStream(is);
+			is = new GZipStream(is, CompressionMode.Decompress);
 		} catch (System.IO.IOException e1) {
 			//
 			// This is not a gzip input.
 			// But gzip has eat some bytes so we reset the stream
 			// or close and open it again.
 			//
-			if (is.markSupported()) {
+			if (stream.CanSeek) {
 				try {
-					is.reset();
+					stream.Seek(0, System.IO.SeekOrigin.Begin);
 				} catch (System.IO.IOException e2) {
 					//
 					// Dirty but we hope do not get there
@@ -81,7 +81,7 @@ public class FileSourceDGS : FileSourceParser {
 				}
 			} else {
 				try {
-					is.Close();
+					stream.Close();
 				} catch (System.IO.IOException e2) {
 					//
 					// Dirty but we hope do not get there
@@ -89,7 +89,7 @@ public class FileSourceDGS : FileSourceParser {
 					Console.Error.WriteLine(e2);
 				}
 
-				is = new FileInputStream(filename);
+				is = new FileStream(filename, FileMode.Open, FileAccess.Read);
 			}
 		}
 

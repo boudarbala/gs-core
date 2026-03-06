@@ -37,21 +37,10 @@ abstract class AnnotatedSink : ISink {
 	/// <summary>
 /// Annotation used to bind an event to a method. This bind is composed of a name (the attribute key) and an element type. For example, the annotation <pre> &#64;Bind(value = &quot;test&quot;, type = ElementType.NODE) </pre> will be triggered the annotated method when receiving 'nodeAttributeXXX()' methods.
 /// </summary>
-	@Documented
-	@Retention(RetentionPolicy.RUNTIME)
-	@Target(java.lang.annotation.ElementType.METHOD)
-	public static @interface Bind {
-		/// <summary>
-/// Name of the attribute key that triggered the annotated method.
-/// </summary>
-/// <returns>an attribute key</returns>
-		string value();
-
-		/// <summary>
-/// Type of element that triggered the annotated method. Default is GRAPH.
-/// </summary>
-/// <returns>type of element in GRAPH, NODE or EDGE</returns>
-		ElementType type() ElementType.GRAPH;
+	[AttributeUsage(AttributeTargets.Method)]
+	public class BindAttribute : Attribute {
+		public string Value { get; set; }
+		public ElementType Type { get; set; } = ElementType.GRAPH;
 	}
 
 	private EnumMap<ElementType, MethodMap> methods;
@@ -62,7 +51,7 @@ abstract class AnnotatedSink : ISink {
 		methods[ElementType.EDGE] = new MethodMap();
 		methods[ElementType.NODE] = new MethodMap();
 
-		Method[] ms = getClass().getMethods();
+		Method[] ms = GetType().getMethods();
 
 		if (ms != null) {
 			for (int i = 0; i < ms.Length; i++) {

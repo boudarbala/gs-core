@@ -320,7 +320,7 @@ public class Point3 : Point2, java.io.System.Runtime.Serialization.ISerializable
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.GetType()) {
+		if (o == null || GetType() != o.GetType()) {
 			return false;
 		}
 		if (!base.Equals(o)) {

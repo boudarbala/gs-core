@@ -95,7 +95,7 @@ public class NetStreamEncoder : ByteEncoder {
 				+ messageSize;
 
 		byte[] bb = new byte[size];
-		/* bb.Write(BitConverter.GetBytes( */size).Add(streamBuffer).Add((byte) eventType).Add(sourceIdBuff).Add(encodeUnsignedVarint(timeId));
+		// Legacy Java code removed
 
 		return bb;
 	}

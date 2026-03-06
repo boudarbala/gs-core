@@ -122,7 +122,7 @@ public class GraphicNode : GraphicElement, INode {
 			} else if (c == 'x' && attribute.Length > 1 && attribute[1] == 'y'
 					&& (attribute.Length == 2 || (attribute.Length == 3 && attribute[2] == 'z'))) {
 
-				double pos[] = nodePosition(this);
+				double[] pos = nodePosition(this);
 				moveFromEvent(pos[0], pos[1], pos[2]);
 			}
 		}
@@ -227,7 +227,7 @@ public class GraphicNode : GraphicElement, INode {
 
 	
 	public IEnumerable<IEdge> edges() {
-		return mygraph.connectivity[this].map(ge => (IEdge) ge);
+		return mygraph.connectivity[this].Select(ge => (IEdge) ge);
 	}
 
 	

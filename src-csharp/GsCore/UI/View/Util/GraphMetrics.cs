@@ -76,7 +76,7 @@ public class GraphMetrics {
 	/// <summary>
 /// The view port size.
 /// </summary>
-	public double viewport[] = new double[4];
+	public double[] viewport = new double[4];
 
 	/// <summary>
 /// The scaling factor to pass from graph units to pixels.

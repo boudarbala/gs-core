@@ -472,24 +472,24 @@ public class OldFileSourceDGS : FileSourceBase {
 
 	
 	protected System.IO.TextReader createReaderFrom(string file){
-		System.IO.Stream is = null;
+		System.IO.Stream stream = null;
 
-		is = new FileInputStream(file);
+		stream = new FileStream(file, FileMode.Open, FileAccess.Read);
 
-		if (is.markSupported())
-			is.mark(128);
+		if (stream.CanSeek)
+			stream.Seek(128, SeekOrigin.Begin);
 
 		try {
-			is = new GZIPInputStream(is);
+			stream = new GZipStream(stream, CompressionMode.Decompress);
 		} catch (System.IO.IOException e1) {
 			//
 			// This is not a gzip input.
 			// But gzip has eat some bytes so we reset the stream
 			// or close and open it again.
 			//
-			if (is.markSupported()) {
+			if (stream.CanSeek) {
 				try {
-					is.reset();
+					stream.Seek(0, SeekOrigin.Begin);
 				} catch (System.IO.IOException e2) {
 					//
 					// Dirty but we hope do not get there
@@ -498,7 +498,7 @@ public class OldFileSourceDGS : FileSourceBase {
 				}
 			} else {
 				try {
-					is.Close();
+					stream.Close();
 				} catch (System.IO.IOException e2) {
 					//
 					// Dirty but we hope do not get there
@@ -506,11 +506,11 @@ public class OldFileSourceDGS : FileSourceBase {
 					Console.Error.WriteLine(e2);
 				}
 
-				is = new FileInputStream(file);
+				stream = new FileStream(file, FileMode.Open, FileAccess.Read);
 			}
 		}
 
-		return new System.IO.StreamReader(new System.IO.StreamReader(is));
+		return new System.IO.StreamReader(stream);
 	}
 
 	

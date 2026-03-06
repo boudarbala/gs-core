@@ -40,7 +40,7 @@ public class FileSinkDGS : FileSinkBase {
 	/// <summary>
 /// A shortcut to the output.
 /// </summary>
-	protected System.IO.StreamWriter out;
+	protected System.IO.StreamWriter writer;
 
 	protected string graphName = "";
 

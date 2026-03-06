@@ -251,9 +251,9 @@ public class AdjacencyListGraph : AbstractGraph {
 	 * For performance tuning
 	 * 
 	 * @return the number of allocated but unused array elements public int
-	 * getUnusedArrayElements() { int count = 0; count += edgeArray.length -
-	 * edgeCount; count += nodeArray.length - nodeCount; for (ALNode n :
-	 * this.<ALNode> getEachNode()) count += n.edges.length - n.degree; return
+	 * getUnusedArrayElements() { int count = 0; count += edgeArray.Length -
+	 * edgeCount; count += nodeArray.Length - nodeCount; for (ALNode n :
+	 * this.<ALNode> getEachNode()) count += n.edges.Length - n.degree; return
 	 * count; }
 	 */
 }

@@ -74,7 +74,7 @@ public class GraphPosLengthUtils {
 /// <param name="node"> The node to consider.</param>
 /// <returns>A newly allocated array of three floats containing the (x,y,z) position of the node.</returns>
 	public static double[] nodePosition(INode node) {
-		double xyz[] = new double[3];
+		double[] xyz = new double[3];
 
 		nodePosition(node, xyz);
 
@@ -190,7 +190,7 @@ public class GraphPosLengthUtils {
 /// <param name="xyz"> The result.</param>
 	public static void positionFromObject(object o, double xyz[]) {
 		if (o is object[]) {
-			object oo[] = (object[]) o;
+			object[] oo = (object[]) o;
 
 			if (oo.Length > 0 && oo[0] is IConvertible) {
 				xyz[0] = ((IConvertible) oo[0]);
@@ -200,7 +200,7 @@ public class GraphPosLengthUtils {
 					xyz[2] = ((IConvertible) oo[2]);
 			}
 		} else if (o is double[]) {
-			double oo[] = (double[]) o;
+			double[] oo = (double[]) o;
 			if (oo.Length > 0)
 				xyz[0] = oo[0];
 			if (oo.Length > 1)
@@ -208,7 +208,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				xyz[2] = oo[2];
 		} else if (o is float[]) {
-			float oo[] = (float[]) o;
+			float[] oo = (float[]) o;
 			if (oo.Length > 0)
 				xyz[0] = oo[0];
 			if (oo.Length > 1)
@@ -216,7 +216,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				xyz[2] = oo[2];
 		} else if (o is int[]) {
-			int oo[] = (int[]) o;
+			int[] oo = (int[]) o;
 			if (oo.Length > 0)
 				xyz[0] = oo[0];
 			if (oo.Length > 1)
@@ -224,7 +224,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				xyz[2] = oo[2];
 		} else if (o is double[]) {
-			double oo[] = (double[]) o;
+			double[] oo = (double[]) o;
 			if (oo.Length > 0)
 				xyz[0] = oo[0];
 			if (oo.Length > 1)
@@ -232,7 +232,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				xyz[2] = oo[2];
 		} else if (o is float[]) {
-			float oo[] = (float[]) o;
+			float[] oo = (float[]) o;
 			if (oo.Length > 0)
 				xyz[0] = oo[0];
 			if (oo.Length > 1)
@@ -240,7 +240,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				xyz[2] = oo[2];
 		} else if (o is int[]) {
-			int oo[] = (int[]) o;
+			int[] oo = (int[]) o;
 			if (oo.Length > 0)
 				xyz[0] = oo[0];
 			if (oo.Length > 1)
@@ -248,7 +248,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				xyz[2] = oo[2];
 		} else if (o is IConvertible[]) {
-			IConvertible oo[] = (IConvertible[]) o;
+			IConvertible[] oo = (IConvertible[]) o;
 			if (oo.Length > 0)
 				xyz[0] = oo[0];
 			if (oo.Length > 1)
@@ -278,7 +278,7 @@ public class GraphPosLengthUtils {
 	public static Point3 positionFromObject(object o, Point3 pos) {
 		double x = pos.x, y = pos.y, z = pos.z;
 		if (o is object[]) {
-			object oo[] = (object[]) o;
+			object[] oo = (object[]) o;
 
 			if (oo.Length > 0 && oo[0] is IConvertible) {
 				x = ((IConvertible) oo[0]);
@@ -288,7 +288,7 @@ public class GraphPosLengthUtils {
 					z = ((IConvertible) oo[2]);
 			}
 		} else if (o is double[]) {
-			double oo[] = (double[]) o;
+			double[] oo = (double[]) o;
 			if (oo.Length > 0)
 				x = oo[0];
 			if (oo.Length > 1)
@@ -296,7 +296,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				z = oo[2];
 		} else if (o is float[]) {
-			float oo[] = (float[]) o;
+			float[] oo = (float[]) o;
 			if (oo.Length > 0)
 				x = oo[0];
 			if (oo.Length > 1)
@@ -304,7 +304,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				z = oo[2];
 		} else if (o is int[]) {
-			int oo[] = (int[]) o;
+			int[] oo = (int[]) o;
 			if (oo.Length > 0)
 				x = oo[0];
 			if (oo.Length > 1)
@@ -312,7 +312,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				z = oo[2];
 		} else if (o is double[]) {
-			double oo[] = (double[]) o;
+			double[] oo = (double[]) o;
 			if (oo.Length > 0)
 				x = oo[0];
 			if (oo.Length > 1)
@@ -320,7 +320,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				z = oo[2];
 		} else if (o is float[]) {
-			float oo[] = (float[]) o;
+			float[] oo = (float[]) o;
 			if (oo.Length > 0)
 				x = oo[0];
 			if (oo.Length > 1)
@@ -328,7 +328,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				z = oo[2];
 		} else if (o is int[]) {
-			int oo[] = (int[]) o;
+			int[] oo = (int[]) o;
 			if (oo.Length > 0)
 				x = oo[0];
 			if (oo.Length > 1)
@@ -336,7 +336,7 @@ public class GraphPosLengthUtils {
 			if (oo.Length > 2)
 				z = oo[2];
 		} else if (o is IConvertible[]) {
-			IConvertible oo[] = (IConvertible[]) o;
+			IConvertible[] oo = (IConvertible[]) o;
 			if (oo.Length > 0)
 				x = oo[0];
 			if (oo.Length > 1)
@@ -379,8 +379,8 @@ public class GraphPosLengthUtils {
 /// <param name="edge"></param>
 /// <returns>The edge length or -1 if the nodes of the edge have no positions.</returns>
 	public static double edgeLength(IEdge edge) {
-		double xyz0[] = nodePosition(edge.getNode0());
-		double xyz1[] = nodePosition(edge.getNode1());
+		double[] xyz0 = nodePosition(edge.getNode0());
+		double[] xyz1 = nodePosition(edge.getNode1());
 
 		if (xyz0 == null || xyz1 == null)
 			return -1;

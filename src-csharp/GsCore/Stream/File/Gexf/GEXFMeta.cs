@@ -36,7 +36,7 @@ public class GEXFMeta : IGEXFElement {
 	string description;
 
 	public GEXFMeta() {
-		creator = "GraphStream using " + getClass().Name;
+		creator = "GraphStream using " + GetType().Name;
 		keywords = "";
 		description = "";
 	}

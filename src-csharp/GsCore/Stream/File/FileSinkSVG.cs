@@ -210,7 +210,7 @@ public class FileSinkSVG : IFileSink {
 			viewBox = new ViewBox(0, 0, 1000, 1000);
 		}
 
-		public void init(XMLWriter out, IGraph g){
+		public void init(XMLWriter writer, IGraph g){
 			if (g.hasAttribute("ui.stylesheet")) {
 				stylesheet.load(((string) g.getAttribute("ui.stylesheet")));
 			}
@@ -278,11 +278,11 @@ public class FileSinkSVG : IFileSink {
 			output.Close();
 		}
 
-		public void end(XMLWriter out){
+		public void end(XMLWriter writer){
 			output.Close();
 		}
 
-		public void writeElements(XMLWriter out, IGraph g){
+		public void writeElements(XMLWriter writer, IGraph g){
 			output.open("g");
 			output.attribute("id", "graph-misc");
 			writeElement(output, g);
@@ -304,7 +304,7 @@ public class FileSinkSVG : IFileSink {
 			output.Close();
 		}
 
-		public void writeElement(XMLWriter out, IElement e){
+		public void writeElement(XMLWriter writer, IElement e){
 			string id = "";
 			SVGStyle style = null;
 			string transform = null;
@@ -340,7 +340,7 @@ public class FileSinkSVG : IFileSink {
 			output.Close();
 		}
 
-		public void writeElementText(XMLWriter out, string text, IElement e, StyleGroup style){
+		public void writeElementText(XMLWriter writer, string text, IElement e, StyleGroup style){
 			if (style == null || style.getTextVisibilityMode() != StyleConstants.TextVisibilityMode.HIDDEN) {
 				double x, y;
 
@@ -1017,7 +1017,7 @@ public class FileSinkSVG : IFileSink {
 			style = styleSB.ToString();
 		}
 
-		public void writeDef(XMLWriter out){
+		public void writeDef(XMLWriter writer){
 			if (gradient) {
 				string gid = string.Format("gradient{0}", gradientId++);
 				string type = "linearGradient";
@@ -1115,15 +1115,15 @@ public class FileSinkSVG : IFileSink {
 	}
 
 	class XMLWriter {
-		System.Xml.XmlWriter out;
+		System.Xml.XmlWriter writer;
 		int depth;
 		bool closed;
 
 		void start(System.IO.TextWriter w){
-			if (out != null)
+			if (writer != null)
 				end();
 
-			out = System.Xml.new XmlWriterSettings().createXMLStreamWriter(w);
+			writer = System.Xml.XmlTextWriter.Create(w);
 			output.WriteStartDocument();
 		}
 
@@ -1131,7 +1131,7 @@ public class FileSinkSVG : IFileSink {
 			output.WriteEndDocument();
 			/* output.Flush(); */
 			output.Close();
-			out = null;
+			writer = null;
 		}
 
 		void open(string name){

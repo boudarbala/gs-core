@@ -321,19 +321,19 @@ public class StyleGroupSet : StyleSheetListener {
 	}
 
 	public IEnumerable<INode> nodes() {
-		return byNodeIdGroups.map(entry => {
+		return byNodeIdGroups.Select(entry => {
 			return (INode) groups[entry.Value].getElement(entry.Key);
 		});
 	}
 
 	public IEnumerable<IEdge> edges() {
-		return byEdgeIdGroups.map(entry => {
+		return byEdgeIdGroups.Select(entry => {
 			return (IEdge) groups[entry.Value].getElement(entry.Key);
 		});
 	}
 
 	public IEnumerable<GraphicSprite> sprites() {
-		return bySpriteIdGroups.map(entry => {
+		return bySpriteIdGroups.Select(entry => {
 			return (GraphicSprite) groups[entry.Value].getElement(entry.Key);
 		});
 	}
@@ -564,7 +564,7 @@ public class StyleGroupSet : StyleSheetListener {
 	}
 
 	/// <summary>
-/// Check if an element need to change from a style group to another. <p> When an element can have potentially changed style due to some of its attributes (ui.class for example), instead of removing it then reading it, use this method to move the element from its current style group to a potentially different style group. </p> <p> Explanation of this method : checking the style of an element may be done by removing it ({@link #removeElement(Element)}) and then re-adding it ( {@link #addElement(Element)}). This must be done by the element since it knows when to check this. However you cannot only remove and add, since the style group inside which the element is can have events occurring on it, and these events must be passed from its old style to its new style. This method does all this information passing. </p>
+/// Check if an element need to change from a style group to another. <p> When an element can have potentially changed style due to some of its attributes (ui.GetType() for example), instead of removing it then reading it, use this method to move the element from its current style group to a potentially different style group. </p> <p> Explanation of this method : checking the style of an element may be done by removing it ({@link #removeElement(Element)}) and then re-adding it ( {@link #addElement(Element)}). This must be done by the element since it knows when to check this. However you cannot only remove and add, since the style group inside which the element is can have events occurring on it, and these events must be passed from its old style to its new style. This method does all this information passing. </p>
 /// </summary>
 /// <param name="element"> The element to move.</param>
 	public void checkElementStyleGroup(IElement element) {
@@ -752,8 +752,8 @@ public class StyleGroupSet : StyleSheetListener {
 
 		clear();
 
-		elements.ToList().ForEach(this::removeElement);
-		elements.ToList().ForEach(this::addElement);
+		elements.ToList().ForEach(e => removeElement(e));
+		elements.ToList().ForEach(e => addElement(e));
 	}
 
 	/// <summary>
@@ -856,8 +856,8 @@ public class StyleGroupSet : StyleSheetListener {
 /// <param name="newRule"> The new style rule.</param>
 /// <param name="elt2grp"> The name space.</param>
 	protected void checkForNewStyle(Rule newRule, Dictionary<string, string> elt2grp) {
-		elt2grp.Keys.map(eltId => getElement(eltId, elt2grp)).ToList()
-				.ToList().ForEach(this::checkElementStyleGroup);
+		elt2grp.Keys.Select(eltId => getElement(eltId, elt2grp)).ToList()
+				.ToList().ForEach(e => checkElementStyleGroup(e));
 	}
 
 	// Utility
@@ -884,7 +884,7 @@ public class StyleGroupSet : StyleSheetListener {
 	public class EventSet {
 		public List<string> eventSet = new List<string>();
 
-		public string events[] = new string[0];
+		public string[] events = new string[0];
 
 		/// <summary>
 /// Add an event to the set.

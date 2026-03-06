@@ -109,42 +109,42 @@ public class NetStreamUtils {
 	}
 
 	public static int getVarintSize(long data) {
-		// 7 bits -> 127
+		// 7 bits => 127
 		if (data < (1L << 7)) {
 			return 1;
 		}
 
-		// 14 bits -> 16383
+		// 14 bits => 16383
 		if (data < (1L << 14)) {
 			return 2;
 		}
 
-		// 21 bits -> 2097151
+		// 21 bits => 2097151
 		if (data < (1L << 21)) {
 			return 3;
 		}
 
-		// 28 bits -> 268435455
+		// 28 bits => 268435455
 		if (data < (1L << 28)) {
 			return 4;
 		}
 
-		// 35 bits -> 34359738367
+		// 35 bits => 34359738367
 		if (data < (1L << 35)) {
 			return 5;
 		}
 
-		// 42 bits -> 4398046511103
+		// 42 bits => 4398046511103
 		if (data < (1L << 42)) {
 			return 6;
 		}
 
-		// 49 bits -> 562949953421311
+		// 49 bits => 562949953421311
 		if (data < (1L << 49)) {
 			return 7;
 		}
 
-		// 56 bits -> 72057594037927935
+		// 56 bits => 72057594037927935
 		if (data < (1L << 56)) {
 			return 8;
 		}
@@ -158,7 +158,7 @@ public class NetStreamUtils {
 			if (i == byteSize - 1)
 				head = 0;
 			long b = ((number >> (7 * i)) & 127) ^ head;
-			buffer.Add((byte) (b & 255));
+			buffer((byte) (b & 255));
 		}
 	}
 
@@ -209,7 +209,7 @@ public class NetStreamUtils {
 	}
 
 	public static byte[] encodeUnsignedVarint(object input) {
-		long data = ((IConvertible) in);
+		long data = ((IConvertible)input);
 		int size = getVarintSize(data);
 
 		byte[] buff = new byte[size];
@@ -218,7 +218,7 @@ public class NetStreamUtils {
 			if (i == size - 1)
 				head = 0;
 			long b = ((data >> (7 * i)) & 127) ^ head;
-			buff.Add((byte) (b & 255));
+			buff[i] = (byte)(b & 255);
 		}
 		/* buff.rewind() */;
 
@@ -226,7 +226,7 @@ public class NetStreamUtils {
 	}
 
 	public static byte[] encodeVarint(object input) {
-		long data = ((IConvertible) in);
+		long data = ((IConvertible)input);
 
 		// signed integers encoding
 		// (n << 1) ^ (n >> 31)
@@ -234,15 +234,13 @@ public class NetStreamUtils {
 	}
 
 	public static byte[] encodeString(object input) {
-		string s = (string) in;
-		byte[] data = s.getBytes(Charset.forName("UTF-8"));
+		string s = (string)input;
+		byte[] data = System.Text.Encoding.UTF8.GetBytes(s);
 
 		byte[] lenBuff = encodeUnsignedVarint(data.Length);
-		// outBuffer(lenBuff);
-		byte[] bb = byte[].allocate(lenBuff.Length + data.Length);
-		bb.Add(lenBuff).Add(data);
-		/* bb.rewind() */;
-		// outBuffer(bb);
+		byte[] bb = new byte[lenBuff.Length + data.Length];
+		Array.Copy(lenBuff, 0, bb, 0, lenBuff.Length);
+		Array.Copy(data, 0, bb, lenBuff.Length, data.Length);
 
 		return bb;
 	}
@@ -252,31 +250,32 @@ public class NetStreamUtils {
 	}
 
 	public static byte[] encodeDoubleArray(object input) {
-		object[] data = (object[]) in;
+		object[] data = (object[])input;
 
 		int ssize = getVarintSize(data.Length);
 
-		byte[] b = byte[].allocate(ssize + data.Length * 8);
+		byte[] b = new byte[ssize + data.Length * 8];
 
 		putVarint(b, data.Length, ssize);
 
 		for (int i = 0; i < data.Length; i++) {
-			b.Write(BitConverter.GetBytes((double) data[i]);
+			byte[] bytes = BitConverter.GetBytes((double)data[i]);
+			Array.Copy(bytes, 0, b, i * 8, 8);
 		}
 		/* b.rewind() */;
 		return b;
 	}
 
 	public static byte[] encodeStringArray(object input) {
-		object[] data = (object[]) in;
+		object[] data = (object[])input;
 
 		int ssize = getVarintSize(data.Length);
 
 		byte[][] dataArray = new byte[data.Length][];
-		byte[][] lenBuffArray = new byte[][data.Length];
+		byte[][] lenBuffArray = new byte[data.Length][];
 		int bufferSize = 0;
 		for(int i = 0; i < data.Length; i++){
-			byte[] bs = ((string)data[i]).getBytes(Charset.forName("UTF-8"));
+			byte[] bs = ((string)data[i]).GetBytes(System.Text.Encoding.UTF8);
 			dataArray[i] = bs;
 
 			byte[] lenBuff = encodeUnsignedVarint(bs.Length);
@@ -286,50 +285,47 @@ public class NetStreamUtils {
 		}
 
 
-		byte[] bb = byte[].allocate(ssize + bufferSize);
+		byte[] bb = new byte[ssize + bufferSize];
 
 		putVarint(bb, data.Length, ssize);
 
 		for(int i = 0; i < data.Length; i++) {
-			bb.Add(lenBuffArray[i]).Add(dataArray[i]);
+			Array.Copy(lenBuffArray[i], 0, bb, dataArray[i], lenBuffArray[i].Length);
 		}
 		/* bb.rewind() */;
 
 		return bb;
 	}
 
-	/// <param name="in"> The double to encode</param>
-/// <returns>System.IO.MemoryStream with encoded double in it</returns>
+	/// <param name="input"> The double to encode</param>
+	/// <returns>System.IO.MemoryStream with encoded double in it</returns>
 	public static byte[] encodeDouble(object input) {
-		byte[] bb = new byte[8].Write(BitConverter.GetBytes((double) in);
-		/* bb.rewind() */;
+		byte[] bb = BitConverter.GetBytes((double)input);
 		return bb;
 	}
 
-	/// <param name="in"> The float array to encode</param>
-/// <returns>System.IO.MemoryStream with encoded float array in it</returns>
+	/// <param name="input"> The float array to encode</param>
+	/// <returns>System.IO.MemoryStream with encoded float array in it</returns>
 	public static byte[] encodeFloatArray(object input) {
-		object[] data = (object[]) in;
+		object[] data = (object[])input;
 
 		int ssize = getVarintSize(data.Length);
 
-		byte[] b = byte[].allocate(ssize + data.Length * 4);
+		byte[] b = new byte[ssize + data.Length * 4];
 
 		putVarint(b, data.Length, ssize);
 
 		for (int i = 0; i < data.Length; i++) {
-			b.Write(BitConverter.GetBytes((float) data[i]);
+			byte[] bytes = BitConverter.GetBytes((float)data[i]);
+			Array.Copy(bytes, 0, b, ssize + i * 4, 4);
 		}
-		/* b.rewind() */;
 		return b;
 	}
 
-	/// <param name="in"> The float to encode</param>
-/// <returns>System.IO.MemoryStream with encoded float in it</returns>
+	/// <param name="input"> The float to encode</param>
+	/// <returns>System.IO.MemoryStream with encoded float in it</returns>
 	public static byte[] encodeFloat(object input) {
-		byte[] b = new byte[4];
-		b.Write(BitConverter.GetBytes(((float) in));
-		/* b.rewind() */;
+		byte[] b = BitConverter.GetBytes(((float)input));
 		return b;
 	}
 
@@ -372,16 +368,16 @@ public class NetStreamUtils {
 	/// <param name="in"></param>
 /// <returns></returns>
 	public static byte[] encodeByteArray(object input) {
-		object[] data = (object[]) in;
+		object[] data = (object[])input;
 
 		int ssize = getVarintSize(data.Length);
 
-		byte[] b = byte[].allocate(ssize + data.Length);
+		byte[] b = new byte[ssize + data.Length];
 
 		putVarint(b, data.Length, ssize);
 
 		for (int i = 0; i < data.Length; i++) {
-			b.Add((byte) data[i]);
+			b((byte) data[i]);
 		}
 		/* b.rewind() */;
 		return b;
@@ -391,7 +387,7 @@ public class NetStreamUtils {
 /// <returns></returns>
 	public static byte[] encodeByte(object input) {
 		byte[] b = new byte[1];
-		b.Add(((byte) in));
+		b[0] = (byte)input;
 		/* b.rewind() */;
 		return b;
 	}
@@ -399,16 +395,16 @@ public class NetStreamUtils {
 	/// <param name="in"></param>
 /// <returns></returns>
 	public static byte[] encodeBooleanArray(object input) {
-		object[] data = (object[]) in;
+		object[] data = (object[])input;
 
 		int ssize = getVarintSize(data.Length);
 
-		byte[] b = byte[].allocate(ssize + data.Length);
+		byte[] b = new byte[ssize + data.Length];
 
 		putVarint(b, data.Length, ssize);
 
 		for (int i = 0; i < data.Length; i++) {
-			b.Add((byte) ((bool) data[i] == false ? 0 : 1));
+			b((byte) ((bool) data[i] == false ? 0 : 1));
 		}
 		/* b.rewind() */;
 		return b;
@@ -418,13 +414,13 @@ public class NetStreamUtils {
 /// <returns></returns>
 	public static byte[] encodeBoolean(object input) {
 		byte[] b = new byte[1];
-		b.Add((byte) (((bool) in) == false ? 0 : 1));
+		b[0] = (byte)((bool)input == false ? 0 : 1);
 		/* b.rewind() */;
 		return b;
 	}
 
 	public static byte[] encodeVarintArray(object input) {
-		object[] data = (object[]) in;
+		object[] data = (object[])input;
 		int[] sizes = new int[data.Length];
 		long[] zigzags = new long[data.Length];
 		int sumsizes = 0;
@@ -442,7 +438,7 @@ public class NetStreamUtils {
 		// the size of the size!
 		int ssize = getVarintSize(data.Length);
 
-		byte[] b = byte[].allocate(ssize + sumsizes);
+		byte[] b = new byte[ssize + sumsizes];
 
 		putVarint(b, data.Length, ssize);
 
@@ -462,7 +458,7 @@ public class NetStreamUtils {
 /// <returns></returns>
 	public static int decodeType(byte[] bb) {
 		try {
-			return bb[];
+			return[] bb;
 		} catch (BufferUnderflowException e) {
 			Console.WriteLine("decodeType: could not decode type");
 			Console.Error.WriteLine(e);

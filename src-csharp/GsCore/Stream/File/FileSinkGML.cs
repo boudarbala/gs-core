@@ -40,7 +40,7 @@ public class FileSinkGML : FileSinkBase {
 	/// <summary>
 /// Alias on the output OutputStream.
 /// </summary>
-	protected System.IO.StreamWriter out;
+	protected System.IO.StreamWriter writer;
 
 	protected string nodeToFinish = null;
 

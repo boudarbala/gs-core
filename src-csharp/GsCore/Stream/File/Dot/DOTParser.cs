@@ -970,16 +970,20 @@ public class DOTParser : Parser, DOTParserConstants {
 			for (int i = 0; i < jj_endpos; i++) {
 				jj_expentry[i] = jj_lasttokens[i];
 			}
-			jj_entries_loop: for (java.util.IEnumerator<object> it = jj_expentries.GetEnumerator(); it.MoveNext();) {
+			bool match = true;
+			for (java.util.IEnumerator<object> it = jj_expentries.GetEnumerator(); it.MoveNext();) {
 				int[] oldentry = (int[]) (it.next());
 				if (oldentry.Length == jj_expentry.Length) {
 					for (int i = 0; i < jj_expentry.Length; i++) {
 						if (oldentry[i] != jj_expentry[i]) {
-							continue jj_entries_loop;
+							match = false;
+							break;
 						}
 					}
-					jj_expentries.Add(jj_expentry);
-					break jj_entries_loop;
+					if (match) {
+						jj_expentries.Add(jj_expentry);
+						break;
+					}
 				}
 			}
 			if (pos != 0)

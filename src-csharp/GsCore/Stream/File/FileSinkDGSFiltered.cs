@@ -41,7 +41,7 @@ public class FileSinkDGSFiltered : FileSinkBaseFiltered {
 	/// <summary>
 /// A shortcut to the output.
 /// </summary>
-	protected System.IO.StreamWriter out;
+	protected System.IO.StreamWriter writer;
 	protected string graphName = "";
 
 	// Command

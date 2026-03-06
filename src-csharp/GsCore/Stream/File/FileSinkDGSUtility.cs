@@ -91,7 +91,7 @@ public class FileSinkDGSUtility {
 		} else if (value is char) {
 			return string.Format("\"%c\"", ((char) value).charValue());
 		} else if (value is object[]) {
-			object array[] = (object[]) value;
+			object[] array = (object[]) value;
 			int n = array.Length;
 			StringBuffer sb = new StringBuffer();
 

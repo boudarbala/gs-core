@@ -493,7 +493,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 		/// <summary>
 /// Set of events on the element.
 /// </summary>
-		protected string events[];
+		protected string[] events;
 
 		/// <summary>
 /// The element.
@@ -556,7 +556,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 
 		protected void pushEvent(string evt) {
 			int n = events.Length + 1;
-			string e[] = new string[n];
+			string[] e = new string[n];
 			bool found = false;
 
 			for (int i = 0; i < events.Length; i++) {
@@ -574,7 +574,7 @@ public class StyleGroup : Style, IEnumerable<IElement> {
 
 		protected void popEvent(string evt) {
 			if (events.Length > 1) {
-				string e[] = new string[events.Length - 1];
+				string[] e = new string[events.Length - 1];
 				bool found = false;
 
 				for (int i = 0, j = 0; i < events.Length; i++) {

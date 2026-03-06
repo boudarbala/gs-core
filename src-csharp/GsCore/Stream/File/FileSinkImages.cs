@@ -871,14 +871,8 @@ abstract class FileSinkImages : IFileSink {
 	// }
 
 	enum Option {
-		IMAGE_PREFIX, IMAGE_TYPE("image-type",
-				't', "image type. one of " + "[values]"), true, true, "PNG"), IMAGE_RESOLUTION(
-				"image-resolution", 'r',
-				"defines images resolution. \"width x height\" or one of " + "[values]"),
-				true, true, "HD720"), OUTPUT_POLICY("output-policy", 'e',
-				"defines when images are outputted. one of " + "[values]"), true, true,
-				"ByStepOutput"), LOGO, STYLESHEET("stylesheet",
-				's', "defines stylesheet of graph. can be a file or a string.", true, true, null), QUALITY("quality",
+		IMAGE_PREFIX, IMAGE_TYPE, IMAGE_RESOLUTION, OUTPUT_POLICY, LOGO, STYLEsheeT, QUALITY
+	}
 
 
 

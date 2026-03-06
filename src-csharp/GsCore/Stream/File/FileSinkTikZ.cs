@@ -67,7 +67,7 @@ public class FileSinkTikZ : FileSinkBase {
 /// </summary>
 	public static readonly double DISPLAY_MAX_SIZE_IN_MM = 10;
 
-	protected System.IO.StreamWriter out;
+	protected System.IO.StreamWriter writer;
 
 	protected Dictionary<string, string> colors = new Dictionary<string, string>();
 	protected Dictionary<string, string> classes = new Dictionary<string, string>();
@@ -346,11 +346,12 @@ public class FileSinkTikZ : FileSinkBase {
 			default:
 				Console.Error.WriteLine(
 						string.Format("% [warning] units {0} are not compatible with TikZ.\n", group.getSize().units));
+				break;
 			}
-		}
 			break;
 		default:
 			Console.Error.WriteLine(string.Format("unhandled group type  {0}\n", group.getType()));
+			break;
 		}
 
 		for (int i = 0; i < style.Count; i++) {
@@ -369,7 +370,7 @@ public class FileSinkTikZ : FileSinkBase {
 	 * @see org.graphstream.stream.file.FileSinkBase#outputHeader()
 	 */
 	protected void outputHeader(){
-		out = (System.IO.StreamWriter) output;
+		writer = (System.IO.StreamWriter) output;
 
 		colors.Clear();
 		classes.Clear();
@@ -804,4 +805,3 @@ public class FileSinkTikZ : FileSinkBase {
 	}
 }
 
-}

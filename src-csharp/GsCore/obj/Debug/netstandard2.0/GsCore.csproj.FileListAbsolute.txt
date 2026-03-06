@@ -1,0 +1,4 @@
+/workspace/project/gs-core/src-csharp/GsCore/obj/Debug/netstandard2.0/GsCore.csproj.AssemblyReference.cache
+/workspace/project/gs-core/src-csharp/GsCore/obj/Debug/netstandard2.0/GsCore.GeneratedMSBuildEditorConfig.editorconfig
+/workspace/project/gs-core/src-csharp/GsCore/obj/Debug/netstandard2.0/GsCore.csproj.CoreCompileInputs.cache
+/workspace/project/gs-core/src-csharp/GsCore/obj/Debug/netstandard2.0/GsCore.sourcelink.json

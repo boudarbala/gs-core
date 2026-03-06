@@ -555,7 +555,7 @@ class AbstractGraph : AbstractElement, IGraph, IReplayable {
 	// helper for removeNode_
 	private void removeAllEdges(AbstractNode node) {
 		ICollection<IEdge> toRemove = node.edges().ToList();
-		toRemove.ToList().ForEach(this::removeEdge);
+		toRemove.ToList().ForEach(e => removeEdge(e));
 	}
 
 	// *** Methods for iterators ***

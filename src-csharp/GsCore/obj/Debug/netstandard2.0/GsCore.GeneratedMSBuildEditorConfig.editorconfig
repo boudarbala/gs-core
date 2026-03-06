@@ -1,0 +1,5 @@
+is_global = true
+build_property.RootNamespace = Org.GraphStream
+build_property.ProjectDir = /workspace/project/gs-core/src-csharp/GsCore/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

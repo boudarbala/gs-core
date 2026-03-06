@@ -38,7 +38,7 @@ public class Vector2 : java.io.System.Runtime.Serialization.ISerializable {
 	/// <summary>
 /// Sequence of 3 coefficients.
 /// </summary>
-	public double data[];
+	public double[] data;
 
 	// Constructors
 

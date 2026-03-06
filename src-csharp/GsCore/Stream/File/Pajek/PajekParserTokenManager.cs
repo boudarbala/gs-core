@@ -39,7 +39,7 @@ public class PajekParserTokenManager : PajekParserConstants {
 	/// <summary>
 /// Debug output.
 /// </summary>
-	public java.io.System.IO.TextWriter debugStream = System.out;
+	public java.io.System.IO.TextWriter debugStream = Console.Out;
 
 	/// <summary>
 /// Set debug output.

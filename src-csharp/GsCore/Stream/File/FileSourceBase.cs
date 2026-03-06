@@ -970,16 +970,16 @@ abstract class FileSourceBase : SourceBase, IFileSource {
 	/// <summary>
 /// True if the <code>string</code> represents a truth statement ("1", "true", "yes", "on").
 /// </summary>
-	protected bool isTrue(string string) {
-		string = string.ToLower();
+	protected bool isTrue(string str) {
+		string = str.ToLower();
 
-		if (string.Equals("1"))
+		if (str.Equals("1"))
 			return true;
-		if (string.Equals("true"))
+		if (str.Equals("true"))
 			return true;
-		if (string.Equals("yes"))
+		if (str.Equals("yes"))
 			return true;
-		if (string.Equals("on"))
+		if (str.Equals("on"))
 			return true;
 
 		return false;
@@ -988,16 +988,16 @@ abstract class FileSourceBase : SourceBase, IFileSource {
 	/// <summary>
 /// True if the <code>string</code> represents a false statement ("0", "false", "no", "off").
 /// </summary>
-	protected bool isFalse(string string) {
-		string = string.ToLower();
+	protected bool isFalse(string str) {
+		string = str.ToLower();
 
-		if (string.Equals("0"))
+		if (str.Equals("0"))
 			return true;
-		if (string.Equals("false"))
+		if (str.Equals("false"))
 			return true;
-		if (string.Equals("no"))
+		if (str.Equals("no"))
 			return true;
-		if (string.Equals("off"))
+		if (str.Equals("off"))
 			return true;
 
 		return false;

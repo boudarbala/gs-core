@@ -149,7 +149,7 @@ abstract class GraphicElement : AbstractElement {
 	}
 
 	/// <summary>
-/// Handle the "ui.class", "label", "ui.style", etc. attributes.
+/// Handle the "ui.GetType()", "label", "ui.style", etc. attributes.
 /// </summary>
 	
 	protected void attributeChanged(AttributeChangeEvent evt, string attribute, object oldValue, object newValue) {

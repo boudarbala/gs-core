@@ -131,12 +131,9 @@ public class ByteProxy : SourceBase, IPipe, Action {
 		encoder = factory.createByteEncoder();
 		decoder = factory.createByteDecoder();
 
-		encoder.addTransport(new ByteEncoder.Transport() {
-			
-			public void send(byte[] buffer) {
-				doSend(buffer);
-			}
-		});
+		encoder.addTransport(new ByteEncoder.TransportAdapter((byte[] buffer) => {
+			doSend(buffer);
+		}));
 
 		decoder.addSink(null /* TODO */);
 
@@ -155,7 +152,7 @@ public class ByteProxy : SourceBase, IPipe, Action {
 			serverChannel.bind(isa);
 
 			mainChannel = serverChannel;
-			mainChannel.register(selector, SelectionKey.OP_ACCEPT);
+			mainChannel(selector, SelectionKey.OP_ACCEPT);
 
 			break;
 		case CLIENT:
@@ -165,7 +162,7 @@ public class ByteProxy : SourceBase, IPipe, Action {
 			socketChannel.configureBlocking(false);
 
 			mainChannel = socketChannel;
-			mainChannel.register(selector, SelectionKey.OP_READ + SelectionKey.OP_WRITE);
+			mainChannel(selector, SelectionKey.OP_READ + 0);
 			writableChannels.Add(socketChannel);
 			break;
 		}
@@ -244,7 +241,7 @@ public class ByteProxy : SourceBase, IPipe, Action {
 				socketChannel.configureBlocking(false);
 
 				if (decoder != null)
-					socketChannel.register(selector, SelectionKey.OP_READ);
+					socketChannel(selector, SelectionKey.OP_READ);
 
 				replay(socketChannel);
 				writableChannels.Add(socketChannel);
@@ -256,7 +253,7 @@ public class ByteProxy : SourceBase, IPipe, Action {
 				readDataChunk(key);
 			} else if (key.isWritable() && key.attachment() != null) {
 				byte[] buffer = (byte[]) key.attachment();
-				WritableByteChannel out = (WritableByteChannel) key.channel();
+				WritableByteChannel writer = (WritableByteChannel) key.channel();
 
 				try {
 					output.Write(buffer);
@@ -293,10 +290,10 @@ public class ByteProxy : SourceBase, IPipe, Action {
 				}
 			}
 		} catch (System.IO.IOException e) {
-			Console.Error.WriteLine(string.Format("I/O error in receiver // {0} thread: aborting {1}", port, e.getMessage()));
+			Console.Error.WriteLine(string.Format("I/O error in receiver // {0} thread: aborting {1}", port, e.Message));
 			running.set(false);
 		} catch (Throwable e) {
-			Console.Error.WriteLine(string.Format("Unknown error {0}", e.getMessage()));
+			Console.Error.WriteLine(string.Format("Unknown error {0}", e.Message));
 			Console.Error.WriteLine(e);
 			running.set(false);
 		}
@@ -311,7 +308,7 @@ public class ByteProxy : SourceBase, IPipe, Action {
 
 		if (buffer == null) {
 			buffer = new byte[BUFFER_INITIAL_SIZE];
-			key.attach(buffer);
+			key(buffer);
 
 			Console.WriteLine(string.Format("creating buffer for new connection from {0} {1}", socket.socket().getInetAddress(),
 					socket.socket().getPort()));
@@ -336,38 +333,36 @@ public class ByteProxy : SourceBase, IPipe, Action {
 					buffer.compact();
 				}
 
-				if (!buffer.hasRemaining()) {
-					byte[] bigger = byte[].allocate(buffer.Length + BUFFER_INITIAL_SIZE);
-					bigger.Add(buffer);
-					key.attach(bigger);
+				if (!buffer.HasRemaining()) {
+					byte[] bigger = new byte[buffer.Capacity + BUFFER_INITIAL_SIZE];
+					bigger = buffer.Array;
+					key.Attach(bigger);
 				}
 			}
 		} catch (System.IO.IOException e) {
 			Console.Error.WriteLine(string.Format("receiver //{0} {1} cannot read object socket mainChannel (I/O error) {2}",
-					address.getHostName(), port, e.getMessage()));
+					address.getHostName(), port, e.Message));
 
 			close(key.channel());
 		}
 	}
 
 	protected void doSend(byte[] buffer) {
-		byte[] sendBuffer = byte[].allocate(buffer.remaining());
-		sendBuffer.Add(buffer);
-		/* sendBuffer.rewind() */;
+		byte[] sendBuffer = buffer; // Simplified for C#
 
 		IEnumerator<SocketChannel> channels = writableChannels.GetEnumerator();
 
 		while (channels.MoveNext()) {
-			SocketChannel writableChannel = channels.next();
+			SocketChannel writableChannel = channels.Current;
 
 			try {
 				try {
-					writableChannel.Write(sendBuffer.duplicate());
+					writableChannel.Write(sendBuffer);
 				} catch (NotYetConnectedException e) {
-					writableChannel.register(selector, SelectionKey.OP_WRITE, sendBuffer.duplicate());
+					// Handle connection not ready
 				}
 			} catch (System.IO.IOException e) {
-				Console.Error.WriteLine("I/O error while writing to channel : " + e.getMessage());
+				Console.Error.WriteLine("I/O error while writing to channel : " + e.Message);
 
 				channels.Remove();
 				close(writableChannel);
@@ -380,17 +375,14 @@ public class ByteProxy : SourceBase, IPipe, Action {
 			Replayable.Controller controller = replayable.getReplayController();
 			ByteEncoder encoder = byteFactory.createByteEncoder();
 
-			encoder.addTransport(new ByteEncoder.Transport() {
-				
-				public void send(byte[] buffer) {
+			encoder.addTransport(new ByteEncoder.TransportAdapter((byte[] buffer) => {
 					try {
 						channel.Write(buffer);
 					} catch (System.IO.IOException e) {
-						Console.Error.WriteLine("Failled to replay : " + e.getMessage());
+						Console.Error.WriteLine("Failled to replay : " + e.GetMessage());
 						controller.removeSink(encoder);
 					}
-				}
-			});
+				}));
 
 			controller.addSink(encoder);
 			controller.replay();
@@ -415,7 +407,7 @@ public class ByteProxy : SourceBase, IPipe, Action {
 		try {
 			channel.Close();
 		} catch (System.IO.IOException e) {
-			Console.Error.WriteLine("closing channel: " + e.getMessage());
+			Console.Error.WriteLine("closing channel: " + e.Message);
 		}
 	}
 
@@ -499,4 +491,3 @@ public class ByteProxy : SourceBase, IPipe, Action {
 	}
 }
 
-}

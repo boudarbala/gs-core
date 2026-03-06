@@ -32,14 +32,7 @@ namespace Org.GraphStream.Stream.File
 
 public class FileSinkGEXF : FileSinkBase {
 	enum TimeFormat {
-		INTEGER)), DOUBLE(
-				new DecimalFormat)), DATE(
-						new SimpleDateFormat), DATETIME(
-
-
-
-
-		}
+		INTEGER, DOUBLE, DATE, DATETIME
 	}
 
 	System.Xml.XmlWriter stream;
@@ -49,7 +42,7 @@ public class FileSinkGEXF : FileSinkBase {
 	GraphSpells graphSpells;
 	TimeFormat timeFormat;
 
-	public FileSinkGEXF {
+	public FileSinkGEXF() {
 		smart = true;
 		depth = 0;
 		graphSpells = null;
@@ -110,10 +103,10 @@ public class FileSinkGEXF : FileSinkBase {
 			startElement(stream, "meta");
 			stream.WriteAttributeString("lastmodifieddate", df.format(date));
 			startElement(stream, "creator");
-			stream.WriteString("GraphStream - " + getClass().Name);
+			stream.WriteString("GraphStream - " + GetType().Name);
 			endElement(stream, true);
 			endElement(stream, false);
-		} catch (Exception | Exception e) {
+		} catch (Exception e) {
 			throw new System.IO.IOException(e);
 		}
 	}
@@ -148,7 +141,7 @@ public class FileSinkGEXF : FileSinkBase {
 		GEXFAttributeMap nodeAttributes = new GEXFAttributeMap("node", g);
 		GEXFAttributeMap edgeAttributes = new GEXFAttributeMap("edge", g);
 
-		Action<Exception> onException = Exception::printStackTrace;
+		Action<Exception> onException = e => Console.Error.WriteLine(e.StackTrace);
 
 		try {
 			startElement(stream, "graph");

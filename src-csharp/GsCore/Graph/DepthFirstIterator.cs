@@ -36,7 +36,7 @@ public class DepthFirstIterator : IEnumerator<INode> {
 
 	INode[] parent;
 	IEnumerator<IEdge>[] iterator;
-	int depth[];
+	int[] depth;
 	INode next;
 	int maxDepth;
 

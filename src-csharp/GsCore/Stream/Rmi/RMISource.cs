@@ -30,7 +30,7 @@ namespace Org.GraphStream.Stream.Rmi
  */
 
 
-public class RMISource : : object /* RMIAdapterIn */, ISource {
+public class RMISource : object /* RMIAdapterIn */, ISource {
 	private static readonly long serialVersionUID = 6635146473737922832L;
 
 	Queue<IAttributeSink> attributesListeners;

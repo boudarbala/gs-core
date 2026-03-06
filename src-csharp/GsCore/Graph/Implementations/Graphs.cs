@@ -679,8 +679,8 @@ public class Graphs {
 			System.Threading.Monitor.Enter(elementLock);
 
 			try {
-				foreach (IAttributeSink as in wrappedElement.attributeSinks())
-					sinks.Add(as);
+				foreach (IAttributeSink sink in wrappedElement.attributeSinks())
+					sinks.Add(sink);
 			} finally {
 				System.Threading.Monitor.Exit(elementLock);
 			}
@@ -1317,7 +1317,7 @@ public class Graphs {
 			sg.System.Threading.Monitor.Enter(elementLock);
 
 			try {
-				nodes = wrappedElement.neighborNodes().map(n => sg.getNode(n.getIndex())).ToList();
+				nodes = wrappedElement.neighborNodes().Select(n => sg.getNode(n.getIndex())).ToList();
 			} finally {
 				sg.System.Threading.Monitor.Exit(elementLock);
 				System.Threading.Monitor.Exit(elementLock);
@@ -1335,7 +1335,7 @@ public class Graphs {
 
 			try {
 
-				edges = wrappedElement.edges().map(e => sg.getEdge(e.getIndex())).ToList();
+				edges = wrappedElement.edges().Select(e => sg.getEdge(e.getIndex())).ToList();
 			} finally {
 				sg.System.Threading.Monitor.Exit(elementLock);
 				System.Threading.Monitor.Exit(elementLock);
@@ -1353,7 +1353,7 @@ public class Graphs {
 
 			try {
 
-				edges = wrappedElement.leavingEdges().map(e => sg.getEdge(e.getIndex())).ToList();
+				edges = wrappedElement.leavingEdges().Select(e => sg.getEdge(e.getIndex())).ToList();
 			} finally {
 				sg.System.Threading.Monitor.Exit(elementLock);
 				System.Threading.Monitor.Exit(elementLock);
@@ -1371,7 +1371,7 @@ public class Graphs {
 
 			try {
 
-				edges = wrappedElement.enteringEdges().map(e => sg.getEdge(e.getIndex())).ToList();
+				edges = wrappedElement.enteringEdges().Select(e => sg.getEdge(e.getIndex())).ToList();
 			} finally {
 				sg.System.Threading.Monitor.Exit(elementLock);
 				System.Threading.Monitor.Exit(elementLock);

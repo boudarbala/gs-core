@@ -566,7 +566,7 @@ abstract class BarnesHutLayout : SourceBase, ILayout, ParticleBoxListener {
 
 	public void particleMoved(object id, double x, double y, double z) {
 		if ((time % sendMoveEventsEvery) == 0) {
-			object xyz[] = new object[3];
+			object[] xyz = new object[3];
 			xyz[0] = x;
 			xyz[1] = y;
 			xyz[2] = z;
@@ -730,7 +730,7 @@ abstract class BarnesHutLayout : SourceBase, ILayout, ParticleBoxListener {
 		} else if (attribute.Equals("layout.frozen")) {
 			freezeNode(nodeId, (newValue != null));
 		} else if (attribute.Equals("xyz") || attribute.Equals("xy")) {
-			double xyz[] = new double[3];
+			double[] xyz = new double[3];
 			GraphPosLengthUtils.positionFromObject(newValue, xyz);
 			moveNode(nodeId, xyz[0], xyz[1], xyz[2]);
 		} else if (attribute.Equals("x") && newValue is IConvertible) {

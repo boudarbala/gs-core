@@ -41,7 +41,7 @@ public class FileSinkDOT : FileSinkBase {
 	/// <summary>
 /// The output.
 /// </summary>
-	protected System.IO.StreamWriter out;
+	protected System.IO.StreamWriter writer;
 
 	/// <summary>
 /// The graph name (set as soon as known).
@@ -70,7 +70,7 @@ public class FileSinkDOT : FileSinkBase {
 /// Build a new DOT sink specifying if the graph is directed or not.
 /// </summary>
 /// <param name="digraph"> true if the graph is directed</param>
-	public FileSinkDOT {
+	public FileSinkDOT(bool digraph) {
 		this.digraph = digraph;
 	}
 

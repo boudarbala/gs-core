@@ -33,7 +33,7 @@ namespace Org.GraphStream.Util
 
 
 /// <summary>
-/// A sink that can be used to display event in a PrintStream like System.out. Format of messages can be customized, inserting keywords quoted with '%' in the format. '%sourceId%' and '%timeId%' keywords are defined for each evt. Following defines keywords available for each event types: <dl> <dt>ADD_NODE</dt> <dd> <ul> <li>%nodeId%</li> </ul> </dd> <dt>ADD_NODE_ATTRIBUTE</dt> <dd> <ul> <li>%nodeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>SET_NODE_ATTRIBUTE</dt> <dd> <ul> <li>%nodeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>DEL_NODE_ATTRIBUTE</dt> <dd> <ul> <li>%nodeId%</li> <li>%attributeId%</li> </ul> </dd> <dt>DEL_NODE</dt> <dd> <ul> <li>%nodeId%</li> </ul> </dd> <dt>ADD_EDGE</dt> <dd> <ul> <li>%edgeId%</li> <li>%source%</li> <li>%target%</li> <li>%directed%</li> </ul> </dd> <dt>ADD_EDGE_ATTRIBUTE</dt> <dd> <ul> <li>%edgeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>SET_EDGE_ATTRIBUTE</dt> <dd> <ul> <li>%edgeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>DEL_EDGE_ATTRIBUTE</dt> <dd> <ul> <li>%edgeId%</li> <li>%attributeId%</li> </ul> </dd> <dt>DEL_EDGE</dt> <dd> <ul> <li>%edgeId%</li> </ul> </dd> <dt>ADD_GRAPH_ATTRIBUTE</dt> <dd> <ul> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>SET_GRAPH_ATTRIBUTE</dt> <dd> <ul> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>DEL_GRAPH_ATTRIBUTE</dt> <dd> <ul> <li>%attributeId%</li> </ul> </dd> <dt>CLEAR</dt> <dd></dd> <dt>STEP_BEGINS</dt> <dd> <ul> <li>%step%</li> </ul> </dd> </dl>
+/// A sink that can be used to display event in a PrintStream like Console.Out. Format of messages can be customized, inserting keywords quoted with '%' in the format. '%sourceId%' and '%timeId%' keywords are defined for each evt. Following defines keywords available for each event types: <dl> <dt>ADD_NODE</dt> <dd> <ul> <li>%nodeId%</li> </ul> </dd> <dt>ADD_NODE_ATTRIBUTE</dt> <dd> <ul> <li>%nodeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>SET_NODE_ATTRIBUTE</dt> <dd> <ul> <li>%nodeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>DEL_NODE_ATTRIBUTE</dt> <dd> <ul> <li>%nodeId%</li> <li>%attributeId%</li> </ul> </dd> <dt>DEL_NODE</dt> <dd> <ul> <li>%nodeId%</li> </ul> </dd> <dt>ADD_EDGE</dt> <dd> <ul> <li>%edgeId%</li> <li>%source%</li> <li>%target%</li> <li>%directed%</li> </ul> </dd> <dt>ADD_EDGE_ATTRIBUTE</dt> <dd> <ul> <li>%edgeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>SET_EDGE_ATTRIBUTE</dt> <dd> <ul> <li>%edgeId%</li> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>DEL_EDGE_ATTRIBUTE</dt> <dd> <ul> <li>%edgeId%</li> <li>%attributeId%</li> </ul> </dd> <dt>DEL_EDGE</dt> <dd> <ul> <li>%edgeId%</li> </ul> </dd> <dt>ADD_GRAPH_ATTRIBUTE</dt> <dd> <ul> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>SET_GRAPH_ATTRIBUTE</dt> <dd> <ul> <li>%attributeId%</li> <li>%value%</li> </ul> </dd> <dt>DEL_GRAPH_ATTRIBUTE</dt> <dd> <ul> <li>%attributeId%</li> </ul> </dd> <dt>CLEAR</dt> <dd></dd> <dt>STEP_BEGINS</dt> <dd> <ul> <li>%step%</li> </ul> </dd> </dl>
 /// </summary>
 public class VerboseSink : ISink {
 	public static readonly string DEFAULT_AN_FORMAT = "%prefix%[{0}ourceId%:%timeId%] add node \"%nodeId%\"{0}uffix%";
@@ -76,7 +76,7 @@ public class VerboseSink : ISink {
 	/// <summary>
 /// Stream used to write message.
 /// </summary>
-	protected System.IO.TextWriter out;
+	protected System.IO.TextWriter writer;
 	/// <summary>
 /// Format of messages associated with each evt.
 /// </summary>
@@ -95,17 +95,17 @@ public class VerboseSink : ISink {
 	protected string suffix;
 
 	/// <summary>
-/// Create a new verbose sink using System.out.
+/// Create a new verbose sink using Console.Out.
 /// </summary>
-	public VerboseSink() : this(System.out) {
+	public VerboseSink() : this(Console.Out) {
 	}
 
 	/// <summary>
 /// Create a new verbose sink.
 /// </summary>
 /// <param name="out"> stream used to output message</param>
-	public VerboseSink(System.IO.TextWriter out) {
-		this.out = out;
+	public VerboseSink(System.IO.TextWriter writer) {
+		this.writer = writer;
 		argsStack = new Stack<Args>();
 		enable = new EnumMap<EventType, bool>(typeof(EventType));
 		formats = new EnumMap<EventType, string>(typeof(EventType));

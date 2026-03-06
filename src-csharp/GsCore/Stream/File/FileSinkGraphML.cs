@@ -244,7 +244,7 @@ public class FileSinkGraphML : FileSinkBase {
 		throw new NotSupportedException();
 	}
 
-	private static string escapeXmlString(string string) {
+	private static string escapeXmlString(string str) {
 		/*
 		 * Thankfully, the unescaping part is done by the xml parser used in
 		 * FileSourceGraphML

@@ -95,28 +95,28 @@ public class FileSourceGraphML : FileSourceXML {
 			KeyAttrType type;
 			string def = null;
 
-			Key {
+			Key() {
 				domain = KeyDomain.ALL;
 				name = null;
 				type = KeyAttrType.STRING;
 			}
 
-			object getKeyValue {
-				if
+			object getKeyValue() {
+				if (type == null)
 					return null;
 
-				switch {
-				case STRING:
+				switch (type) {
+				case KeyAttrType.STRING:
 					return value;
-				case INT:
+				case KeyAttrType.INT:
 					return int.Parse(value);
-				case LONG:
+				case KeyAttrType.LONG:
 					return (long)Enum.Parse(typeof(long), value);
-				case FLOAT:
+				case KeyAttrType.FLOAT:
 					return float.Parse(value);
-				case DOUBLE:
+				case KeyAttrType.DOUBLE:
 					return double.Parse(value);
-				case BOOLEAN:
+				case KeyAttrType.BOOLEAN:
 					return bool.Parse(value);
 				}
 

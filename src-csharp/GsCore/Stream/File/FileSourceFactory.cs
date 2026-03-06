@@ -53,7 +53,7 @@ public class FileSourceFactory {
 
 		RandomAccessFile input = new RandomAccessFile(fileName, "r");
 
-		byte b[] = new byte[10];
+		byte[] b = new byte[10];
 		int n = input.Read(b, 0, 10);
 
 		// System.err.printf( "[" );

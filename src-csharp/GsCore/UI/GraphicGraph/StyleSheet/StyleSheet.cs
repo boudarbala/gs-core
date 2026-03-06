@@ -336,7 +336,7 @@ public class StyleSheet {
 /// </summary>
 /// <param name="url"> Name of the file containing the style sheet.</param>
 	public void parseFromURL(string url){
-		System.Uri u = typeof(StyleSheet).getClassLoader().getResource(url);
+		System.Uri u = typeof(StyleSheet).GetType().Assembly.getResource(url);
 		if (u == null) {
 			string fileUrl = url.Replace("file://", "");
 			System.IO.FileInfo f = new System.IO.FileInfo(fileUrl);

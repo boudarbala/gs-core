@@ -195,7 +195,7 @@ public class FixedArrayList<E> : ICollection<E> {
 		int n = size();
 		int m = elements.Count;
 		int j = 0;
-		object a[] = new object[n];
+		object[] a = new object[n];
 
 		for (int i = 0; i < m; ++i) {
 			E e = elements[i];

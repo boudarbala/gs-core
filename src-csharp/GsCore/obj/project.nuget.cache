@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "KRR05W5b8O8=",
+  "success": true,
+  "projectFilePath": "/workspace/project/gs-core/src-csharp/GsCore/GsCore.csproj",
+  "expectedPackageFiles": [
+    "/home/openhands/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/home/openhands/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -306,7 +306,7 @@ public class Sprite : IElement {
 	}
 
 	public object getFirstAttributeOf(params string[] keys) {
-		string completeKeys[] = new string[keys.Length];
+		string[] completeKeys = new string[keys.Length];
 		int i = 0;
 
 		foreach (string key in keys) {
@@ -318,7 +318,7 @@ public class Sprite : IElement {
 	}
 
 	public T getFirstAttributeOf<T>(Type clazz, params string[] keys) {
-		string completeKeys[] = new string[keys.Length];
+		string[] completeKeys = new string[keys.Length];
 		int i = 0;
 
 		foreach (string key in keys) {
@@ -395,7 +395,7 @@ public class Sprite : IElement {
 		manager.graph.removeAttribute(string.Format("{0}.{1}", completeId, attribute));
 	}
 
-	// XXX -> UGLY FIX
+	// XXX => UGLY FIX
 	// Sprites do not have unique index but is this useful?
 	public int getIndex() {
 		return 0;

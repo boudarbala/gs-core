@@ -223,19 +223,19 @@ public class Environment : ICloneable {
 /// Initialize all the fields of the given object whose name correspond to parameters of this environment. This works only if the object to initialize provides methods that begins by "set". For example if the object provides a method named "setThing(int value)", and if there is a parameter named "thing" in this environment and its value is convertible to an integer, then the method "setThing()" will be invoked on the object with the correct value.
 /// </summary>
 /// <param name="object"> The object to initialize.</param>
-	public void initializeFieldsOf(object object) {
-		Method[] methods = object.GetType().getMethods();
+	public void initializeFieldsOf(object obj) {
+		Method[] methods = obj.GetType().GetMethods();
 
 		foreach (Method method in methods) {
 			if (method.Name.StartsWith("set")) {
-				Type types[] = method.getParameterTypes();
+				Type[] types = method.getParameterTypes();
 
 				if (types.Length == 1) {
 					string name = method.Name.Substring(3, 4).ToLower() + method.Name.Substring(4);
 					string value = parameters[name];
 
 					if (value != null) {
-						invokeSetMethod(object, method, types, name, value);
+						invokeSetMethod(obj, method, types, name, value);
 					}
 				}
 			}
@@ -247,8 +247,8 @@ public class Environment : ICloneable {
 /// </summary>
 /// <param name="object"> The object to initialize.</param>
 /// <param name="fieldList"> The name of the fields to initialize in the object.</param>
-	public void initializeFieldsOf(object object, params string[] fieldList) {
-		Method[] methods = object.GetType().getMethods();
+	public void initializeFieldsOf(object obj, params string[] fieldList) {
+		Method[] methods = obj.GetType().GetMethods();
 		HashSet<string> names = new HashSet<string>();
 
 		foreach (string s in fieldList)
@@ -256,7 +256,7 @@ public class Environment : ICloneable {
 
 		foreach (Method method in methods) {
 			if (method.Name.StartsWith("set")) {
-				Type types[] = method.getParameterTypes();
+				Type[] types = method.getParameterTypes();
 
 				if (types.Length == 1) {
 					string name = method.Name.Substring(3, 4).ToLower() + method.Name.Substring(4);
@@ -265,7 +265,7 @@ public class Environment : ICloneable {
 						string value = parameters[name];
 
 						if (value != null) {
-							invokeSetMethod(object, method, types, name, value);
+							invokeSetMethod(obj, method, types, name, value);
 						}
 					}
 				}
@@ -278,12 +278,12 @@ public class Environment : ICloneable {
 /// </summary>
 /// <param name="object"> The object to initialize.</param>
 /// <param name="fieldList"> The name of the fields to initialize in the object.</param>
-	protected void initializeFieldsOf(object object, ICollection<string> fieldList) {
-		Method[] methods = object.GetType().getMethods();
+	protected void initializeFieldsOf(object obj, ICollection<string> fieldList) {
+		Method[] methods = obj.GetType().GetMethods();
 
 		foreach (Method method in methods) {
 			if (method.Name.StartsWith("set")) {
-				Type types[] = method.getParameterTypes();
+				Type[] types = method.getParameterTypes();
 
 				if (types.Length == 1) {
 					string name = method.Name.Substring(3).ToLower();
@@ -292,7 +292,7 @@ public class Environment : ICloneable {
 						string value = parameters[name];
 
 						if (value != null) {
-							invokeSetMethod(object, method, types, name, value);
+							invokeSetMethod(obj, method, types, name, value);
 						}
 					}
 				}
@@ -300,7 +300,7 @@ public class Environment : ICloneable {
 		}
 	}
 
-	protected void invokeSetMethod(object object, Method method, Type types[], string name, string value) {
+	protected void invokeSetMethod(object obj, Method method, Type[] types, string name, string value) {
 		try {
 			// XXX a way to avoid this overlong and repetitive
 			// list of setters ?
@@ -377,7 +377,7 @@ public class Environment : ICloneable {
 /// Print all parameters the stdout.
 /// </summary>
 	public void printParameters() {
-		printParameters(System.out);
+		printParameters(Console.Out);
 	}
 
 	

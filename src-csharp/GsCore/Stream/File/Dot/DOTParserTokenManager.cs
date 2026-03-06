@@ -39,7 +39,7 @@ public class DOTParserTokenManager : DOTParserConstants {
 	/// <summary>
 /// Debug output.
 /// </summary>
-	public java.io.System.IO.TextWriter debugStream = System.out;
+	public java.io.System.IO.TextWriter debugStream = Console.Out;
 
 	/// <summary>
 /// Set debug output.
@@ -403,7 +403,7 @@ public class DOTParserTokenManager : DOTParserConstants {
 		int i = 1;
 		jjstateSet[0] = startState;
 		int kind = 0x7fffffff;
-		for (;) {
+		while (true) {
 			if (++jjround == 0x7fffffff)
 				ReInitRounds();
 			if (curChar < 64) {
@@ -731,7 +731,7 @@ public class DOTParserTokenManager : DOTParserConstants {
 		Token matchedToken;
 		int curPos = 0;
 
-		EOFLoop: for (;) {
+		while (true) {
 			try {
 				curChar = input_stream.BeginToken();
 			} catch (java.io.System.IO.IOException e) {
@@ -745,7 +745,7 @@ public class DOTParserTokenManager : DOTParserConstants {
 				while (curChar <= 32 && (0x100002600L & (1L << curChar)) != 0L)
 					curChar = input_stream.BeginToken();
 			} catch (java.io.System.IO.IOException e1) {
-				continue EOFLoop;
+				goto EOFLoop;
 			}
 			jjmatchedKind = 0x7fffffff;
 			jjmatchedPos = 0;
@@ -757,7 +757,7 @@ public class DOTParserTokenManager : DOTParserConstants {
 					matchedToken = jjFillToken();
 					return matchedToken;
 				} else {
-					continue EOFLoop;
+					goto EOFLoop;
 				}
 			}
 			int error_line = input_stream.getEndLine();

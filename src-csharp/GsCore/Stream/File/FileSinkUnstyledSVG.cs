@@ -41,7 +41,7 @@ public class FileSinkUnstyledSVG : FileSinkBase {
 	/// <summary>
 /// The output.
 /// </summary>
-	protected System.IO.StreamWriter out;
+	protected System.IO.StreamWriter writer;
 
 	/// <summary>
 /// What element ?.
@@ -57,18 +57,18 @@ public class FileSinkUnstyledSVG : FileSinkBase {
 
 	// Construction
 
-	public FileSinkUnstyledSVG {
+	public FileSinkUnstyledSVG() {
 		// NOP.
 	}
 
 	// Command
 
 	
-	public void end throws System.IO.IOException {
-		if {
-			output.flush;
+	public void end()  {
+		if (output != null) {
+			output.Flush();
 			output.Close();
-			out = null;
+			writer = null;
 		}
 	}
 
@@ -76,7 +76,7 @@ public class FileSinkUnstyledSVG : FileSinkBase {
 
 	
 	protected void outputHeader(){
-		out = (System.IO.StreamWriter) output;
+		writer = (System.IO.StreamWriter) output;
 
 		output.printf("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>%n");
 		output.printf("<svg" + " xmlns:svg=\"http://www.w3.org/2000/svg\"" + " width=\"100%%\"" + " height=\"100%%\""
@@ -191,7 +191,7 @@ public class FileSinkUnstyledSVG : FileSinkBase {
 
 		else if (attribute.Equals("xy")) {
 			if (value is object[]) {
-				object xy[] = ((object[]) value);
+				object[] xy = ((object[]) value);
 
 				if (xy.Length > 1) {
 					x = ((IConvertible) xy[0]);
@@ -200,7 +200,7 @@ public class FileSinkUnstyledSVG : FileSinkBase {
 			}
 		} else if (attribute.Equals("xyz")) {
 			if (value is object[]) {
-				object xyz[] = ((object[]) value);
+				object[] xyz = ((object[]) value);
 
 				if (xyz.Length > 1) {
 					x = ((IConvertible) xyz[0]);
@@ -270,7 +270,7 @@ public class FileSinkUnstyledSVG : FileSinkBase {
 		return output.ToString();
 	}
 
-	protected void addRule(System.Text.StringBuilder out, Rule rule) {
+	protected void addRule(System.Text.StringBuilder writer, Rule rule) {
 		// Style style = rule.getStyle();
 
 		// TODO

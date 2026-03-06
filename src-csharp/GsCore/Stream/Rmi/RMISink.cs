@@ -30,7 +30,7 @@ namespace Org.GraphStream.Stream.Rmi
  */
 
 
-public class RMISink : : object /* RMIAdapterOut */, ISink {
+public class RMISink : object /* RMIAdapterOut */, ISink {
 	private static readonly long serialVersionUID = 23444722897331612L;
 
 	Dictionary<string, object /* RMIAdapterIn */> inputs;
@@ -45,7 +45,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 
 	public void bind(string name) {
 		try {
-			/* RMI Naming.rebind not available */, this);
+			RMI Naming.rebind, this);
 		} catch (Exception e) {
 			Console.Error.WriteLine(e);
 		}
@@ -56,7 +56,7 @@ public class RMISink : : object /* RMIAdapterOut */, ISink {
 			object /* RMIAdapterIn */ input = (object /* RMIAdapterIn */) null /* RMI Naming.lookup not available */;
 
 			if (input != null)
-				inputs[url] = in;
+				inputs[url] = input;
 		} catch (Exception e) {
 			Console.Error.WriteLine(e);
 		}

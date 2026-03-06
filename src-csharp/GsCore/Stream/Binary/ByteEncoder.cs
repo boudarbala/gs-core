@@ -56,6 +56,19 @@ public interface ByteEncoder : ISink {
 /// <param name="buffer"> buffer that has to be transported</param>
 		void send(byte[] buffer);
 	}
-}
 
+	/// <summary>
+	/// Adapter class to convert a delegate to Transport interface
+	/// </summary>
+	class TransportAdapter : Transport {
+		private Action<byte[]> _send;
+		
+		public TransportAdapter(Action<byte[]> send) {
+			_send = send;
+		}
+		
+		public void send(byte[] buffer) {
+			_send(buffer);
+		}
+	}
 }

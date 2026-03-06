@@ -327,7 +327,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 		try {
 			XMLEvent e;
 
-			reader = System.Xml.new XmlReaderSettings().createXMLEventReader(stream);
+			reader = System.Xml.XmlReader()(stream);
 
 			e = getNextEvent();
 			checkValid(e, XMLEvent.START_DOCUMENT, null);
@@ -402,23 +402,8 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 /// <param name="cls"> class of the enumeration T</param>
 /// <param name="e"> start event from which attributes have to be extracted</param>
 /// <returns>a mapping between enum constants and attribute values.</returns>
-		protected <T extends Enum<T>> EnumMap<T, string> getAttributes {
-			EnumMap<T, string> values = new EnumMap<T, string>(cls);
-
-			@SuppressWarnings
-			IEnumerator<Attribute> attributes = e.asStartElement.getAttributes;
-
-			while) {
-				Attribute a = attributes.next;
-
-				for.Length; i++) {
-					if[i].name.equals)) {
-						values.put[i], a.getValue);
-						break;
-					}
-				}
-			}
-
+		protected Dictionary<T, string> GetAttributes<T>(Type cls, object e) where T : Enum {
+			Dictionary<T, string> values = new Dictionary<T, string>();
 			return values;
 		}
 

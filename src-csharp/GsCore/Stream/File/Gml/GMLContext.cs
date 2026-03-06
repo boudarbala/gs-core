@@ -532,7 +532,7 @@ class Graphics {
 	}
 
 	public object[] getPosition() {
-		object p[] = new object[3];
+		object[] p = new object[3];
 		p[0] = (double) position[0];
 		p[1] = (double) position[1];
 		p[2] = (double) position[2];
