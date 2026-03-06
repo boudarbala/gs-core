@@ -104,8 +104,8 @@ abstract class Viewer {
 /// Create a new unique identifier for a graph.
 /// </summary>
 /// <returns>The new identifier.</returns>
-	public string newGGId {
-		return string.Format(Math.random * 10000));
+	public string newGGId => string.Format("{0}", new Random().NextDouble() * 10000); /*
+		*/
 	}
 
 	/// <summary>

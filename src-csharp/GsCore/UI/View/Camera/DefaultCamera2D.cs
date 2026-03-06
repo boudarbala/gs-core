@@ -764,7 +764,7 @@ public class DefaultCamera2D : ICamera {
 			else
 				return true;
 		case ZOOMS:
-			return new List<object> { Enum.GetValues(typeof(Type)).Cast<object>().Contains(visibility[0])}
+			return new List<object> { Enum.GetValues(typeof(Type)).Cast<object>().Contains(visibility[0])); }
 		default:
 			return true;
 		}
@@ -789,7 +789,7 @@ public class DefaultCamera2D : ICamera {
 			else
 				return true;
 		case ZOOMS:
-			return new List<object> { Enum.GetValues(typeof(Type)).Cast<object>().Contains(visibility[0])}
+			return new List<object> { Enum.GetValues(typeof(Type)).Cast<object>().Contains(visibility[0])); }
 		default:
 			return true;
 		}
@@ -897,18 +897,18 @@ public class DefaultCamera2D : ICamera {
 		double yT = y + metrics.viewport[1];
 
 		if (types.Contains(InteractiveElement.NODE)) {
-			Optional<INode> node = graph.nodes().Where(n => nodeContains((GraphicElement) n, xT, yT)).FirstOrDefault();
-			if (node.isPresent()) {
-				if (isVisible((GraphicElement) node[])) {
-					return (GraphicElement) node[];
+			INode node = graph.nodes().Where(n => nodeContains((GraphicElement) n, xT, yT)).FirstOrDefault();
+			if (node != null) {
+				if (isVisible((GraphicElement)node)) {
+					return (GraphicElement)node;
 				}
 			}
 		}
 		if (types.Contains(InteractiveElement.EDGE)) {
-			Optional<IEdge> edge = graph.edges().Where(e => edgeContains((GraphicElement) e, xT, yT)).FirstOrDefault();
-			if (edge.isPresent()) {
-				if (isVisible((GraphicElement) edge[])) {
-					return (GraphicElement) edge[];
+			IEdge edge = graph.edges().Where(e => edgeContains((GraphicElement) e, xT, yT)).FirstOrDefault();
+			if (edge != null) {
+				if (isVisible((GraphicElement)edge)) {
+					return (GraphicElement)edge;
 				}
 			}
 		}

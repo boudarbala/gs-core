@@ -30,7 +30,7 @@ namespace Org.GraphStream.Stream.Rmi
  */
 
 
-public interface object /* RMIAdapterIn */ : object /* Remote */ {
+public interface RMIAdapterIn  {
 	void edgeAttributeAdded(string graphId, long timeId, string edgeId, string attribute, object value);
 
 	void edgeAttributeChanged(string graphId, long timeId, string edgeId, string attribute, object oldValue,

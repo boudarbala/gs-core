@@ -113,7 +113,7 @@ abstract class NodeParticle : Particle {
 	protected void createDebug() {
 		if (box.outputNodeStats) {
 			try {
-				out = new System.IO.TextWriter(new FileOutputStream("out" + getId() + ".data"));
+				writer = new System.IO.StreamWriter("out" + getId() + ".data"));
 			} catch (Exception e) {
 				Console.Error.WriteLine(e);
 				System.Environment.Exit(1);
@@ -183,8 +183,8 @@ abstract class NodeParticle : Particle {
 				nextPos.z = pos.z;
 		}
 
-		if (out != null) {
-			output.printf(System.Globalization.CultureInfo.InvariantCulture, "{0} {1} {2} {3}\n", getId(), len, attE, repE);
+		if (writer != null) {
+			output.Write(System.Globalization.CultureInfo.InvariantCulture, "{0} {1} {2} {3}\n", getId(), len, attE, repE);
 			/* output.Flush(); */
 		}
 

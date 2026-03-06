@@ -57,13 +57,13 @@ public class FileSourceDGS : FileSourceParser {
 	protected System.IO.TextReader createReaderForFile(string filename){
 		System.IO.Stream stream = null;
 
-		is = new FileStream(filename, FileMode.Open, FileAccess.Read);
+		inputStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
 		if (stream.CanSeek)
 			stream.Seek(128, SeekOrigin.Begin);
 
 		try {
-			is = new GZipStream(is, CompressionMode.Decompress);
+			inputStream = new GZipStream(is, CompressionMode.Decompress);
 		} catch (System.IO.IOException e1) {
 			//
 			// This is not a gzip input.
@@ -89,7 +89,7 @@ public class FileSourceDGS : FileSourceParser {
 					Console.Error.WriteLine(e2);
 				}
 
-				is = new FileStream(filename, FileMode.Open, FileAccess.Read);
+				inputStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 			}
 		}
 

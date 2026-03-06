@@ -305,39 +305,39 @@ public class Environment : ICloneable {
 			// XXX a way to avoid this overlong and repetitive
 			// list of setters ?
 
-			if (types[0] == long.TYPE) {
+			if (types[0] == typeof(long)) {
 				try {
 					long val = long.Parse(value);
-					method.invoke(object, new long(val));
+					method.Invoke(obj, val);
 				} catch (FormatException e) {
 					Console.Error.WriteLine(string.Format("cannot set '{0}' to the value '{1}', values is not a long\n",
 							method.ToString(), value));
 				}
-			} else if (types[0] == int.TYPE) {
+			} else if (types[0] == typeof(int)) {
 				try {
 					int val = (int) double.Parse(value);
-					method.invoke(object, new int(val));
+					method.Invoke(obj, val);
 				} catch (FormatException e) {
 					Console.Error.WriteLine(string.Format("cannot set '{0}' to the value '{1}', values is not a int\n",
 							method.ToString(), value));
 				}
-			} else if (types[0] == double.TYPE) {
+			} else if (types[0] == typeof(double)) {
 				try {
 					double val = double.Parse(value);
-					method.invoke(object, new double(val));
+					method.Invoke(obj, val);
 				} catch (FormatException e) {
 					Console.Error.WriteLine(string.Format("cannot set '{0}' to the value '{1}', values is not a double\n",
 							method.ToString(), value));
 				}
-			} else if (types[0] == float.TYPE) {
+			} else if (types[0] == typeof(float)) {
 				try {
 					float val = float.Parse(value);
-					method.invoke(object, new float(val));
+					method.Invoke(obj, val);
 				} catch (FormatException e) {
 					Console.Error.WriteLine(string.Format("cannot set '{0}' to the value '{1}', values is not a float\n",
 							method.ToString(), value));
 				}
-			} else if (types[0] == bool.TYPE) {
+			} else if (types[0] == typeof(bool)) {
 				try {
 					bool val = false;
 					value = value.ToLower();
@@ -345,23 +345,23 @@ public class Environment : ICloneable {
 					if (value.Equals("1") || value.Equals("true") || value.Equals("yes") || value.Equals("on"))
 						val = true;
 
-					method.invoke(object, new bool(val));
+					method.Invoke(obj, val);
 				} catch (FormatException e) {
 					Console.Error.WriteLine(string.Format("cannot set '{0}' to the value '{1}', values is not a bool\n",
 							method.ToString(), value));
 				}
 			} else if (types[0] == typeof(string)) {
-				method.invoke(object, value);
+				method.Invoke(obj, value);
 			} else {
 				Console.Error.WriteLine(
 						string.Format("cannot match parameter '{0}' and the method '{1}'\n", value, method.ToString()));
 			}
-		} catch (InvocationTargetException ite) {
+		} catch (TargetInvocationException ite) {
 			Console.Error.WriteLine(string.Format("cannot invoke method '{0}' : invocation targer error  {1}\n",
-					method.ToString(), ite.getMessage()));
-		} catch (IllegalAccessException iae) {
+					method.ToString(), ite.Message));
+		} catch (MemberAccessException iae) {
 			Console.Error.WriteLine(string.Format("cannot invoke method '{0}' : illegal access error  {1}\n", method.ToString(),
-					iae.getMessage()));
+					iae.Message));
 		}
 	}
 

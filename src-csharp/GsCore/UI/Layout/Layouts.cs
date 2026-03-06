@@ -48,11 +48,11 @@ public class Layouts {
 		string layoutClassName;
 
 		try {
-			layoutClassName = (System.Environment.GetEnvironmentVariable("gs.ui.layout");
+			layoutClassName = (System.Environment.GetEnvironmentVariable("gs.ui.layout"));
 			if (layoutClassName != null) {
 				Console.Error.WriteLine("\"gs.ui.layout\" is deprecated, use \"org.graphstream.ui.layout\" instead.");
 			} else {
-				layoutClassName = (System.Environment.GetEnvironmentVariable("org.graphstream.ui.layout");
+				layoutClassName = (System.Environment.GetEnvironmentVariable("org.graphstream.ui.layout"));
 			}
 		} catch (Exception e) {
 			layoutClassName = null;
@@ -61,10 +61,10 @@ public class Layouts {
 		if (layoutClassName != null) {
 			try {
 				Type c = Type.GetType(layoutClassName);
-				object object = new c();
+				object obj = new c();
 
-				if (object is ILayout) {
-					return (ILayout) object;
+				if (obj is ILayout) {
+					return (ILayout) obj;
 				} else {
 					Console.Error.WriteLine(string.Format("class '{0}' is not a 'IGraphRenderer'\n", object));
 				}

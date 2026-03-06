@@ -1057,20 +1057,20 @@ public class FileSourceGPX : FileSourceXML {
 		/// <summary>
 /// <pre> name       : FIX attributes : structure  : enum FixType </pre>
 /// </summary>
-		private string __fix throws System.IO.IOException, Exception {
+		private string __fix() {
 			string fix;
 			XMLEvent e;
 
-			e = getNextEvent;
-			checkValid;
+			e = getNextEvent();
+			checkValid();
 
 			fix = __characters;
 
-			if.matches$"))
-				newParseError;
+			if (matchesPattern) 
+				throw new Exception("Parse error");
 
-			e = getNextEvent;
-			checkValid;
+			e = getNextEvent();
+			checkValid();
 
 			return fix;
 		}

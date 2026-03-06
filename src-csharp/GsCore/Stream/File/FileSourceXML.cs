@@ -413,7 +413,7 @@ abstract class FileSourceXML : SourceBase, IFileSource, XMLStreamConstants {
 /// <param name="e"> the event</param>
 /// <param name="attributes"> extracted attributes</param>
 /// <param name="required"> array of required attributes</param>
-		protected void checkRequiredAttributes<T>(XMLEvent e, EnumMap<T, string> attributes, where T : Enum<T>
+		protected void checkRequiredAttributes<T>(XMLEvent e, EnumMap<T, string> attributes, 
 				params T[] required){
 			if (required != null) {
 				for (int i = 0; i < required.Length; i++) {

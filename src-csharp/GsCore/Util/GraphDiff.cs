@@ -42,7 +42,7 @@ public class GraphDiff {
 	/// <summary>
 /// Create a new empty diff.
 /// </summary>
-	public GraphDiff {
+	public GraphDiff() {
 		this.events = new List<Event>();
 		this.bridge = null;
 	}

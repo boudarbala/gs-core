@@ -372,19 +372,19 @@ public class Timeline : ISource, IReplayable, IEnumerable<IGraph> {
 
 		timeline.end();
 
-		Console.Write(string.Format("############\n");
-		Console.Write(string.Format("# Play :\n");
+		Console.Write(string.Format("############\n"));
+		Console.Write(string.Format("# Play :\n"));
 		timeline.play();
-		Console.Write(string.Format("############\n");
-		Console.Write(string.Format("# Playback :\n");
+		Console.Write(string.Format("############\n"));
+		Console.Write(string.Format("# Playback :\n"));
 		timeline.playback();
-		Console.Write(string.Format("############\n");
-		Console.Write(string.Format("# Sequence :\n");
+		Console.Write(string.Format("############\n"));
+		Console.Write(string.Format("# Sequence :\n"));
 		int i = 0;
 		foreach (IGraph it in timeline) {
 			Console.Write(string.Format(" IGraph#{0} {1}\n", i, toString(it));
 		}
-		Console.Write(string.Format("############\n");
+		Console.Write(string.Format("############\n"));
 	}
 
 	private static string toString(IGraph g) {

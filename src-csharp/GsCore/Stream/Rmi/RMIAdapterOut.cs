@@ -30,7 +30,7 @@ namespace Org.GraphStream.Stream.Rmi
  */
 
 
-public interface object /* RMIAdapterOut */ : object /* Remote */ {
+public interface RMIAdapterOut  {
 	void register(string url);
 
 	void unregister(string url);
