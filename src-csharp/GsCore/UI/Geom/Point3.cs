@@ -83,13 +83,13 @@ public class Point3 : Point2, java.io.System.Runtime.Serialization.ISerializable
 		copy(vec);
 	}
 
-	public Point3(float data[]) : this(0, data) {
+	public Point3(float[] data) : this(0, data) {
 	}
 
-	public Point3(double data[]) : this(0, data) {
+	public Point3(double[] data) : this(0, data) {
 	}
 
-	public Point3(int start, float data[]) {
+	public Point3(int start, float[] data) {
 		if (data != null) {
 			if (data.Length > start + 0)
 				x = data[start + 0];
@@ -100,7 +100,7 @@ public class Point3 : Point2, java.io.System.Runtime.Serialization.ISerializable
 		}
 	}
 
-	public Point3(int start, double data[]) {
+	public Point3(int start, double[] data) {
 		if (data != null) {
 			if (data.Length > start + 0)
 				x = data[start + 0];

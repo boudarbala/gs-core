@@ -1111,4 +1111,3 @@ abstract class FileSinkImages : IFileSink {
 	}
 }
 
-}

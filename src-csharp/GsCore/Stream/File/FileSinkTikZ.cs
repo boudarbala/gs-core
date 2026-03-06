@@ -266,7 +266,7 @@ public class FileSinkTikZ : FileSinkBase {
 			checkColor(group.getFillColor(i));
 
 		switch (group.getType()) {
-		case NODE {
+		case NODE:
 			if (group.getFillMode() != FillMode.DYN_PLAIN) {
 				string fill = checkColor(group.getFillColor(0));
 				style.Add("fill=" + fill);
@@ -329,7 +329,7 @@ public class FileSinkTikZ : FileSinkBase {
 			style.Add("inner sep=0pt");
 		}
 			break;
-		case EDGE {
+		case EDGE:
 			if (group.getFillMode() != FillMode.DYN_PLAIN) {
 				string fill = checkColor(group.getFillColor(0));
 				style.Add("draw=" + fill);

@@ -63,7 +63,7 @@ public class FileSourceDGS : FileSourceParser {
 			stream.Seek(128, SeekOrigin.Begin);
 
 		try {
-			inputStream = new GZipStream(is, CompressionMode.Decompress);
+			inputStream = new GZipStream(stream, CompressionMode.Decompress);
 		} catch (System.IO.IOException e1) {
 			//
 			// This is not a gzip input.
@@ -93,7 +93,7 @@ public class FileSourceDGS : FileSourceParser {
 			}
 		}
 
-		return new System.IO.StreamReader(new System.IO.StreamReader(is));
+		return new System.IO.StreamReader(new System.IO.StreamReader(stream));
 	}
 }
 

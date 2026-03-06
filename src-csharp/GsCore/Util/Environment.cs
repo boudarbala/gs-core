@@ -369,7 +369,7 @@ public class Environment : ICloneable {
 /// Print all parameters to the given stream.
 /// </summary>
 /// <param name="out"> The output stream to use.</param>
-	public void printParameters(System.IO.TextWriter out) {
+	public void printParameters(System.IO.TextWriter writer) {
 		output.println(toString());
 	}
 
