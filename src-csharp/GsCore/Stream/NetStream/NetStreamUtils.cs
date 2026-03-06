@@ -458,7 +458,7 @@ public class NetStreamUtils {
 /// <returns></returns>
 	public static int decodeType(byte[] bb) {
 		try {
-			return[] bb;
+			return bb[0];
 		} catch (BufferUnderflowException e) {
 			Console.WriteLine("decodeType: could not decode type");
 			Console.Error.WriteLine(e);
@@ -549,7 +549,7 @@ public class NetStreamUtils {
 		int data = 0;
 
 		try {
-			data = bb[];
+			data = bb[0];
 		} catch (BufferUnderflowException e) {
 			Console.WriteLine("decodeByte: could not decode");
 			Console.Error.WriteLine(e);
@@ -562,7 +562,7 @@ public class NetStreamUtils {
 		byte data = 0;
 
 		try {
-			data = bb[];
+			data = bb[0];
 		} catch (BufferUnderflowException e) {
 			Console.WriteLine("decodeByte: could not decode");
 			Console.Error.WriteLine(e);
@@ -577,7 +577,7 @@ public class NetStreamUtils {
 			long[] data = new long[9];
 
 			do {
-				data[size] = bb[];
+				data[size] = bb[0];
 
 				size++;
 
@@ -644,7 +644,7 @@ public class NetStreamUtils {
 			bool[] res = new bool[len];
 
 			for (int i = 0; i < len; i++) {
-				byte b = bb[];
+				byte b = bb[0];
 				res[i] = b != 0;
 			}
 
@@ -663,7 +663,7 @@ public class NetStreamUtils {
 			byte[] res = new byte[len];
 
 			for (int i = 0; i < len; i++) {
-				res[i] = bb[];
+				res[i] = bb[0];
 			}
 
 			return res;

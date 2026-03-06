@@ -36,7 +36,7 @@ public interface IDisplay {
 /// </summary>
 /// <returns>the Display object linked to the UI property</returns>
 	static IDisplay getDefault(){
-		string uiModule = (System.Environment.GetEnvironmentVariable("org.graphstream.ui");
+		string uiModule = (System.Environment.GetEnvironmentVariable("org.graphstream.ui"));
 
 		if (uiModule == null) {
 			throw new MissingDisplayException("No UI package detected! "
@@ -49,10 +49,10 @@ public interface IDisplay {
 			foreach (string candidate in candidates) {
 				try {
 					Type clazz = Type.GetType(candidate);
-					object object = new clazz();
+					object obj = new clazz();
 
-					if (object is IDisplay) {
-						display = (IDisplay) object;
+					if (obj is IDisplay) {
+						display = (IDisplay) obj;
 						break;
 					}
 				} catch (TypeLoadException e) {

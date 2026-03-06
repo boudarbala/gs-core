@@ -210,14 +210,14 @@ public class VerboseSink : ISink {
 		if (!enable[type])
 			return;
 
-		string out = formats[type];
+		string outputStr = formats[type];
 
 		foreach (string k in args.Keys) {
 			object o = args[k];
-			out = output.Replace(string.Format("%{0}%", k), o == null ? "null" : o.ToString());
+			outputStr = output.Replace(string.Format("%{0}%", k), o == null ? "null" : o.ToString());
 		}
 
-		this.output.print(output);
+		this.this.output.Print(output);
 		this.output.printf("\n");
 
 		if (autoflush)

@@ -764,7 +764,7 @@ public class DefaultCamera2D : ICamera {
 			else
 				return true;
 		case ZOOMS:
-			return new List<object> { Enum.GetValues(typeof(Type)).Cast<object>().Contains(visibility[0])); }
+			return new List<object> { Enum.GetValues(typeof(Type)).Cast<object>().Contains(visibility[0]); }
 		default:
 			return true;
 		}
@@ -789,7 +789,7 @@ public class DefaultCamera2D : ICamera {
 			else
 				return true;
 		case ZOOMS:
-			return new List<object> { Enum.GetValues(typeof(Type)).Cast<object>().Contains(visibility[0])); }
+			return new List<object> { Enum.GetValues(typeof(Type)).Cast<object>().Contains(visibility[0]); }
 		default:
 			return true;
 		}

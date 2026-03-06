@@ -536,15 +536,15 @@ public class FileSourceDGS1And2 : FileSourceBase {
 
 	
 	protected System.IO.TextReader createReaderFrom(string file){
-		System.IO.Stream is = null;
+		System.IO.Stream inputStream = null;
 
 		try {
-			is = new GZIPInputStream(new FileInputStream(file));
+			inputStream = new GZIPInputStream(new FileInputStream(file));
 		} catch (System.IO.IOException e) {
-			is = new FileInputStream(file);
+			inputStream = new FileInputStream(file);
 		}
 
-		return new System.IO.StreamReader(new System.IO.StreamReader(is));
+		return new System.IO.StreamReader(new System.IO.StreamReader(inputStream));
 	}
 
 	

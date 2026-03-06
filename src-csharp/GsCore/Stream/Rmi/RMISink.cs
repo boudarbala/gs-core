@@ -45,7 +45,7 @@ public class RMISink : object /* RMIAdapterOut */, ISink {
 
 	public void bind(string name) {
 		try {
-			RMI Naming.rebind, this);
+			Naming.Rebind(name, this);
 		} catch (Exception e) {
 			Console.Error.WriteLine(e);
 		}

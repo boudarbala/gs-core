@@ -362,7 +362,7 @@ public class TLPParserTokenManager : TLPParserConstants {
 		int i = 1;
 		jjstateSet[0] = startState;
 		int kind = 0x7fffffff;
-		for (;) {
+		for (;;) {
 			if (++jjround == 0x7fffffff)
 				ReInitRounds();
 			if (curChar < 64) {
@@ -800,7 +800,7 @@ public class TLPParserTokenManager : TLPParserConstants {
 		Token matchedToken;
 		int curPos = 0;
 
-		EOFLoop: for (;) {
+		EOFLoop: for (;;) {
 			try {
 				curChar = input_stream.BeginToken();
 			} catch (java.io.System.IO.IOException e) {
