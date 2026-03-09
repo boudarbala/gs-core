@@ -327,6 +327,7 @@ public class FileSinkTikZ : FileSinkBase {
 			}
 
 			style.Add("inner sep=0pt");
+			break;
 		}
 			break;
 		case EDGE:

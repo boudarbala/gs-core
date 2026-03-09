@@ -935,7 +935,7 @@ abstract class FileSinkImages : IFileSink {
 		}
 	}
 
-/*
+/*/*
 	public static void usage() {
 		Console.WriteLine(string.Format("usage: java {0} [options] fichier.dgs\n", typeof(FileSinkImages).Name));
 		Console.WriteLine(string.Format("where options in:\n"));
@@ -1109,5 +1109,5 @@ abstract class FileSinkImages : IFileSink {
 
 		dgs.end();
 	}
-}
+*/}
 
